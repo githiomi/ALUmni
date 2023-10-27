@@ -1,27 +1,84 @@
-# ALUmni
+# <a href="https://github.com/githiomi/ALUmni.git" target="_blank"><img style="margin: 0px 5px" src="./src/assets/images/ALUmni_logo.png" alt="ALUmni" height="50" /></a> ALUmni
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+> Created by <a href="https://www.github.com/githiomi"> Daniel Githiomi </a>
 
-## Development server
+## 🚧 Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+`ALUmni` is a project developed using Node, Angular, Typescript, HTML5 and CSS and other third-party libraries. It is a web-based platform wherein each student's alumni can connect and, at the same time,participate in various events organized by the group.
 
-## Code scaffolding
+## 👀 Product Preview
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![Screenshot](./src/assets/Images/Screenshot.png)
 
-## Build
+## 🏗️ Development server
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng serve` for the development server. Navigate to __`http://localhost:4200/`__. The application will automatically reload if you change any of the source files.
 
-## Running unit tests
+## 🏁 App Configuration
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Install dependencies
 
-## Running end-to-end tests
+```` (nodejs)
+npm install
+````
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run Angular server __(http://localhost:4200)__
 
-## Further help
+## ⏬ Setup/Installation Minimal Requirements
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+You will need to have the following installed on your system for the application to run:
+
+* Any Modern Browser.
+* `Node JS` installed on your machine
+
+Make sure to run the following command to get the `node_modules` folder added to your version.
+
+```(nodejs)
+npm init
+```
+
+## ➕ Compatibility
+
+Compatible with all mordern browsers.
+
+## 🤖 Technologies & Resources Used
+
+It is made entirely using Visual Studio Code in ollaboration with the Angular CLI to create all the files and to achieve the output as you see it.
+
+* `Typescript` - Angular core language.
+* `Angular` - Client-Side Frontend Framework.
+* `Angular Material` - Angular Material library to help with component creation.
+* `TailwindCSS` - Styling Framework
+
+```(nodejs)
+ng add @angular/material
+```
+
+## 🪲 Known Bugs
+
+The system works efficiently and is 100% guaranteed.
+
+## 🏗️ Setup Instructions
+
+In order to enjoy the features of this application you will need to:
+
+* Git clone [this](https://github.com/githiomi/ALUmni) into your terminal to your
+  desired directory.
+* Open the project in an IDE of choice (Eg: Visual Studio Code).
+* Run 'ng serve' to run the application on the development server.
+* Enjoy the `ALUmni` Angular Application and Shop at will.
+
+## 📧 Support and contact details
+
+Contact me through any of the following:
+
+* Slack: danielgithiomi
+* Email: danielgithiomi@gmail.com
+* Github: githiomi
+
+## 📃 License
+
+Click the following to access the license
+page: [Click-Here](https://githiomi.github.io/Privacy-Policy/)
+
+> Copyright (c) {2023} DhosioLux Co.

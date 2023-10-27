@@ -1,0 +1,21 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    height: 64px;
+    width: 100%;
+    background-color: black;
+}
+
+/* Body */
+.body{
+    width: 100%;
+    background-image: url('./../assets/images/campus_background.jpg');
+    background-position: center;
+    background-size: cover;
+    flex: 1;
+}
