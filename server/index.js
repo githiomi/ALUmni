@@ -6,7 +6,6 @@ const date = require("date-and-time");
 const bodyParser = require('body-parser');
 const Event = require('./models/event');
 const eventCategories = require('./models/eventCategories');
-const Alumni = require('./models/alumni');
 
 // Configurations
 const app = express();
@@ -20,11 +19,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.urlencoded({ extended: false }));
 const eventsDB = new nedb({ filename: "./database/events.db", autoload: true });
-const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 console.log("The NeDB Events database has been created successfully!");
 
 // Global variables
 const PORT_NUMBER = 3000;
+
+// Routers
+const alumniRouter = require('./routes/alumniRoutes');
 
 app.use((req, res, next) => {
     console.log("Time:", value);
@@ -35,6 +36,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(public, 'index.html'));
 });
 
+// --------------------------------------------------------------------------------------------------------------------
 // EVENTS
 app.post("/addEvent", (req, res) => {
     const event = new Event(
@@ -80,48 +82,12 @@ app.get('/events/:eventId', (req, res) => {
 
 });
 
-// USERS
-app.post('/addUser', (req, res) => {
+// ALUMNI ROUTES
+app.post('/newAlum', alumniRouter);
 
-    const alum = new Alumni(
-        'ALU001',
-        "John",
-        "Doe",
-        "Male",
-        28,
-        "https://example.com/profile.jpg",
-        2010,
-        2014,
-        "johndoe@example.com",
-        "alumni",
-        "password123",
-        "password123"
-    );
+app.get('/alumni', alumniRouter)
 
-    res.send(`Creating a new user and adding it to the database. ${JSON.stringify(alum)}`);
-
-    alumniDB.insert(alum, (err, newAlum) => {
-        if (err)
-            console.error('There was an error inserting the new user into the database', err);
-        else
-            console.log('Added new user to the database', newAlum);
-    });
-});
-
-app.get('/users', (req, res) => {
-
-    alumniDB.find({}, (err, alumni) => {
-        if (err)
-            console.error(err);
-        else {
-            if (alumni.length > 0)
-                res.send('Retrived the following alumni : ' + JSON.stringify(alumni));
-            else
-                res.send("No users found in the database.");
-        }
-    });
-});
-
+// --------------------------------------------------------------------------------------------------------------------
 app.get('/close', function (req, res) {
     db.close((err) => {
         if (err) {

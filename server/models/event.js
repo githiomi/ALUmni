@@ -14,6 +14,7 @@ class Event {
         this.eventCategory = eventCategory;
         this.createdBy = createdBy;
         this.createdAt = Date.now();
+        this.atendees = [];
     }
 
 }
