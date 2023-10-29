@@ -1,65 +1,22 @@
 // Application Imports
 const path = require('path');
-const nedb = require("nedb");
+const nedb = require("gray-nedb");
 const express = require("express");
 const date = require("date-and-time");
-
-class Event {
-
-    constructor(
-        eventId, eventTitle, venue, shortDescription, details, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy
-    ) {
-        this.eventId = eventId;
-        this.eventTitle = eventTitle;
-        this.venue = venue;
-        this.shortDescription = shortDescription;
-        this.details = details;
-        this.eventDuration = eventDuration;
-        this.eventDate = eventDate;
-        this.attendeeLimit = attendeeLimit;
-        this.eventCategory = eventCategory;
-        this.createdBy = createdBy;
-        this.createdAt = Date.now();
-    }
-
-}
-
-class ALUmnni {
-
-    MAX = 101;
-    MIN = 0
-
-    constructor(
-        alumniId, firstName, lastName, gender, age, profilePictureUrl, startYear, endYear, emailAddress, role, password, confirmPassword
-    ) {
-        this.alumniId = alumniId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = this.firstName.charAt(0).toUpperCase() + this.lastName.substring(0, 5).toUpperCase() + Math.floor(Math.random() * (this.MAX - this.MIN)) + this.MIN
-        this.gender = gender;
-        this.age = age;
-        this.profilePictureUrl = profilePictureUrl;
-        this.startYear = startYear;
-        this.endYear = endYear;
-        this.emailAddress = emailAddress;
-        this.role = role;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-    }
-}
-
-const EventCategories = {
-    professional : 'Professional Development',
-    networking : 'Networking',
-    campus : 'Campus Event'
-}
+const bodyParser = require('body-parser');
+const Event = require('./models/event');
+const eventCategories = require('./models/eventCategories');
+const Alumni = require('./models/alumni');
 
 // Configurations
 const app = express();
 const public = path.join(__dirname, 'public');
+app.use(express.static(public));
 
 const now = new Date();
 const value = date.format(now, "DD/MM/YYYY HH:mm:ss");
+
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.urlencoded({ extended: false }));
 const eventsDB = new nedb({ filename: "./database/events.db", autoload: true });
@@ -81,7 +38,7 @@ app.get("/", (req, res) => {
 // EVENTS
 app.post("/addEvent", (req, res) => {
     const event = new Event(
-        'EV001', 'Meet Uber CEO', 'Piazza', 'Come and meet the Uber CEO', 'Come for an interactive session with one of the leading minds...', 1, new Date(2023, 10, 20), 30, EventCategories.networking, 'ALU021', Date.now()
+        'EV001', 'Meet Uber CEO', 'Piazza', 'Come and meet the Uber CEO', 'Come for an interactive session with one of the leading minds...', 1, new Date(2023, 10, 20), 30, eventCategories.networking, 'ALU021', Date.now()
     )
 
     res.send(`Adding new event ${JSON.stringify(event)} to the database`);
@@ -111,13 +68,22 @@ app.get('/events', (req, res) => {
 });
 
 app.get('/events/:eventId', (req, res) => {
-    
+
+    const eventId = req.params.eventId;
+
+    eventsDB.find( { eventId: eventId }, (err, event) => {
+        if (err)
+            console.error(err);
+        else
+            res.json(event)   
+    });
+
 });
 
 // USERS
 app.post('/addUser', (req, res) => {
 
-    const alum = new ALUmnni(
+    const alum = new Alumni(
         'ALU001',
         "John",
         "Doe",
@@ -142,6 +108,20 @@ app.post('/addUser', (req, res) => {
     });
 });
 
+app.get('/users', (req, res) => {
+
+    alumniDB.find({}, (err, alumni) => {
+        if (err)
+            console.error(err);
+        else {
+            if (alumni.length > 0)
+                res.send('Retrived the following alumni : ' + JSON.stringify(alumni));
+            else
+                res.send("No users found in the database.");
+        }
+    });
+});
+
 app.get('/close', function (req, res) {
     db.close((err) => {
         if (err) {
@@ -155,7 +135,7 @@ app.get('/close', function (req, res) {
 
 app.use((req, res) => {
     res.status(404);
-    res.send("Oops! 404 Error. No route matches the current one..");
+    res.sendFile(path.join(public, 'error.html'));
 });
 
 app.listen(process.env.port || PORT_NUMBER, (req, res) => {

@@ -1,8 +1,8 @@
 class Event {
 
     constructor(
-        eventId, eventTitle, venue, shortDescription, details, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy, createdAt
-    ){
+        eventId, eventTitle, venue, shortDescription, details, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy
+    ) {
         this.eventId = eventId;
         this.eventTitle = eventTitle;
         this.venue = venue;
@@ -17,3 +17,5 @@ class Event {
     }
 
 }
+
+module.exports = Event
