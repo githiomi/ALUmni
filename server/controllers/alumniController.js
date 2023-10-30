@@ -1,6 +1,7 @@
 // Corresponding DB connection
 const nedb = require('gray-nedb');
 const { alumni } = require('../models/roles');
+// const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 
 exports.get_all_alumni = (req, res) => {

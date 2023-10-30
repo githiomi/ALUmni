@@ -35,14 +35,14 @@ app.get("/", (req, res) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 // AUTHENTICATION
-app.post("/login", authRouter);
+app.post("/auth/login", authRouter);
 
-app.post('/register', authRouter);
+app.post('/auth/register', authRouter);
 
 // EVENTS
-app.post("/newEvent", eventRouter);
-
 app.get('/events', eventRouter);
+
+app.post("/events/new", eventRouter);
 
 app.get('/events/:eventId', eventRouter);
 
