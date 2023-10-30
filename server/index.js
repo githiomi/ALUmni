@@ -12,8 +12,9 @@ app.use(express.static(public));
 const now = new Date();
 const value = date.format(now, "DD/MM/YYYY HH:mm:ss");
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Global variables
 const PORT_NUMBER = 3000;
@@ -21,6 +22,7 @@ const PORT_NUMBER = 3000;
 // Routers
 const alumniRouter = require('./routes/alumniRoutes');
 const eventRouter = require('./routes/eventRoutes');
+const authRouter = require('./routes/authRoutes');
 
 app.use((req, res, next) => {
     console.log("Time:", value);
@@ -32,6 +34,11 @@ app.get("/", (req, res) => {
 });
 
 // --------------------------------------------------------------------------------------------------------------------
+// AUTHENTICATION
+app.post("/login", authRouter);
+
+app.post('/register', authRouter);
+
 // EVENTS
 app.post("/newEvent", eventRouter);
 
@@ -39,10 +46,18 @@ app.get('/events', eventRouter);
 
 app.get('/events/:eventId', eventRouter);
 
-// ALUMNI ROUTES
-app.post('/newAlum', alumniRouter);
+app.get('/events/:eventId/atendees', eventRouter);
 
-app.get('/alumni', alumniRouter)
+app.post('/events/:eventId/atendees', eventRouter);
+
+// ALUMNI ROUTES
+app.get('/alumni', alumniRouter);
+
+app.get('/alumni/:alumniId', alumniRouter);
+
+app.get('/alumni/:alumniId/events', alumniRouter);
+
+app.post('/alumni/:alumniId/events', alumniRouter);
 // --------------------------------------------------------------------------------------------------------------------
 
 app.get('/close', function (req, res) {

@@ -1,38 +1,7 @@
 // Corresponding DB connection
 const nedb = require('gray-nedb');
+const { alumni } = require('../models/roles');
 const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
-
-// Data Models
-const Alumni = require('./../models/alumni');
-const Roles = require('./../models/roles');
-
-exports.new_alum = (req, res) => {
-
-    const alum = new Alumni(
-        'ALU001',
-        "John",
-        "Doe",
-        "Male",
-        28,
-        "https://example.com/profile.jpg",
-        2010,
-        2014,
-        "johndoe@example.com",
-        Roles.alumni,
-        "password123",
-        "password123"
-    );
-
-    res.send(`Creating a new user and adding it to the database. ${JSON.stringify(alum)}`);
-
-    alumniDB.insert(alum, (err, newAlum) => {
-        if (err)
-            console.error('There was an error inserting the new user into the database', err);
-        else
-            console.log('Added new user to the database', newAlum);
-    });
-
-};
 
 exports.get_all_alumni = (req, res) => {
 
@@ -40,11 +9,82 @@ exports.get_all_alumni = (req, res) => {
         if (err)
             console.error(err);
         else {
-            if (alumni.length > 0)
+            if (alumni)
                 res.json(alumni);
             else
                 res.send("No users found in the database.");
         }
     });
+
+};
+
+exports.get_alumni_by_id = (req, res) => {
+
+    const alumId = (req.params.alumniId).toUpperCase();
+
+    alumniDB.find({ alumniId: alumId }, (err, alumni) => {
+        if (err)
+            console.error(err);
+        else {
+            if (alumni.length > 0)
+                res.json(alumni)
+            else
+                res.send(`No user with the id "${alumId}" was found in the database.`)
+        }
+    })
+
+}
+
+exports.get_alumni_events = (req, res) => {
+
+    const alumId = (req.params.alumniId).toUpperCase();
+    
+    if (!alumId) return next();
+
+    alumniDB.find({ alumniId: alumId }, (err, alumni) => {
+        if (err)
+            console.error(err);
+        else {
+            if (alumni[0].eventsToAttend.length > 0)
+                res.json(alumni[0].eventsToAttend)
+            else
+                res.send(`There are no events that ${alumni[0].username} has signed up for.`)
+        }
+    })
+
+}
+
+exports.add_event_to_alumni = (req, res) => {
+
+    const alumId = (req.params.alumniId).toUpperCase();
+
+    if (!alumId) return next();
+
+    alumniDB.find({ alumniId: alumId }, (err, alumni) => {
+        if (err)
+            console.error(err);
+        else {
+            if (alumni.length > 0) {
+                const alum = alumni[0]
+
+                let updatedAlum = {
+                    ...alum,
+                    eventsToAttend: [...alum.eventsToAttend, "EV001"]
+                }
+
+                alumniDB.update({ alumniId: alumId }, { $set: updatedAlum }, {}, (err, replaced) => {
+                    if (err)
+                        res.status(500).json({
+                            error: 'An Internal Error occurred',
+                            timestamp: Date.now()
+                        })
+                    else
+                        res.status(200).json(updatedAlum);
+                });
+            }
+            else
+                res.send(`There is no user with the id: "${alumId}"`)
+        }
+    })
 
 }
