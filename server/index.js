@@ -1,5 +1,6 @@
 // Application Imports
 const path = require('path');
+const cors = require('cors');
 const express = require("express");
 const date = require("date-and-time");
 const bodyParser = require('body-parser');
@@ -13,8 +14,9 @@ const now = new Date();
 const value = date.format(now, "DD/MM/YYYY HH:mm:ss");
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: false}));
+
 
 // Global variables
 const PORT_NUMBER = 3000;
@@ -23,6 +25,11 @@ const PORT_NUMBER = 3000;
 const alumniRouter = require('./routes/alumniRoutes');
 const eventRouter = require('./routes/eventRoutes');
 const authRouter = require('./routes/authRoutes');
+
+app.use(cors({
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+    origin: 'http://localhost:4200'
+}));
 
 app.use((req, res, next) => {
     console.log("Time:", value);

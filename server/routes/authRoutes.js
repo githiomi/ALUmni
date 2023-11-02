@@ -11,4 +11,4 @@ authRouter.post('/auth/login', authController.log_in);
 authRouter.post('/auth/register', authController.register);
 
 // Exports
-module.exports = authRouter;
+module.exports = authRouter;    
