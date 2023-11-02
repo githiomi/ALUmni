@@ -1,1 +1,9 @@
 <p>home works!</p>
+
+<button mat-raised-button color="accent" (click)="getAtendeesForEvent()">
+    Make Call
+</button>
+
+<div *ngFor="let alum of alumni$ | async">
+    Alum : {{ alum }}
+</div>
