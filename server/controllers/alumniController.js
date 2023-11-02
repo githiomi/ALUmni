@@ -1,7 +1,5 @@
 // Corresponding DB connection
 const nedb = require('gray-nedb');
-const { alumni } = require('../models/roles');
-// const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 
 exports.get_all_alumni = (req, res) => {
@@ -59,6 +57,8 @@ exports.add_event_to_alumni = (req, res) => {
 
     const alumId = (req.params.alumniId).toUpperCase();
 
+    const { events } = req.body;
+
     if (!alumId) return next();
 
     alumniDB.find({ alumniId: alumId }, (err, alumni) => {
@@ -67,20 +67,23 @@ exports.add_event_to_alumni = (req, res) => {
         else {
             if (alumni.length > 0) {
                 const alum = alumni[0]
+                const hashedAlumId = alum._id;
 
                 let updatedAlum = {
                     ...alum,
-                    eventsToAttend: [...alum.eventsToAttend, "EV001"]
+                    eventsToAttend: [...alum.eventsToAttend, ...events]
                 }
 
-                alumniDB.update({ alumniId: alumId }, { $set: updatedAlum }, {}, (err, replaced) => {
+                alumniDB.update({ _id: hashedAlumId }, { $set: updatedAlum }, {}, (err, replaced) => {
                     if (err)
                         res.status(500).json({
                             error: 'An Internal Error occurred',
                             timestamp: Date.now()
                         })
-                    else
+                    else{
                         res.status(200).json(updatedAlum);
+                        console.log(replaced);
+                    }
                 });
             }
             else

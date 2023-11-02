@@ -6,32 +6,34 @@ const Event = require('./../models/event');
 const EventCategory = require('./../models/eventCategories');
 
 exports.create_new_event = (req, res) => {
-    const event = new Event(
-        'EV001',
-        'Meet Uber CEO',
-        'Piazza',
-        'Come and meet the Uber CEO',
-        'Come for an interactive session with one of the leading minds...',
-        1,
-        new Date(2023, 10, 20),
-        30,
-        EventCategory.networking,
-        'ALU021',
-        Date.now()
-    )
 
-    console.log(`Adding new event ${JSON.stringify(event)} to the database`);
+    const { eventTitle, venue, description, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
 
-    eventsDB.insert(event, (err, newEvent) => {
-        if (err) {
-            console.error(err);
-            console.log("Error adding the new event with the name {} to the databse", newEvent);
-        } else {
-            console.log("Inserted the event document into the database", newEvent);
-            res.json(newEvent)
-        }
+const event = new Event(
+    eventTitle,
+    venue,
+    description,
+    eventDuration,
+    //new Date(2023, 10, 20),
+    eventDate,
+    attendeeLimit,
+    eventCategory,
+    createdBy,
+    Date.now()
+)
 
-    });
+console.log(`Adding new event ${JSON.stringify(event)} to the database`);
+
+eventsDB.insert(event, (err, newEvent) => {
+    if (err) {
+        console.error(err);
+        console.log("Error adding the new event with the name {} to the databse", newEvent);
+    } else {
+        console.log("Inserted the event document into the database", newEvent);
+        res.json(newEvent)
+    }
+
+});
 }
 
 exports.get_all_events = (req, res) => {
@@ -44,7 +46,7 @@ exports.get_all_events = (req, res) => {
         else {
             res.json(events)
         }
-            console.log(events);
+        console.log(events);
     });
 
 }
@@ -53,7 +55,7 @@ exports.get_event_by_id = (req, res) => {
 
     const eventId = (req.params.eventId).toUpperCase();
 
-    eventsDB.find( { eventId: eventId }, (err, event) => {
+    eventsDB.find({ eventId: eventId }, (err, event) => {
         if (err)
             console.error(err);
         else
@@ -68,7 +70,7 @@ exports.get_event_by_id = (req, res) => {
 exports.get_atendees_per_event = (req, res) => {
 
     const eventId = (req.params.eventId).toUpperCase();
-    
+
     if (!eventId) return next();
 
     eventsDB.find({ eventId: eventId }, (err, event) => {
@@ -86,6 +88,10 @@ exports.get_atendees_per_event = (req, res) => {
 
 exports.add_atendees_to_event = (req, res) => {
 
+    const {
+        atendees
+    } = req.body;
+
     const eventId = (req.params.eventId).toUpperCase();
 
     if (!eventId) return next();
@@ -96,10 +102,11 @@ exports.add_atendees_to_event = (req, res) => {
         else {
             if (events.length > 0) {
                 const event = events[0]
+                const hashEventId = event._id;
 
                 let updatedEvent = {
                     ...event,
-                    atendees: [...event.atendees, "ALU01"]
+                    atendees: [...event.atendees, ...atendees],
                 }
 
                 eventsDB.update({ eventId: eventId }, { $set: updatedEvent }, {}, (err, replaced) => {

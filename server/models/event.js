@@ -1,13 +1,14 @@
+let eventCounter = 1
+
 class Event {
 
     constructor(
-        eventId, eventTitle, venue, shortDescription, details, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy
+        eventTitle, venue, description, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy
     ) {
-        this.eventId = eventId;
+        this.eventId = "EV00" + eventCounter;
         this.eventTitle = eventTitle;
         this.venue = venue;
-        this.shortDescription = shortDescription;
-        this.details = details;
+        this.description = description;
         this.eventDuration = eventDuration;
         this.eventDate = eventDate;
         this.attendeeLimit = attendeeLimit;
@@ -15,6 +16,9 @@ class Event {
         this.createdBy = createdBy;
         this.createdAt = Date.now();
         this.atendees = [];
+
+        // Increment event counter
+        eventCounter++;
     }
 
 }

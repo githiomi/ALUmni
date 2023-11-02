@@ -40,17 +40,17 @@ exports.log_in = (req, res) => {
 
 exports.register = (req, res) => {
 
+    const { firstName, lastName, gender, age, graduationYear, emailAddress, role, password } = req.body;
+
     const alum = new Alumni(
-        "John",
-        "Doe",
-        "Male",
-        28,
-        "https://example.com/profile.jpg",
-        2010,
-        2014,
-        "johndoe@example.com",
-        Roles.alumni,
-        "password123"
+        firstName,
+        lastName,
+        gender,
+        age,
+        graduationYear,
+        emailAddress,
+        role,
+        password
     );
 
     alumniDB.insert(alum, (err, newAlum) => {
