@@ -21,12 +21,8 @@ export class MainService {
     return this._httpClient.get<Event[]>(`${this.baseUrl}/events`);
   }
 
-  getEvent(eventId: string): Observable<Event> {
+  getEventById(eventId: string): Observable<Event> {
     return this._httpClient.get<Event>(`${this.baseUrl}/events/${eventId}`);
-  }
-
-  getAlumni(alumId: string): Observable<Alumni> {
-    return this._httpClient.get<Alumni>(`${this.baseUrl}/alumni/${alumId.toUpperCase()}`);
   }
 
   getEventAtendees(eventId: string): Observable<string[]> {
@@ -34,13 +30,28 @@ export class MainService {
   }
 
   getEventAlumni(eventId: string): Observable<Alumni> {
-    return this._httpClient.get<string[]>(`${this.baseUrl}/events/${eventId}/atendees`).pipe(
-      tap(_atendees => console.log(_atendees)),
-      map(_attendees => from(_attendees)),
-      concatMap(_atendee => {
-        return this._httpClient.get<Alumni>(`${this.baseUrl}/alumni/${_atendee}`)
-      })
-    )
+    return this._httpClient.get<Alumni>(`${this.baseUrl}/events/${eventId}/atendees`);
   }
+
+  getAllAlumni(): Observable<Alumni[]> {
+    return this._httpClient.get<Alumni[]>(`${this.baseUrl}/alumni`);
+  }
+
+  getAlumniById(alumId: string): Observable<Alumni> {
+    return this._httpClient.get<Alumni>(`${this.baseUrl}/alumni/${alumId.toUpperCase()}`);
+  }
+
+  getAlumniEvents(alumId: string): Observable<string[]> {
+    return this._httpClient.get<string[]>(`${this.baseUrl}/alumni/${alumId.toUpperCase()}/events`);
+  }
+
+  // getEventAlumni(eventId: string): Observable<Alumni> {
+  //   return this._httpClient.get<string[]>(`${this.baseUrl}/events/${eventId}/atendees`).pipe(
+  //     tap(_atendees => console.log(_atendees)),
+  //     map(_attendees => from(_attendees)),
+  //     concatMap(_atendee => this._httpClient.get<Alumni>(`${this.baseUrl}/alumni/${'ALU01'}`)
+  //   ))
+  // }
+
 
 }

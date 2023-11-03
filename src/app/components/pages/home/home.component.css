@@ -1,0 +1,120 @@
+/* Home */
+.hero {
+    min-height: 100vh;
+}
+
+/* Lined Text Light */
+.linedTextLight {
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--var-white);
+}
+
+.linedTextLight::after, .linedTextLight::before {
+    flex-grow: 1;
+    content: '';
+    height: 4px;
+    background-color: var(--var-white);
+    margin: 0 2rem
+}
+
+.hero p {
+    color: var(--var-white);
+    font-weight: bolder;
+    font-size: 80px;
+    letter-spacing: .6rem;
+    margin: 3rem 0;
+}
+
+/* About Card */
+.about{
+    transform: translateY(-10vh);
+    width: 50%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+mat-card{
+    padding: 3rem 1rem;
+    box-shadow: 3px 3px .1rem var(--var-primary-red);
+}
+
+/* Lined Text Dark */
+.linedTextDark {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--var-black);
+}
+
+.linedTextDark::after, .linedTextDark::before {
+    flex-grow: 1;
+    content: '';
+    height: 4px;
+    background-color: var(--var-black);
+    margin: 0 2rem
+}
+
+/* Stats Cards */
+.statsCard{
+    cursor: pointer;
+    background-color: var(--var-primary-blue);
+    border: 2px solid var(--var-primary-red);
+    border-radius: 1rem;
+    padding: 1rem;
+    height: 20vh;
+    width: 180px;
+    color: var(--var-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.statsCard:hover{
+    transform: scale(1.05);
+    box-shadow: 5px 5px 10px var(--var-primary-red);
+    transition: all .5s ease-in-out;
+}
+
+.digit{
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--var-primary-red);
+}
+
+/* Options */
+#options{
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.optionCard {
+    cursor: pointer;
+    background-color: var(--var-white);
+    border-bottom: 5px solid var(--var-primary-red);
+    padding: 1rem;
+    height: 30vh;
+    width: 250px;
+    color: var(--var-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.optionCard:hover{
+    transform: scale(1.03);
+    transition: all .5s ease-in-out;
+}
+
+.optionButton {
+    background-color: var(--var-primary-red);
+    color: var(--var-white);
+}

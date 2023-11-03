@@ -1,32 +1,48 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainService } from 'src/app/services/main.service';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  ngOnInit(): void {
-    this._mainService.getEventAlumni('EV001').subscribe(
-      alumni => console.log(alumni)
-    )
-  }
+  readonly aboutStats = [
+    {
+      digit: 2,
+      tagLine: 'Campuses Unique Across Africa'
+    },
+    {
+      digit: 7,
+      tagLine: 'Hubs Across The Continent'
+    },
+    {
+      digit: 3000,
+      tagLine: 'Students To Change Africa'
+    }
+  ]
 
-  // Service Imports
-  private _mainService: MainService = inject(MainService);
-
-  // Local Variables
-  alumni$!: Observable<string[]>;
-
-  getAtendeesForEvent(): void {
-    this.alumni$ = this._mainService.getEventAtendees('EV001');
-  }
+  readonly optionTiles = [
+    {
+      optionName: 'Attend An Event By ALU',
+      optionIcon: './../../assets/images/event_calendar.png',
+      buttonText: 'Events'
+    },
+    {
+      optionName: 'Give Back To Society',
+      optionIcon: './../../assets/images/give_back.png',
+      buttonText: 'Volunteer'
+    },
+    {
+      optionName: 'Explore Communites',
+      optionIcon: './../../assets/images/explore.png',
+      buttonText: 'Community'
+    }
+  ]
 
 }

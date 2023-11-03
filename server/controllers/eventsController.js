@@ -83,7 +83,6 @@ exports.get_atendees_per_event = (req, res) => {
                 res.send(`There are no attendees that signed up for "${event[0].eventTitle}".`)
         }
     })
-
 }
 
 exports.add_atendees_to_event = (req, res) => {

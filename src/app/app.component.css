@@ -10,14 +10,38 @@
     width: 100%;
     background-color: var(--var-primary-blue);
     color: var(--var-white);
+    position: fixed;
+    top: 0;
+    z-index: 10;
 }
 
 /* Body */
 .body{
+    flex: 1;
+    position: relative;
+}
+
+/* Hero Section And Overlay */
+.hero{
     width: 100%;
+    height: 100vh;
     background-image: url('./../assets/images/campus_background.jpg');
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
     flex: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+
+.overlay{
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -5;
 }
