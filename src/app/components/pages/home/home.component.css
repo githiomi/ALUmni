@@ -42,24 +42,6 @@ mat-card {
     box-shadow: 3px 3px .1rem var(--var-primary-red);
 }
 
-/* Lined Text Dark */
-.linedTextDark {
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    color: var(--var-black);
-}
-
-.linedTextDark::after,
-.linedTextDark::before {
-    flex-grow: 1;
-    content: '';
-    height: 4px;
-    background-color: var(--var-black);
-    margin: 0 2rem
-}
-
 /* Stats Cards */
 .statsCard {
     cursor: pointer;

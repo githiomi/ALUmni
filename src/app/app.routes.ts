@@ -10,6 +10,11 @@ export const routes: Routes = [
         title: 'ALUmni Homepage'
     },
     {
+        path: 'login',
+        loadComponent: () => import('./components/pages/login/login.component').then( c => c.LoginComponent),
+        title: 'Alumni Login'
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

@@ -50,3 +50,42 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* Common Styles */
+/* Login Button */
+.appButton {
+    background-color: white;
+    color: var(--var-primary-red);
+    text-transform: uppercase;
+}
+
+.appButton:hover {
+    transform: scale(0.95);
+    background-color: var(--var-primary-red) !important;
+    color: var(--var-white) !important;
+    transition: all .3s ease-in-out;
+}
+
+/* Lined Text Dark */
+.linedTextDark {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--var-black);
+}
+
+.linedTextDark::after,
+.linedTextDark::before {
+    flex-grow: 1;
+    content: '';
+    height: 4px;
+    background-color: var(--var-black);
+    margin: 0 2rem
+}
+
+/* Material Colors */
+mat-progress-spinner circle,
+mat-spinner circle {
+    stroke: var(--var-primary-red) !important;
+}

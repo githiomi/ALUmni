@@ -1,0 +1,50 @@
+<section id="login">
+
+    <mat-card>
+
+        <!-- Mat Card Header -->
+        <mat-card-header class="flex flex-col text-center items-center">
+            <p class="text-3xl uppercase font-bold">ALUmni Login</p>
+            <div class="linedTextDark uppercase text-center text-lg">
+                <div class="horizontalLine"></div>
+                Login With YOur Credentials
+                <div class="horizontalLine"></div>
+            </div>
+        </mat-card-header>
+
+        <!-- Mat Card Content -->
+        <mat-card-content>
+
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm)">
+
+                <div class="inputGroup text-lg">
+                    <label for="alumniId">Alumni ID</label>
+                    <input type="text" name="alumniId" formControlName="alumniId" id="alumniId" placeholder="Alumni ID">
+                </div>
+
+                <div class="inputGroup text-lg">
+                    <label for="alumniPassword">Alumni Password</label>
+                    <input type="password" name="alumniPassword" formControlName="alumniPassword" id="alumniPassword"
+                        placeholder="Alumni Password">
+                </div>
+
+            </form>
+
+        </mat-card-content>
+
+        <!-- Mat Card Footer -->
+        <mat-card-footer class="grid place-items-center">
+
+            <button *ngIf="!isProcessing" mat-raised-button class="appButton" (click)="submitForm(loginForm)">
+                Login
+            </button>
+
+            <mat-progress-spinner class="mt-4" mode="indeterminate" diameter="30" *ngIf="isProcessing">
+                <!-- Ipload progress spinner goes here  -->
+            </mat-progress-spinner>
+
+        </mat-card-footer>
+
+    </mat-card>
+
+</section>
