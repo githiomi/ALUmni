@@ -19,10 +19,11 @@
     --var-black: black;
     --var-success-green: rgb(25, 135, 84);
     --var-error-red: red;
+    --var-overlay-color: rgba(0, 0, 0, 0.7);
 
 }
 
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -39,5 +40,13 @@ body {
     margin: 0;
     font-family: Poppins, "Helvetica Neue", sans-serif;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
