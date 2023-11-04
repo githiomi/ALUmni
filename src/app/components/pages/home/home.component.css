@@ -3,6 +3,20 @@
     min-height: 100vh;
 }
 
+/* Profile */
+.profile {
+    width: 100%;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    background-color: var(--var-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding: .5rem 4rem 0;
+}
+
 /* Lined Text Light */
 .linedTextLight {
     width: 60%;

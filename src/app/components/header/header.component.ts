@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +14,18 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
 
+  // Dependancy Injection
+  private _authService: AuthService = inject(AuthService);
+
+  // Component Variables
+  isLoggedIn: Observable<boolean> = this._authService.loginStatus$;
+
   login() : void {
     console.log('Login Button Clicked')
+  }
+
+  changeStatus(status:boolean) : void {
+    this._authService.changeLoginStatus(status);
   }
 
 }

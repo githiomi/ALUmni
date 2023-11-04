@@ -19,15 +19,20 @@ mat-card-header {
     font-size: 40px;
 }
 
+mat-card-header > p{
+    color: var(--var-primary-red);
+}
+
 mat-card-content {
     padding: 2rem;
+    width: 70%;
+    margin: 0 auto;
 }
 
 /* Forms */
 form {
     display: flex;
     flex-direction: column;
-    width: 70%;
     margin: 0 auto;
 }
 
@@ -48,4 +53,15 @@ input{
 
 input:focus{
     border: 2px solid var(--var-primary-red);
+}
+
+/* Options */
+.options p{
+    cursor: pointer;
+}
+
+.options p:hover{
+    transform: scale(1.03);
+    color: var(--var-primary-red);
+    transition: all .3s ease-in-out;
 }

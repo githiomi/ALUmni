@@ -15,12 +15,12 @@
         <nav>
             <ul class="uppercase text-base">
                 <li class="cursor-pointer" routerLink="/home">Home</li>
-                <li class="cursor-pointer" routerLink="/about">About</li>
+                <li class="cursor-pointer" routerLink="/about" (click)="changeStatus(false)">About</li>
                 <li class="cursor-pointer" routerLink="/contact">Contact</li>
             </ul>
         </nav>
 
-        <button mat-raised-button class="loginBtn uppercase" routerLink="/login">
+        <button *ngIf="!(isLoggedIn | async)" mat-raised-button class="loginBtn uppercase" routerLink="/login">
             login
         </button>
 

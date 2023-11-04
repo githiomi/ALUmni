@@ -1,6 +1,21 @@
 <div class="home">
 
     <div class="hero flex justify-center items-center flex-col">
+        
+        <div *ngIf="isLoggedIn | async" class="profile">
+
+            <div class="content">
+
+                <h3 class="font-extralight">Hello. Welcome Back,</h3>
+                <h1 class="font-semibold uppercase"> {{ username }}</h1>
+
+            </div>
+
+            <div class="picture">
+                <img [src]="profilePictureUrl" alt="Profile Picture Url" width="100px" height="100px">
+            </div>
+
+        </div>
 
         <div class="linedTextLight uppercase text-center text-2xl">
             <div class="horizontalLine"></div>

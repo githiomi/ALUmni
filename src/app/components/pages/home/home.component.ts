@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,20 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+
+  readonly username = 'Daniel Githiomi';
+  readonly profilePictureUrl = './../../assets/images/ALUmni_logo.png';
+
+  // Dependancy Injection
+  private _authService : AuthService = inject(AuthService);
+
+  // Component Variables
+  isLoggedIn !: Observable<boolean>;
+
+  ngOnInit() {
+    this.isLoggedIn = this._authService.loginStatus$;
+  }
 
   readonly aboutStats = [
     {
