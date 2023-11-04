@@ -13,6 +13,12 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
+}
+
+.logo:hover{
+    transform: scale(1.03);
+    transition: transform .3s ease-in-out;
 }
 
 .name p,
@@ -31,4 +37,18 @@ nav{
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+ul li:hover{
+    transform: scale(1.03);
+    color: var(--var-primary-red);
+    transition: all .3s ease-in-out;
+}
+
+/* Login Button */
+.loginBtn:hover{
+    transform: scale(0.95);
+    background-color: var(--var-primary-red);
+    color: var(--var-white);
+    transition: all .3s ease-in-out;
 }

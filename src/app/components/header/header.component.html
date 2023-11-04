@@ -1,11 +1,11 @@
 <div class="header">
 
-    <div class="logo">
+    <div class="logo" routerLink="/home">
 
         <img src="./../../assets/images/ALUmni_logo.png" alt="ALUmni Logo" width="40px" height="40px">
 
-        <div class="name items-center">
-            <p class="text-3xl"><span>A</span><span>L</span><span>U</span>mni</p>
+        <div class="name flex items-center text-3xl">
+            <span>A</span><span>L</span><span>U</span>mni
         </div>
 
     </div>
@@ -14,13 +14,13 @@
 
         <nav>
             <ul class="uppercase text-base">
-                <li routerLink="home">Home</li>
-                <li routerLink="about">About</li>
-                <li routerLink="contact">Contact</li>
+                <li class="cursor-pointer" routerLink="/home">Home</li>
+                <li class="cursor-pointer" routerLink="/about">About</li>
+                <li class="cursor-pointer" routerLink="/contact">Contact</li>
             </ul>
         </nav>
 
-        <button mat-raised-button class="uppercase" (click)="login()">
+        <button mat-raised-button class="loginBtn uppercase" routerLink="/login">
             login
         </button>
 
