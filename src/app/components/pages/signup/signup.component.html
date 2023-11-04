@@ -87,7 +87,7 @@
         <!-- Mat Card Footer -->
         <mat-card-footer class="grid place-items-center">
 
-            <button *ngIf="!isProcessing" mat-raised-button class="appButton" (click)="submitForm(registerForm)">
+            <button *ngIf="!isProcessing" mat-raised-button class="appButton" (click)="submitForm(registerForm)" [disabled]="registerForm.invalid">
                 Register
             </button>
 

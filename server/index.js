@@ -53,9 +53,13 @@ app.post("/events/new", eventRouter);
 
 app.get('/events/:eventId', eventRouter);
 
+app.put('/events/:eventId', eventRouter);
+
 app.get('/events/:eventId/atendees', eventRouter);
 
 app.post('/events/:eventId/atendees', eventRouter);
+
+app.delete('/events/:eventId', eventRouter);
 
 // ALUMNI ROUTES
 app.get('/alumni', alumniRouter);

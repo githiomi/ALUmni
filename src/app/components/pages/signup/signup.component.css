@@ -11,7 +11,7 @@ mat-card {
     flex-direction: column;
     justify-content: space-between;
     background-color: whitesmoke;
-    padding: 2rem 1rem;
+    padding: 1rem;
 }
 
 mat-card-header {
@@ -19,13 +19,13 @@ mat-card-header {
     font-size: 40px;
 }
 
-mat-card-header > p{
+mat-card-header>p {
     color: var(--var-primary-red);
 }
 
 mat-card-content {
-    padding: 2rem;
-    width: 70%;
+    padding: 1rem 2rem;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -36,14 +36,14 @@ form {
     margin: 0 auto;
 }
 
-.inputRow{
+.inputRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.inputRow.three{
+.inputRow.three {
     gap: 2rem;
 }
 
@@ -54,24 +54,30 @@ form {
 }
 
 /* Input Fields */
-input{
+label {
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+input {
     width: 100%;
     background-color: var(--var-white);
     padding: .5rem .5rem;
-    font-size: 15px;
+    font-size: 14px;
     outline: none;
 }
 
-input:focus{
-    border: 2px solid var(--var-primary-red);
+input:focus {
+    border: 1.5px solid var(--var-primary-red);
 }
 
 /* Options */
-.options p{
+.options p {
     cursor: pointer;
 }
 
-.options p:hover{
+.options p:hover {
     transform: scale(1.03);
     color: var(--var-primary-red);
     transition: all .3s ease-in-out;

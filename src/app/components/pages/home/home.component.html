@@ -6,13 +6,13 @@
 
             <div class="content">
 
-                <h3 class="font-extralight">Hello. Welcome Back,</h3>
+                <small class="font-extralight">Hello. Welcome Back,</small>
                 <h1 class="font-semibold uppercase"> {{ username }}</h1>
 
             </div>
 
             <div class="picture">
-                <img [src]="profilePictureUrl" alt="Profile Picture Url" width="100px" height="100px">
+                <img [src]="profilePictureUrl" alt="Profile Picture Url" width="80px" height="80px">
             </div>
 
         </div>
@@ -83,7 +83,7 @@
                 {{_optionTile.optionName}}
             </p>
 
-            <button mat-raised-button color="primary" class="optionButton uppercase">
+            <button mat-raised-button color="primary" class="optionButton uppercase" (click)="goToPage(_optionTile.pageLink)">
                 {{_optionTile.buttonText}}
             </button>
 

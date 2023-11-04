@@ -9,31 +9,31 @@ exports.create_new_event = (req, res) => {
 
     const { eventTitle, venue, description, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
 
-const event = new Event(
-    eventTitle,
-    venue,
-    description,
-    eventDuration,
-    //new Date(2023, 10, 20),
-    eventDate,
-    attendeeLimit,
-    eventCategory,
-    createdBy,
-    Date.now()
-)
+    const event = new Event(
+        eventTitle,
+        venue,
+        description,
+        eventDuration,
+        //new Date(2023, 10, 20),
+        eventDate,
+        attendeeLimit,
+        eventCategory,
+        createdBy,
+        Date.now()
+    )
 
-console.log(`Adding new event ${JSON.stringify(event)} to the database`);
+    console.log(`Adding new event ${JSON.stringify(event)} to the database`);
 
-eventsDB.insert(event, (err, newEvent) => {
-    if (err) {
-        console.error(err);
-        console.log("Error adding the new event with the name {} to the databse", newEvent);
-    } else {
-        console.log("Inserted the event document into the database", newEvent);
-        res.json(newEvent)
-    }
+    eventsDB.insert(event, (err, newEvent) => {
+        if (err) {
+            console.error(err);
+            console.log("Error adding the new event with the name {} to the databse", newEvent);
+        } else {
+            console.log("Inserted the event document into the database", newEvent);
+            res.json(newEvent)
+        }
 
-});
+    });
 }
 
 exports.get_all_events = (req, res) => {
@@ -63,6 +63,73 @@ exports.get_event_by_id = (req, res) => {
                 res.send(`No Event with the id ${eventId} was found in the database.`);
             else
                 res.json(event);
+    });
+
+}
+
+exports.update_event_by_id = (req, res) => {
+
+    const eventId = (req.params.eventId).toUpperCase();
+
+    const updatedEvent = req.body;
+
+    if (!eventId) return next();
+
+    eventsDB.find({ eventId: eventId }, (err, event) => {
+
+        if (err) {
+            console.log(err);
+            res.status(400).send({
+                error: `No event with the id ${eventId} was found in the database.`,
+                timestamp: Date.now()
+            })
+        }
+        else {
+            eventsDB.update({ eventId: eventId }, { $set: updatedEvent }, {}, (err, replaced) => {
+                if (err)
+                    res.status(500).json({
+                        error: 'An Internal Error occurred',
+                        timestamp: Date.now()
+                    })
+                else
+                    if (replaced == 1)
+                        res.status(200).json(updatedEvent);
+                    else{
+                        res.status(200).send({
+                            error: `An Internal Error occurred. Could not update event with Id: ${eventId}`,
+                            timestamp: Date.now()
+                        })
+                    }
+            });
+        }
+
+    });
+}
+
+exports.delete_event_by_id = (req, res) => {
+
+    const eventId = (req.params.eventId).toUpperCase();
+
+    if (!eventId) return next();
+
+    eventsDB.remove({ eventId: eventId }, {}, (err, removedEvent) => {
+        if (err)
+            console.log(err)
+        else {
+            if (removedEvent == 1) {
+                console.log(`Removed event with ID: ${eventId}`);
+                res.status(200).json({
+                    message: `The event with the ID ${eventId} was successfully deleted from the database.`,
+                    timestamp: Date.now()
+                })
+            }
+            else {
+                res.status(500).json({
+                    error: `Could not delete event with the ID: ${eventId} from the database.`,
+                    timestamp: Date.now()
+                })
+            }
+        }
     });
 
 }
@@ -100,8 +167,7 @@ exports.add_atendees_to_event = (req, res) => {
             console.error(err);
         else {
             if (events.length > 0) {
-                const event = events[0]
-                const hashEventId = event._id;
+                const event = events[0];
 
                 let updatedEvent = {
                     ...event,

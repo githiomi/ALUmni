@@ -54,11 +54,25 @@ export class SignupComponent {
 
     // Getting Form Content
     let formValue = form.value;
-    let alumniId = formValue.alumniId;
-    let alumniPassword = formValue.alumniPassword;
+    let firstName = formValue.firstName;
+    let lastName = formValue.lastName;
+    let age = parseInt(formValue.age);
+    let gender = formValue.gender.toUpperCase();
+    let role = formValue.role;
+    let graduationYear = parseInt(formValue.graduationYear);
+    let emailAddress = formValue.emailAddress;
+    let password = formValue.password;
+    let confirmPassword = formValue.confirmPassword;
+
+    if (password !== confirmPassword){
+      alert('Passwords Do Not Match');
+      this.isProcessing = false;
+      return;
+    }
+
+    alert(firstName + ', ' + lastName + ', ' + age + ', ' + gender + ', ' + role + ', ' + graduationYear + ', ' + emailAddress + ', ' + password + ', ' + confirmPassword)
 
     this._authService.changeLoginStatus(true);
-    alert(alumniId + ", " + alumniPassword);
 
     setTimeout(
       () => {

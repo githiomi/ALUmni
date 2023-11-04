@@ -18,7 +18,7 @@ class Event {
         this.atendees = [];
 
         // Increment event counter
-        eventCounter++;
+        eventCounter ++;
     }
 
 }

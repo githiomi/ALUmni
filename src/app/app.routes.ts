@@ -20,6 +20,11 @@ export const routes: Routes = [
         title: 'Alumni Registration'
     },
     {
+        path: 'events',
+        loadComponent: () => import('./components/pages/events/events.component').then( c => c.EventsComponent),
+        title: 'Alumni Events'
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

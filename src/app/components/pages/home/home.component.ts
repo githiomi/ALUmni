@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,9 +16,10 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
 
   readonly username = 'Daniel Githiomi';
-  readonly profilePictureUrl = './../../assets/images/ALUmni_logo.png';
+  readonly profilePictureUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png';
 
   // Dependancy Injection
+  private _router: Router = inject(Router);
   private _authService : AuthService = inject(AuthService);
 
   // Component Variables
@@ -46,18 +48,25 @@ export class HomeComponent implements OnInit {
     {
       optionName: 'Attend An Event By ALU',
       optionIcon: './../../assets/images/event_calendar.png',
-      buttonText: 'Events'
+      buttonText: 'Events',
+      pageLink: '/events'
     },
     {
       optionName: 'Give Back To Society',
       optionIcon: './../../assets/images/give_back.png',
-      buttonText: 'Volunteer'
+      buttonText: 'Volunteer',
+      pageLink: '/volunteer'
     },
     {
       optionName: 'Explore Communites',
       optionIcon: './../../assets/images/explore.png',
-      buttonText: 'Community'
+      buttonText: 'Community',
+      pageLink: '/community'
     }
   ]
+
+  goToPage(routerLink : string) : void {
+    this._router.navigate([routerLink]);
+  }
 
 }

@@ -11,6 +11,10 @@ eventRouter.post('/events/new', eventsController.create_new_event);
 
 eventRouter.get('/events/:eventId', eventsController.get_event_by_id);
 
+eventRouter.put('/events/:eventId', eventsController.update_event_by_id);
+
+eventRouter.delete('/events/:eventId', eventsController.delete_event_by_id);
+
 eventRouter.get('/events/:eventId/atendees', eventsController.get_atendees_per_event);
 
 eventRouter.post('/events/:eventId/atendees', eventsController.add_atendees_to_event);
