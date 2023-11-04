@@ -55,16 +55,21 @@ app.get('/events/:eventId', eventRouter);
 
 app.put('/events/:eventId', eventRouter);
 
+app.delete('/events/:eventId', eventRouter);
+
 app.get('/events/:eventId/atendees', eventRouter);
 
 app.post('/events/:eventId/atendees', eventRouter);
 
-app.delete('/events/:eventId', eventRouter);
 
 // ALUMNI ROUTES
 app.get('/alumni', alumniRouter);
 
 app.get('/alumni/:alumniId', alumniRouter);
+
+app.put('/alumni/:alumniId', alumniRouter);
+
+app.delete('/alumni/:alumniId', alumniRouter);
 
 app.get('/alumni/:alumniId/events', alumniRouter);
 
