@@ -1,0 +1,102 @@
+<section id="signup">
+
+    <mat-card>
+
+        <!-- Mat Card Header -->
+        <mat-card-header class="flex flex-col text-center items-center">
+            <p class="text-3xl uppercase font-bold">ALUmni Registration</p>
+            <div class="linedTextDark uppercase text-center text-lg">
+                <div class="horizontalLine"></div>
+                Create A New Alumni Account
+                <div class="horizontalLine"></div>
+            </div>
+        </mat-card-header>
+
+        <!-- Mat Card Content -->
+        <mat-card-content>
+
+            <form [formGroup]="registerForm" (ngSubmit)="submitForm(registerForm)">
+
+                <div class="inputRow">
+                    <div class="inputGroup text-lg">
+                        <label for="firstName">First Name</label>
+                        <input type="text" name="firstName" formControlName="firstName" id="firstName"
+                            placeholder="First Name">
+                    </div>
+
+                    <div class="inputGroup text-lg">
+                        <label for="alumniPassword">Last Name</label>
+                        <input type="text" name="lastName" formControlName="lastName" id="lastName"
+                            placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div class="inputRow three">
+                    <div class="inputGroup text-lg">
+                        <label for="age">Age</label>
+                        <input type="number" name="age" formControlName="age" id="age" placeholder="Age">
+                    </div>
+
+                    <div class="inputGroup text-lg">
+                        <label for="gender">Gender</label>
+                        <input type="text" name="gender" formControlName="gender" id="gender" placeholder="Gender">
+                    </div>
+
+                    <div class="inputGroup text-lg">
+                        <label for="role">Role</label>
+                        <input type="text" name="role" formControlName="role" id="role" placeholder="Role">
+                    </div>
+                </div>
+
+                <div class="inputRow">
+                    <div class="inputGroup text-lg">
+                        <label for="role">Graduation Year</label>
+                        <input type="number" name="graduationYear" formControlName="graduationYear" id="graduationYear"
+                            placeholder="Graduation Year">
+                    </div>
+
+                    <div class="inputGroup text-lg">
+                        <label for="role">Email Address</label>
+                        <input type="email" name="emailAddress" formControlName="emailAddress" id="emailAddress"
+                            placeholder="Email Address">
+                    </div>
+                </div>
+
+                <div class="inputRow">
+                    <div class="inputGroup text-lg">
+                        <label for="role">Password</label>
+                        <input type="password" name="password" formControlName="password" id="password"
+                            placeholder="Password">
+                    </div>
+
+                    <div class="inputGroup text-lg">
+                        <label for="role">Confirm Password</label>
+                        <input type="password" name="confirmPassword" formControlName="confirmPassword"
+                            id="confirmPassword" placeholder="Confirm Password">
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="options flex justify-end py-4 px-2 font-semibold">
+                <p routerLink="/login">Already Have An Account?</p>
+            </div>
+
+        </mat-card-content>
+
+        <!-- Mat Card Footer -->
+        <mat-card-footer class="grid place-items-center">
+
+            <button *ngIf="!isProcessing" mat-raised-button class="appButton" (click)="submitForm(registerForm)">
+                Register
+            </button>
+
+            <mat-progress-spinner class="mt-4" mode="indeterminate" diameter="30" *ngIf="isProcessing">
+                <!-- Ipload progress spinner goes here  -->
+            </mat-progress-spinner>
+
+        </mat-card-footer>
+
+    </mat-card>
+
+</section>

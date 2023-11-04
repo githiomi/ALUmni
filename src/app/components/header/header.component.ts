@@ -20,10 +20,6 @@ export class HeaderComponent {
   // Component Variables
   isLoggedIn: Observable<boolean> = this._authService.loginStatus$;
 
-  login() : void {
-    console.log('Login Button Clicked')
-  }
-
   changeStatus(status:boolean) : void {
     this._authService.changeLoginStatus(status);
   }

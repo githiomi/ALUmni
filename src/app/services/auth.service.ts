@@ -14,5 +14,4 @@ export class AuthService {
     this.isLoggedIn.next(newStatus);
   }
 
-
 }

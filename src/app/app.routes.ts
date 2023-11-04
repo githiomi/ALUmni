@@ -15,6 +15,11 @@ export const routes: Routes = [
         title: 'Alumni Login'
     },
     {
+        path: 'register',
+        loadComponent: () => import('./components/pages/signup/signup.component').then( c => c.SignupComponent),
+        title: 'Alumni Registration'
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
