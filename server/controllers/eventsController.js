@@ -46,7 +46,6 @@ exports.get_all_events = (req, res) => {
         else {
             res.json(events)
         }
-        console.log(events);
     });
 
 }
@@ -185,7 +184,7 @@ exports.add_atendees_to_event = (req, res) => {
                 });
             }
             else
-                res.send(`There is no user with the id: "${eventId}"`)
+                res.send(`No event with the id: ${eventId} was found in the database`);
         }
     })
 }

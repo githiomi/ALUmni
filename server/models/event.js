@@ -3,7 +3,7 @@ let eventCounter = 1
 class Event {
 
     constructor(
-        eventTitle, venue, description, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy
+        eventTitle, description, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy
     ) {
         this.eventId = "EV00" + eventCounter;
         this.eventTitle = eventTitle;

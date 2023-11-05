@@ -17,7 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({extended: false}));
 
-
 // Global variables
 const PORT_NUMBER = 3000;
 
@@ -41,6 +40,7 @@ app.get("/", (req, res) => {
 });
 
 // --------------------------------------------------------------------------------------------------------------------
+
 // AUTHENTICATION
 app.post("/auth/login", authRouter);
 
@@ -61,7 +61,6 @@ app.get('/events/:eventId/atendees', eventRouter);
 
 app.post('/events/:eventId/atendees', eventRouter);
 
-
 // ALUMNI ROUTES
 app.get('/alumni', alumniRouter);
 
@@ -74,8 +73,8 @@ app.delete('/alumni/:alumniId', alumniRouter);
 app.get('/alumni/:alumniId/events', alumniRouter);
 
 app.post('/alumni/:alumniId/events', alumniRouter);
-// --------------------------------------------------------------------------------------------------------------------
 
+// --------------------------------------------------------------------------------------------------------------------
 app.get('/close', function (req, res) {
     db.close((err) => {
         if (err) {
