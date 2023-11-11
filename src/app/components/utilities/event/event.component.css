@@ -1,0 +1,62 @@
+#event{
+    cursor: pointer;
+    margin: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--var-primary-red);
+    overflow: hidden;
+    background-color: var(--var-card-background-blue);
+    color: white;
+    width: 300px;
+    height: 400px;
+}
+
+#event:hover{
+    transform: scale(1.01);
+    box-shadow: .1rem .1rem .5rem var(--var-primary-red);
+    transition: all .5s ease-in-out;
+}
+
+#event:hover .header {
+    transform: scale(1.05);
+    transition: all .5s ease-in-out;
+}
+
+/* Header Image Section */
+.header {
+    height: 50%;
+    overflow: hidden;
+}
+
+/* Date Section */
+.date{
+    width: 35%;
+    color: white;
+    background-color: var(--var-primary-red);
+    transform: translateY(-1.5rem);
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--var-white);
+    border-radius: 1rem;
+    margin-left: 1rem;
+}
+
+/* Card Body Section */
+.eventBody {
+    margin: 0 1rem;
+}
+
+.eventBody h2 {
+    max-width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    word-wrap: break-word;
+}
+
+.eventBody p{
+    margin-top: 1rem;
+    text-justify: newspaper;
+    font-size: 14px;
+}

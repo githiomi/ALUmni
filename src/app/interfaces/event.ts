@@ -1,5 +1,3 @@
-import { Alumni } from "./alumni";
-
 export interface Event {
     eventId: string;
     eventTitle: string;
