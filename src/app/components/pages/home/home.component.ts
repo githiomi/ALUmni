@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   readonly username = 'Daniel Githiomi';
-  readonly profilePictureUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png';
 
   // Dependancy Injection
   private _router: Router = inject(Router);

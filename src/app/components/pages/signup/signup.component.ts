@@ -8,8 +8,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { passwordMatchValidator } from 'src/app/validators/passwordMatchValidator';
 
 @Component({
   selector: 'app-signup',
@@ -38,8 +39,11 @@ export class SignupComponent {
       role: new FormControl('Alumni', [Validators.required]),
       graduationYear: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required]),
+    }, {
+      updateOn: 'blur',
+      validators: [passwordMatchValidator]
     })
   }
 
@@ -63,12 +67,6 @@ export class SignupComponent {
     let emailAddress = formValue.emailAddress;
     let password = formValue.password;
     let confirmPassword = formValue.confirmPassword;
-
-    if (password !== confirmPassword){
-      alert('Passwords Do Not Match');
-      this.isProcessing = false;
-      return;
-    }
 
     alert(firstName + ', ' + lastName + ', ' + age + ', ' + gender + ', ' + role + ', ' + graduationYear + ', ' + emailAddress + ', ' + password + ', ' + confirmPassword)
 

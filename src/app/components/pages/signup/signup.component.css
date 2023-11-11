@@ -72,6 +72,11 @@ input:focus {
     border: 1.5px solid var(--var-primary-red);
 }
 
+small::before{
+    content: '*';
+    color: var(--var-primary-red);
+}
+
 /* Options */
 .options p {
     cursor: pointer;
