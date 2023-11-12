@@ -1,0 +1,73 @@
+<div class="home">
+
+    <div class="hero flex justify-center items-center flex-col">
+
+        <div class="linedTextLight uppercase text-center text-2xl">
+            <div class="horizontalLine"></div>
+            Educate The Whole Person
+            <div class="horizontalLine"></div>
+        </div>
+
+        <p class="uppercase">
+            Do Hard Things
+        </p>
+
+        <p class="uppercase">
+            Missions Not Majors
+        </p>
+
+    </div>
+
+    <div class="upcomingEvents">
+
+        <mat-card>
+
+            <mat-card-header class="flex flex-col text-center items-center">
+                <p class="text-3xl">DHOSIO UNIVERSITY</p>
+                <div class="linedTextDark uppercase text-center text-lg">
+                    <div class="horizontalLine"></div>
+                    Educate The Whole Person
+                    <div class="horizontalLine"></div>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <p class="text-center text-2xl uppercase pt-10 font-bold">
+                    Your Upcoming Events
+                </p>
+
+                <div class="events flex gap-3 items-center overflow-y-scroll">
+                    <ng-container *ngFor="let event of events">
+                        <app-event [event]="event" /></ng-container>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-footer class="footer grid place-items-center bg-black text-white uppercase text-base">
+                <p>View All Events...</p>
+            </mat-card-footer>
+
+        </mat-card>
+
+    </div>
+
+    <section id="manage">
+
+        <div *ngFor="let _manageTile of manageTiles" class="manageCard text-center uppercase">
+
+            <img [src]="_manageTile.manageIcon" [alt]="_manageTile.manageName" width="80px" height="80px" />
+
+            <p class="text-black font-semibold text-base">
+                {{_manageTile.manageName}}
+            </p>
+
+            <button mat-raised-button color="primary" class="manageButton uppercase" (click)="goToPage(_manageTile.pageLink)">
+                {{_manageTile.buttonText}}
+            </button>
+
+        </div>
+
+    </section>
+
+</div>

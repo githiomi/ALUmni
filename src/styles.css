@@ -85,6 +85,66 @@ body {
     margin: 0 2rem
 }
 
+/* Lined Text Light */
+/* Home */
+.hero {
+    min-height: 100vh;
+}
+
+/* Profile */
+.profile {
+    width: 100%;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    background-color: var(--var-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding: .5rem 4rem 0;
+}
+
+/* Lined Text Light */
+.linedTextLight {
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--var-white);
+}
+
+.linedTextLight::after,
+.linedTextLight::before {
+    flex-grow: 1;
+    content: '';
+    height: 4px;
+    background-color: var(--var-white);
+    margin: 0 2rem
+}
+
+.hero p {
+    color: var(--var-white);
+    font-weight: bolder;
+    font-size: 80px;
+    letter-spacing: .6rem;
+    margin: 3rem 0;
+}
+
+mat-card {
+    padding: 3rem 0 0;
+    box-shadow: 3px 3px .1rem var(--var-primary-red);
+    transform: translateY(-10vh);
+    width: 50%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Card Body */
+mat-card-content {
+    margin: 2rem 1rem 0;
+}
+
 /* Material Colors */
 mat-progress-spinner circle,
 mat-spinner circle {

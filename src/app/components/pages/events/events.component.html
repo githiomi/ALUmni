@@ -4,21 +4,21 @@
 
         <div class="linedTextLight uppercase text-center text-2xl">
             <div class="horizontalLine"></div>
-            Educate The Whole Person
+            Dhosio University
             <div class="horizontalLine"></div>
         </div>
 
         <p class="uppercase">
-            Do Hard Things
+            View All Our
         </p>
 
         <p class="uppercase">
-            Missions Not Majors
+            University Events
         </p>
 
     </div>
 
-    <div class="upcomingEvents">
+    <div class="eventFilter">
 
         <mat-card>
 
@@ -34,40 +34,68 @@
             <mat-card-content>
 
                 <p class="text-center text-2xl uppercase pt-10 font-bold">
-                    Your Upcoming Events
+                    Filter Events
                 </p>
 
-                <div class="events flex gap-3 items-center overflow-y-scroll">
-                    <ng-container *ngFor="let event of events">
-                        <app-event [event]="event" /></ng-container>
-                </div>
+                <form [formGroup]="filterForm">
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Event Category</mat-label>
+                        <mat-select formControlName="eventCategory">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let _eventCategory of eventCategories" value="{{_eventCategory}}">{{
+                                _eventCategory }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="formRow">
+                        <mat-form-field>
+                            <mat-label>Event Location</mat-label>
+                            <mat-select formControlName="eventLocation">
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let _eventLocation of eventLocations" value="{{_eventLocation}}">{{
+                                    _eventLocation }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Alumni Year</mat-label>
+                            <mat-select formControlName="eventYear">
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let _eventYear of eventYears" value="{{_eventYear}}">{{ _eventYear
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </form>
 
             </mat-card-content>
 
-            <mat-card-footer class="footer grid place-items-center bg-black text-white uppercase text-base">
-                <p>View All Events...</p>
+            <mat-card-footer class="grid place-items-center">
+                <button [disabled]="filterForm.invalid" (click)="submitForm(filterForm)" mat-raised-button
+                    class="appButton">
+                    <mat-icon>filter_list</mat-icon>Apply
+                </button>
             </mat-card-footer>
 
         </mat-card>
 
     </div>
 
-    <section id="manage">
+    <div class="events">
 
-        <div *ngFor="let _manageTile of manageTiles" class="manageCard text-center uppercase">
+        <!-- <ng-container *ngIf="events$; else noEvents">
+            <ng-container *ngFor="let _event of events$; let index = index">
+                <app-event-list>
+                </app-event-list>
+            </ng-container>
+        </ng-container> -->
 
-            <img [src]="_manageTile.manageIcon" [alt]="_manageTile.manageName" width="80px" height="80px" />
+        <ng-template #noEvents>
+            
+        </ng-template>
 
-            <p class="text-black font-semibold text-base">
-                {{_manageTile.manageName}}
-            </p>
-
-            <button mat-raised-button color="primary" class="manageButton uppercase" (click)="goToPage(_manageTile.pageLink)">
-                {{_manageTile.buttonText}}
-            </button>
-
-        </div>
-
-    </section>
+    </div>
 
 </div>

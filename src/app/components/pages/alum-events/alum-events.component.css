@@ -1,0 +1,68 @@
+/* About Card */
+.upcomingEvents {
+    transform: translateY(-10vh);
+    width: 50%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.events::-webkit-scrollbar {
+    display: none;
+}
+
+.events {
+    margin: 1rem 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Card Footer */
+mat-card-footer {
+    cursor: pointer;
+    margin: 1rem 0 0;
+    padding: 1rem;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+
+mat-card-footer:hover p {
+    transform: scale(1.03);
+    transition: all .3s ease-in-out;
+}
+
+/* Manage */
+#manage {
+    margin: -2rem auto 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.manageCard {
+    cursor: pointer;
+    background-color: var(--var-white);
+    border-bottom: 5px solid var(--var-primary-red);
+    padding: 1rem 1.5rem;
+    height: 30vh;
+    width: 250px;
+    color: var(--var-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.manageCard:hover {
+    transform: scale(1.03);
+    transition: all .5s ease-in-out;
+}
+
+.manageButton {
+    background-color: var(--var-primary-red);
+    color: var(--var-white);
+}
