@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatMenuModule, MatDividerModule, MatButtonModule, MatIconModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

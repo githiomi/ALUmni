@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { EventComponent } from '../../utilities/event/event.component';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { Observable, concatMap, interval, of, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule, MatCardModule, EventComponent],
+  imports: [CommonModule, MatCardModule, EventComponent, MatButtonModule],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent {
+
+  private _router : Router = inject(Router);
 
   readonly events = [
     {
@@ -71,5 +76,23 @@ export class EventsComponent {
     }
   ]
 
+  readonly manageTiles = [
+    {
+      manageName: 'Create A New University Event',
+      manageIcon: './../../assets/images/event_calendar.png',
+      buttonText: 'Create',
+      pageLink: '/create'
+    },
+    {
+      manageName: 'Manage Your Existing Events',
+      manageIcon: './../../assets/images/give_back.png',
+      buttonText: 'Manage',
+      pageLink: '/manage'
+    }
+  ]
+
+  goToPage(routerLink : string) : void {
+    this._router.navigate([routerLink]);
+  }
 
 }

@@ -50,10 +50,31 @@ ul li:hover{
     color: var(--var-primary-red);
 }
 
+.mat-divider.mat-divider-vertical{
+    border-right-width: 1px;
+    border-right-color: var(--var-white);
+}
+
 /* Login Button */
 .loginBtn:hover{
     transform: scale(0.95);
     background-color: var(--var-primary-red);
     color: var(--var-white);
     transition: all .3s ease-in-out;
+}
+
+/* Profile Info */
+.profileButton:hover {
+    background-color: var(--var-primary-red) !important;
+    color: var(--var-white) !important;
+    transition: all .4s ease-in-out !important;
+}
+
+.profileButton:hover mat-icon{
+    color: var(--var-white) !important;
+    transition: all .4s ease-in-out !important;
+}
+
+mat-icon{
+    color: var(--var-primary-red) !important;
 }

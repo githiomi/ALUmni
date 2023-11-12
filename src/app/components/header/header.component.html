@@ -15,28 +15,41 @@
         <nav>
             <ul class="uppercase text-base">
                 <li class="cursor-pointer" routerLink="/home" routerLinkActive="active">Home</li>
-                <li class="cursor-pointer" routerLink="/about" (click)="changeStatus(false)" routerLinkActive="active">
+                <li class="cursor-pointer" routerLink="/about" routerLinkActive="active">
                     About</li>
                 <li class="cursor-pointer" routerLink="/contact" routerLinkActive="active">Contact</li>
             </ul>
         </nav>
 
+        <mat-divider [vertical]="true">
+            <!-- Vertical Divider goes here -->
+        </mat-divider>
+
         <button *ngIf="!(isLoggedIn | async)" mat-raised-button class="loginBtn uppercase" routerLink="/login">
             login
         </button>
 
-        <div class="flex justify-between items-center gap-2" *ngIf="isLoggedIn | async">
+        <div class="cursor-pointer flex justify-between items-center gap-2" *ngIf="isLoggedIn | async" [mat-menu-trigger-for]="profileDropDown">
 
             <img [src]="profilePictureUrl" alt="./../../../assets/images/ALUmni_logo.png" width="40px" height="40px">
 
             <div class="content flex flex-col items-start">
-
                 <small class="font-extralight">Welcome Back,</small>
                 <span class="font-semibold tracking-wider">{{ username }}</span>
-
             </div>
 
             <mat-icon class="text-red-600">expand_more</mat-icon>
+
+            <mat-menu #profileDropDown="matMenu">
+                <ng-template id="pro" matMenuContent>
+                    <button class="profileButton" mat-menu-item>
+                        <mat-icon>person-add</mat-icon>
+                        View Profile</button>
+                    <button class="profileButton" mat-menu-item (click)="changeStatus(false)">
+                        <mat-icon>exit_to_app</mat-icon> 
+                        Log Out</button>
+                </ng-template>
+            </mat-menu>
 
         </div>
 

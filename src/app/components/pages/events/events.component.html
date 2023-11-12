@@ -52,4 +52,22 @@
 
     </div>
 
+    <section id="manage">
+
+        <div *ngFor="let _manageTile of manageTiles" class="manageCard text-center uppercase">
+
+            <img [src]="_manageTile.manageIcon" [alt]="_manageTile.manageName" width="80px" height="80px" />
+
+            <p class="text-black font-semibold text-base">
+                {{_manageTile.manageName}}
+            </p>
+
+            <button mat-raised-button color="primary" class="manageButton uppercase" (click)="goToPage(_manageTile.pageLink)">
+                {{_manageTile.buttonText}}
+            </button>
+
+        </div>
+
+    </section>
+
 </div>
