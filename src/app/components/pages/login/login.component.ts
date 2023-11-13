@@ -6,36 +6,38 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatButtonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatButtonModule, MatProgressSpinnerModule, MatSnackBarModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
   // Dependency Injection
-  private _router : Router = inject(Router);
-  private _authService : AuthService = inject(AuthService);
-  private _formBuilder : FormBuilder = inject(FormBuilder);
+  private _router: Router = inject(Router);
+  private _snackbar: MatSnackBar = inject(MatSnackBar);
+  private _authService: AuthService = inject(AuthService);
+  private _formBuilder: FormBuilder = inject(FormBuilder);
 
   // Component Variables
-  isProcessing : boolean = false;
-  loginForm : FormGroup;
+  isProcessing: boolean = false;
+  loginForm: FormGroup;
 
-  constructor(){
+  constructor() {
     this.loginForm = this._formBuilder.group({
-      alumniId : new FormControl('', [Validators.required]),
-      alumniPassword : new FormControl('', [Validators.required])
+      alumniId: new FormControl('', [Validators.required]),
+      alumniPassword: new FormControl('', [Validators.required])
     })
   }
 
-  submitForm( form : any) {
+  submitForm(form: any) {
     this.isProcessing = true;
 
-    if ( ! form.valid ) {
+    if (!form.valid) {
       alert('Form Is Invalid');
       this.isProcessing = false;
       return;
@@ -46,15 +48,21 @@ export class LoginComponent {
     let alumniId = formValue.alumniId;
     let alumniPassword = formValue.alumniPassword;
 
-    this._authService.changeLoginStatus(true);
-    alert(alumniId + ", " + alumniPassword);
-
-    setTimeout(
-      () => {
-        this._router.navigate(['/home']);
-      }, 1000
-    )
-
+    if (this._authService.loginUser(alumniId, alumniPassword))
+      setTimeout(
+        () => {
+          this._router.navigate(['/home']);
+        }, 1000
+      )
+    else {
+      this.isProcessing = false;
+      this._snackbar.open('Login Failed. Try again!', "CLOSE",
+        {
+          duration: 3000,
+          horizontalPosition: 'start',
+          verticalPosition: 'bottom'
+        });
+    }
   }
 
 }

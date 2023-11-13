@@ -4,12 +4,11 @@ import { MatCardModule } from '@angular/material/card';
 import { EventComponent } from '../../utilities/event/event.component';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { Observable, concatMap, interval, of, take, tap } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
 
 @Component({
-  selector: 'app-events',
+  selector: 'app-alum-events',
   standalone: true,
   imports: [CommonModule, MatCardModule, EventComponent, MatButtonModule],
   templateUrl: './alum-events.component.html',

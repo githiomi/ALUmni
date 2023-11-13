@@ -13,8 +13,6 @@
             <mat-icon class="text-red-600">delete</mat-icon>
         </button>
 
-        <p class="z-10 text-4xl font-bold text-center uppercase"><code class="text-white">{{ _event$.eventTitle }}</code></p>
-
         <button color="basic" mat-mini-fab mat-dialog-close="close">
             <mat-icon class="text-red-600">close</mat-icon>
         </button>
@@ -27,11 +25,8 @@
             <mat-card-content>
 
                 <div class="grid place-items-center text-center">
-                    <div class="linedTextDark uppercase text-center text-lg">
-                        <div class="horizontalLine"></div>
-                        Event Details
-                        <div class="horizontalLine"></div>
-                    </div>
+                    <p class="text-3xl font-bold text-center uppercase"><code
+                            class="text-red-600">{{ _event$.eventTitle }}</code></p>
                 </div>
 
                 <div class="shortDescription p-6">
@@ -68,7 +63,9 @@
                     <div class="rowItem">
                         <span class="label text-base uppercase font-semibold text-red-600 mr-2">Attendee Limit:</span>
                         <code class="font-semibold">{{ _event$.attendeeLimit }}</code>
-                        <small class="text-xs text-black" [ngClass]="seatsRemaining <= 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}} Seats Remaining</small>
+                        <small class="text-xs text-black"
+                            [ngClass]="seatsRemaining <= 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}} Seats
+                            Remaining</small>
                     </div>
                 </div>
 
