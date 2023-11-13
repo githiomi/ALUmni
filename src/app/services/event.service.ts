@@ -57,13 +57,12 @@ export class EventService {
       details: "Join us for a day of exciting tech exhibits and presentations.",
       eventDuration: "3 hours",
       eventDate: "2023-12-15T09:00:00Z",
-      attendeeLimit: 150,
+      attendeeLimit: 11,
       eventCategory: "Technology",
       createdBy: "JohnDoe",
-      createdAt: Date.now(),
+      createdAt: new Date,
       attendees: [],
       eventBanner: "https://th.bing.com/th/id/R.dc4f0a57312421ebc00eb0a9fffac1c8?rik=W%2f5gQweDXNe%2bwQ&pid=ImgRaw&r=0"
-      // eventBanner : './../../assets/images/campus_background.jpg'
     },
     {
       eventId: "ALU05678",
@@ -76,9 +75,9 @@ export class EventService {
       attendeeLimit: 80,
       eventCategory: "Art",
       createdBy: "JaneSmith",
-      createdAt: Date.now(),
+      createdAt: new Date(),
       attendees: [],
-      eventBanner: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fmusic-event-banner-design-template-for-festival-concert-and-party--953566921075375701%2F&psig=AOvVaw0zOQAommJCfZeyKpZH1fKW&ust=1699940409655000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOjkqtehwIIDFQAAAAAdAAAAABAD"
+      eventBanner: "https://www.coventry.ac.uk/globalassets/media/global/open-day-2021/visitor-guide-open-day-767-368.jpg"
     },
     {
       eventId: "ALU09876",
@@ -91,9 +90,9 @@ export class EventService {
       attendeeLimit: 200,
       eventCategory: "Food",
       createdBy: "RobertJohnson",
-      createdAt: Date.now(),
+      createdAt: new Date(),
       attendees: [],
-      eventBanner: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fmusic-event-banner-design-template-for-festival-concert-and-party--953566921075375701%2F&psig=AOvVaw0zOQAommJCfZeyKpZH1fKW&ust=1699940409655000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOjkqtehwIIDFQAAAAAdAAAAABAD"
+      eventBanner: "https://pxl-duracuk.terminalfour.net/prod01/channel_3/business/media/durham-university-business-school/events/Home-Page-Banner-or-Footer-(16).png"
     },
     {
       eventId: "ALU03456",
@@ -106,9 +105,9 @@ export class EventService {
       attendeeLimit: 120,
       eventCategory: "Music",
       createdBy: "ChrisMiller",
-      createdAt: Date.now(),
+      createdAt: new Date(0),
       attendees: [],
-      eventBanner: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fmusic-event-banner-design-template-for-festival-concert-and-party--953566921075375701%2F&psig=AOvVaw0zOQAommJCfZeyKpZH1fKW&ust=1699940409655000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOjkqtehwIIDFQAAAAAdAAAAABAD"
+      eventBanner: "https://www.uq.edu.au/sites/default/files/styles/card_image/public/2022-05/alumni-community-event.jpg?h=a81fead4&itok=OYRffluV"
     },
     {
       eventId: "ALU11223",
@@ -121,9 +120,9 @@ export class EventService {
       attendeeLimit: 180,
       eventCategory: "Sports",
       createdBy: "AlexJohnson",
-      createdAt: Date.now(),
+      createdAt: new Date(),
       attendees: [],
-      eventBanner: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fmusic-event-banner-design-template-for-festival-concert-and-party--953566921075375701%2F&psig=AOvVaw0zOQAommJCfZeyKpZH1fKW&ust=1699940409655000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOjkqtehwIIDFQAAAAAdAAAAABAD"
+      eventBanner: "https://events.utk.edu/wp-content/uploads/sites/65/2019/01/firstgen.jpg"
     }
   ]
 

@@ -1,7 +1,7 @@
 <div id="event">
 
     <section class="header">
-        <img [src]="eventImage" alt="">
+        <img [src]="event.eventBanner" alt="Event Image">
     </section>
 
     <div class="info flex items-center justify-between">
@@ -10,7 +10,7 @@
         </div>
 
         <div>
-            <button mat-mini-fab>
+            <button (click)="openDetailsDialog()" mat-mini-fab>
                 <mat-icon>arrow_forward_ios</mat-icon>
             </button>
         </div>
@@ -21,7 +21,7 @@
             {{ event.eventTitle }}
         </h2>
 
-        <p>
+        <p class="shortDescription">
             {{ event.shortDescription }}
         </p>
     </section>

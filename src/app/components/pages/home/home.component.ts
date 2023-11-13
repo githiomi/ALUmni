@@ -5,11 +5,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { EventComponent } from '../../utilities/event/event.component';
+import { EventService } from 'src/app/services/event.service';
+import { Event } from 'src/app/interfaces/event';
+import { AlumEventsComponent } from '../alum-events/alum-events.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, EventComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -20,12 +24,15 @@ export class HomeComponent implements OnInit {
   // Dependancy Injection
   private _router: Router = inject(Router);
   private _authService : AuthService = inject(AuthService);
+  private _eventService: EventService = inject(EventService);
 
   // Component Variables
+  events !: Event[];
   isLoggedIn !: Observable<boolean>;
 
   ngOnInit() {
     this.isLoggedIn = this._authService.loginStatus$;
+    this.events = this._eventService.events;
   }
 
   readonly aboutStats = [

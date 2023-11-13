@@ -91,20 +91,6 @@ body {
     min-height: 100vh;
 }
 
-/* Profile */
-.profile {
-    width: 100%;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    background-color: var(--var-white);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: black;
-    padding: .5rem 4rem 0;
-}
-
 /* Lined Text Light */
 .linedTextLight {
     width: 60%;
@@ -134,9 +120,8 @@ body {
 mat-card {
     padding: 3rem 0 0;
     box-shadow: 3px 3px .1rem var(--var-primary-red);
-    transform: translateY(-10vh);
     margin: 0 auto;
-    padding: 1rem;
+    padding: .5rem;
 }
 
 /* Card Body */

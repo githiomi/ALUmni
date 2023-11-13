@@ -3,20 +3,6 @@
     min-height: 100vh;
 }
 
-/* Profile */
-.profile {
-    width: 100%;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    background-color: var(--var-white);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: black;
-    padding: .5rem 4rem 0;
-}
-
 /* Lined Text Light */
 .linedTextLight {
     width: 60%;
@@ -51,7 +37,7 @@
     padding: 1rem;
 }
 
-mat-card {
+.aboutMatCard {
     padding: 3rem 1rem;
     box-shadow: 3px 3px .1rem var(--var-primary-red);
 }
@@ -115,4 +101,33 @@ mat-card {
 .optionButton {
     background-color: var(--var-primary-red);
     color: var(--var-white);
+}
+
+/* Events Preview */
+.eventsPreview {
+    width: 50%;
+    margin: 0 auto 2rem;
+    padding: 1rem;
+}
+
+.events::-webkit-scrollbar {
+    display: none;
+}
+
+.events {
+    margin: 1rem 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Card Footer */
+mat-card-footer {
+    cursor: pointer;
+    margin: 1rem 0 0;
+    padding-top: 12px;
+}
+
+mat-card-footer:hover p {
+    transform: scale(1.03);
+    transition: all .3s ease-in-out;
 }

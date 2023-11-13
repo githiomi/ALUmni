@@ -4,12 +4,16 @@
         <img [src]="_event$.eventBanner" alt="Event Banner Image">
     </div>
 
+    <div class="overlay">
+        <!-- Overlay goes here -->
+    </div>
+
     <div class="header">
         <button color="basic" mat-mini-fab>
             <mat-icon class="text-red-600">delete</mat-icon>
         </button>
 
-        <p class="z-10 text-4xl text-center uppercase"><code>{{ _event$.eventTitle }}</code></p>
+        <p class="z-10 text-4xl font-bold text-center uppercase"><code class="text-white">{{ _event$.eventTitle }}</code></p>
 
         <button color="basic" mat-mini-fab mat-dialog-close="close">
             <mat-icon class="text-red-600">close</mat-icon>
@@ -22,7 +26,7 @@
 
             <mat-card-content>
 
-                <div class="grid place-items-center my-4 text-center">
+                <div class="grid place-items-center text-center">
                     <div class="linedTextDark uppercase text-center text-lg">
                         <div class="horizontalLine"></div>
                         Event Details
@@ -64,10 +68,9 @@
                     <div class="rowItem">
                         <span class="label text-base uppercase font-semibold text-red-600 mr-2">Attendee Limit:</span>
                         <code class="font-semibold">{{ _event$.attendeeLimit }}</code>
-                        <small class="text-xs text-black" [ngClass]="seatsRemaining < 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}} Seats Remaining</small>
+                        <small class="text-xs text-black" [ngClass]="seatsRemaining <= 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}} Seats Remaining</small>
                     </div>
                 </div>
-
 
             </mat-card-content>
 
@@ -76,7 +79,7 @@
     </mat-dialog-content>
 
     <mat-dialog-actions class="p-4 w-full grid place-items-center">
-        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0">
+        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0" (click)="reserveSpot()">
             Reserve A Spot
         </button>
 

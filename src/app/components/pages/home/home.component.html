@@ -20,7 +20,7 @@
 
     <div class="about">
 
-        <mat-card>
+        <mat-card class="aboutMatCard">
 
             <mat-card-header class="flex flex-col text-center items-center">
                 <p class="text-3xl">DHOSIO UNIVERSITY</p>
@@ -75,5 +75,30 @@
         </div>
 
     </section>
+
+    <div class="eventsPreview">
+
+        <mat-card>
+
+            <mat-card-content>
+
+                <p class="text-center text-2xl uppercase font-bold">
+                    Upcoming Events Preview
+                </p>
+
+                <div class="events flex gap-3 items-center overflow-y-scroll">
+                    <ng-container *ngFor="let event of events">
+                        <app-event [event]="event" /></ng-container>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-footer (click)="goToPage('/events')" class="footer grid place-items-center bg-black text-white uppercase text-base">
+                <p>View All Events...</p>
+            </mat-card-footer>
+
+        </mat-card>
+
+    </div>
 
 </div>
