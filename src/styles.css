@@ -135,7 +135,6 @@ mat-card {
     padding: 3rem 0 0;
     box-shadow: 3px 3px .1rem var(--var-primary-red);
     transform: translateY(-10vh);
-    width: 50%;
     margin: 0 auto;
     padding: 1rem;
 }

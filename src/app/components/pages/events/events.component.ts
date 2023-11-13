@@ -9,14 +9,31 @@ import { MatSelectModule } from '@angular/material/select';
 import { EventService } from 'src/app/services/event.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
+// Animation Imports
+import { LottieModule, AnimationOptions } from 'ngx-lottie';
+import { EventListComponent } from '../../utilities/event-list/event-list.component';
+
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatSnackBarModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatSnackBarModule, LottieModule, EventListComponent],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent {
+
+  // Const Paths
+  private readonly fetchingAnimation = './../../../../assets/animations/fetching.json'
+  private readonly noDataAnimation = './../../../../assets/animations/no_data.json'
+
+  // Animation Options
+  fetchingAnimationOptions : AnimationOptions = {
+    path: this.fetchingAnimation
+  }
+
+  noDataAnimationOptions : AnimationOptions = {
+    path: this.noDataAnimation
+  }
 
   // Dependency injection
   private _matSnackBar: MatSnackBar = inject(MatSnackBar);
@@ -24,10 +41,12 @@ export class EventsComponent {
   private _eventService: EventService = inject(EventService);
 
   // Component variables
+  events$ = [1,2,3,4,5,6,7];
+  fetching = true;
+  eventYears: number[];
   filterForm: FormGroup;
   eventCategories: string[];
   eventLocations: string[];
-  eventYears: number[];
 
   constructor() {
 
@@ -39,13 +58,20 @@ export class EventsComponent {
       eventCategory: new FormControl(''),
       eventLocation: new FormControl(''),
       eventYear: new FormControl('')
-    })
+    });
+
+    setTimeout ( () => this.fetching = false, 2000);
+  }
+
+  clearInputControl (event : any, formControlName : string) {
+    event.stopPropagation();
+    this.filterForm.controls[formControlName].setValue('');
   }
 
   submitForm(filterForm: any): void {
     const formValues = filterForm.value;
 
-    if (!formValues.eventCategory && !formValues.eventLocation && !formValues.eventYear)
+    if (!formValues.eventCategory && !formValues.eventLocation && !formValues.eventYear){
       this._matSnackBar.open(
         'No filter action was specified.',
         'CLOSE',
@@ -54,6 +80,10 @@ export class EventsComponent {
           verticalPosition: 'bottom',
           horizontalPosition: 'start'
         });
+      
+      return;
+    }
+    console.log(formValues);    
   }
 
 }

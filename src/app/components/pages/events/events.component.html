@@ -39,32 +39,38 @@
 
                 <form [formGroup]="filterForm">
 
-                    <mat-form-field class="w-full">
+                    <mat-form-field>
                         <mat-label>Event Category</mat-label>
                         <mat-select formControlName="eventCategory">
-                            <mat-option>None</mat-option>
                             <mat-option *ngFor="let _eventCategory of eventCategories" value="{{_eventCategory}}">{{
                                 _eventCategory }}</mat-option>
                         </mat-select>
+                        <button color="basic" class="appButton" *ngIf="filterForm.controls['eventCategory'].value" matSuffix mat-mini-fab aria-label="clear" (click)="clearInputControl($event, 'eventCategory')">
+                            <mat-icon>close</mat-icon>
+                        </button>
                     </mat-form-field>
 
                     <div class="formRow">
                         <mat-form-field>
                             <mat-label>Event Location</mat-label>
                             <mat-select formControlName="eventLocation">
-                                <mat-option>None</mat-option>
                                 <mat-option *ngFor="let _eventLocation of eventLocations" value="{{_eventLocation}}">{{
                                     _eventLocation }}</mat-option>
                             </mat-select>
+                            <button color="basic" class="appButton" *ngIf="filterForm.controls['eventLocation'].value" matSuffix mat-mini-fab aria-label="clear" (click)="clearInputControl($event, 'eventLocation')">
+                                <mat-icon>close</mat-icon>
+                            </button>
                         </mat-form-field>
 
-                        <mat-form-field>
-                            <mat-label>Alumni Year</mat-label>
-                            <mat-select formControlName="eventYear">
-                                <mat-option>None</mat-option>
+                        <mat-form-field appearance="fill">
+                            <mat-label class="w-full">Alumni Year</mat-label>
+                            <mat-select class="w-full" formControlName="eventYear">
                                 <mat-option *ngFor="let _eventYear of eventYears" value="{{_eventYear}}">{{ _eventYear
                                     }}</mat-option>
                             </mat-select>
+                            <button color="basic" class="appButton" *ngIf="filterForm.controls['eventYear'].value" matSuffix mat-mini-fab aria-label="clear" (click)="clearInputControl($event, 'eventYear')">
+                                <mat-icon>close</mat-icon>
+                            </button>
                         </mat-form-field>
                     </div>
 
@@ -85,15 +91,47 @@
 
     <div class="events">
 
-        <!-- <ng-container *ngIf="events$; else noEvents">
-            <ng-container *ngFor="let _event of events$; let index = index">
-                <app-event-list>
-                </app-event-list>
-            </ng-container>
-        </ng-container> -->
+        <ng-container *ngIf="!fetching; else fetchingEvents">
 
-        <ng-template #noEvents>
-            
+            <ng-container *ngIf="events$.length > 0; else noEvents">
+
+                <p class="text-3xl uppercase font-bold">
+                    Scheduled Events
+                </p>
+
+                <ng-container *ngFor="let _event of events$; let index = index">
+                    <app-event-list />
+                </ng-container>
+
+            </ng-container>
+
+            <ng-template #noEvents>
+                <div class="info flex flex-col justify-around items-center">
+                    <code class="font-semibold"><em>No event data was found on the dtaabase!</em></code>
+
+                    <div class="animation">
+                        <ng-lottie [options]="noDataAnimationOptions">
+                            <!-- Animation goes here -->
+                        </ng-lottie>
+                    </div>
+                </div>
+            </ng-template>
+
+        </ng-container>
+
+        <ng-template #fetchingEvents>
+
+            <div class="info flex flex-col justify-around items-center">
+                <code class="font-semibold"><em>Fetching data from the database. Please wait...</em></code>
+
+                <div class="animation">
+                    <ng-lottie [options]="fetchingAnimationOptions">
+                        <!-- Animation goes here -->
+                    </ng-lottie>
+                </div>
+            </div>
+
+
         </ng-template>
 
     </div>

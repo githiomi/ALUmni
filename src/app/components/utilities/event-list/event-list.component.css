@@ -1,0 +1,6 @@
+#eventList {
+    border-radius: 1rem;
+    background-color: var(--var-white);
+    border: 1px solid var(--var-primary-red);
+    box-shadow: 3px 3px 1rem var(--var-primary-red);
+}

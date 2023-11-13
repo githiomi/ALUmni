@@ -1,6 +1,7 @@
 mat-card {
     padding: 3rem 0 0;
     box-shadow: 3px 3px .1rem var(--var-primary-red);
+    width: 50%;
 }
 
 mat-card-footer {
@@ -9,12 +10,12 @@ mat-card-footer {
 
 /* Mat Card Content */
 /* Form */
-form{
+form {
     margin: 1rem auto;
     width: 80%;
 }
 
-.formRow{
+.formRow {
     width: 100%;
     display: flex !important;
     justify-content: space-between;
@@ -23,11 +24,23 @@ form{
 }
 
 /* Form Field */
-mat-form-field{
+mat-form-field {
     width: 100%;
     margin: .5rem 0 !important;
 }
 
-mat-label{
+mat-label {
     font-size: 15px !important;
+}
+
+/* Events */
+.events {
+    width: 70%;
+    margin: 1rem auto 1rem;
+}
+
+.animation {
+    width: 400px;
+    height: 400px;
+    margin: 1rem 0;
 }
