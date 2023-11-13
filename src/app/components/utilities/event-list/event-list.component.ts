@@ -21,7 +21,7 @@ export class EventListComponent {
   @Input() _event$ !: Event;
 
   // Method to open the dialog
-  openDetailsDialog(event : Event) : void {
+  openDetailsDialog() : void {
     
     const dialogConfig : MatDialogConfig = {
       data : {

@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
 import { EventListComponent } from '../../utilities/event-list/event-list.component';
+import { Filter } from 'src/app/interfaces/filter';
 
 @Component({
   selector: 'app-events',
@@ -28,13 +29,8 @@ export class EventsComponent {
   private readonly noDataAnimation = './../../../../assets/animations/no_data.json'
 
   // Animation Options
-  fetchingAnimationOptions : AnimationOptions = {
-    path: this.fetchingAnimation
-  }
-
-  noDataAnimationOptions : AnimationOptions = {
-    path: this.noDataAnimation
-  }
+  noDataAnimationOptions: AnimationOptions = { path: this.noDataAnimation }
+  fetchingAnimationOptions: AnimationOptions = { path: this.fetchingAnimation }
 
   // Dependency injection
   private _matSnackBar: MatSnackBar = inject(MatSnackBar);
@@ -42,7 +38,7 @@ export class EventsComponent {
   private _eventService: EventService = inject(EventService);
 
   // Component variables
-  events$ : any;
+  events$: any;
   fetching = false;
   eventYears: number[];
   filterForm: FormGroup;
@@ -52,9 +48,9 @@ export class EventsComponent {
   constructor() {
 
     this.events$ = this._eventService.events;
-    this.eventCategories = this._eventService.eventCategories;
-    this.eventLocations = this._eventService.eventLocations;
     this.eventYears = this._eventService.eventYears;
+    this.eventLocations = this._eventService.eventLocations;
+    this.eventCategories = this._eventService.eventCategories;
 
     this.filterForm = this._formBuilder.group({
       eventCategory: new FormControl(''),
@@ -65,7 +61,7 @@ export class EventsComponent {
     // setTimeout ( () => this.fetching = false, 2000);
   }
 
-  clearInputControl (event : any, formControlName : string) {
+  clearInputControl(event: any, formControlName: string) {
     event.stopPropagation();
     this.filterForm.controls[formControlName].setValue('');
   }
@@ -73,7 +69,7 @@ export class EventsComponent {
   submitForm(filterForm: any): void {
     const formValues = filterForm.value;
 
-    if (!formValues.eventCategory && !formValues.eventLocation && !formValues.eventYear){
+    if (!formValues.eventCategory && !formValues.eventLocation && !formValues.eventYear) {
       this._matSnackBar.open(
         'No filter action was specified.',
         'CLOSE',
@@ -82,10 +78,24 @@ export class EventsComponent {
           verticalPosition: 'bottom',
           horizontalPosition: 'start'
         });
-      
+
       return;
     }
-    console.log(formValues);    
+    console.log(formValues);
+
+    // Filter the events
+    this.filterEvents(formValues);
+
+  }
+
+  // Method to perform filter
+  filterEvents({ eventCategory, eventLocation }: any): void {
+    
+    if (eventCategory && eventLocation)
+      this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
+
+    this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
+
   }
 
 }
