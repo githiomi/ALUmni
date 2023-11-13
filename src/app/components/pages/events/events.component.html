@@ -100,7 +100,7 @@
                 </p>
 
                 <ng-container *ngFor="let _event of events$; let index = index">
-                    <app-event-list />
+                    <app-event-list [_event$]="_event" />
                 </ng-container>
 
             </ng-container>

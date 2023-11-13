@@ -1,6 +1,69 @@
 #eventList {
+    height: 250px;
+    width: 100%;
+    margin: 1rem auto;
+    overflow: hidden;
     border-radius: 1rem;
     background-color: var(--var-white);
     border: 1px solid var(--var-primary-red);
-    box-shadow: 3px 3px 1rem var(--var-primary-red);
+    box-shadow: 1px 1px .3rem var(--var-primary-red);
+    display: flex;
+    gap: 3rem;
+    justify-content: flex-start;
+    position: relative;
+    transition: all .5s ease-in;
+}
+
+#eventList:hover .view button,
+#eventList:hover .eventBanner img{
+    transform: scale(1.1);
+    transition: all .5s ease-in-out;
+}
+
+#eventList:hover{
+    transform: scale(0.99);
+    box-shadow: 2px 2px .5rem var(--var-primary-red);
+    transition: all .5s ease-in-out;
+}
+
+/* Event Banner */
+.eventBanner {
+    width: 30%;
+    height: 100%;
+}
+
+.eventBanner img {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    transition: all .5s ease-in-out;
+}
+
+/* Event Details */
+.eventDetails {
+    margin: 2rem auto;
+    width: 80%;
+}
+
+.shortDescription{
+    padding: 0 1rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.view{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 2rem;
+}
+
+.view button {
+    transform: scale(0);
 }

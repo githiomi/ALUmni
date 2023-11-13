@@ -1,5 +1,39 @@
 <section id="eventList">
 
-    sfgb
+    <div class="eventBanner">
+        <img [src]="_event$.eventBanner" alt="Event Image Banner">
+    </div>
+
+    <div class="eventDetails flex flex-col justify-between">
+
+        <h2 class="eventTitle uppercase">
+            <code class="text-2xl font-semibold">{{ _event$.eventTitle }}</code>
+        </h2>
+
+        <p class="shortDescription">
+            {{ _event$.shortDescription }}
+        </p>
+
+        <div class="info flex items-center justify-between">
+
+            <div class="venue">
+                <span class="label text-base uppercase font-semibold text-red-600 mr-2">Venue:</span>
+                <code class="font-semibold">{{ _event$.venue }}</code>
+            </div>
+
+            <div class="date">
+                <span class="label text-base uppercase font-semibold text-red-600 mr-2">Date:</span>
+                <code class="font-semibold">{{ _event$.eventDate }}</code>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="view grid place-items-center">
+        <button color="basic" mat-mini-fab class="appButton">
+            <mat-icon>play_arrow</mat-icon>
+        </button>
+    </div>
 
 </section>

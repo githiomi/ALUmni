@@ -1,5 +1,6 @@
 export interface Event {
     eventId: string;
+    eventBanner: string;
     eventTitle: string;
     venue: string;
     shortDescription: string;
@@ -10,5 +11,6 @@ export interface Event {
     eventCategory: string;
     createdBy: string;
     createdAt: Date;
-    atendees: string[];
+    attendees: string[];
 }
+

@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { EventService } from 'src/app/services/event.service';
+import { Event } from 'src/app/interfaces/event';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Animation Imports
@@ -41,8 +42,8 @@ export class EventsComponent {
   private _eventService: EventService = inject(EventService);
 
   // Component variables
-  events$ = [1,2,3,4,5,6,7];
-  fetching = true;
+  events$ : any;
+  fetching = false;
   eventYears: number[];
   filterForm: FormGroup;
   eventCategories: string[];
@@ -50,6 +51,7 @@ export class EventsComponent {
 
   constructor() {
 
+    this.events$ = this._eventService.events;
     this.eventCategories = this._eventService.eventCategories;
     this.eventLocations = this._eventService.eventLocations;
     this.eventYears = this._eventService.eventYears;
@@ -60,7 +62,7 @@ export class EventsComponent {
       eventYear: new FormControl('')
     });
 
-    setTimeout ( () => this.fetching = false, 2000);
+    // setTimeout ( () => this.fetching = false, 2000);
   }
 
   clearInputControl (event : any, formControlName : string) {
