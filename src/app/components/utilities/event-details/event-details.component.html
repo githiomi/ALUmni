@@ -1,0 +1,90 @@
+<section id="eventDetails">
+
+    <div class="background">
+        <img [src]="_event$.eventBanner" alt="Event Banner Image">
+    </div>
+
+    <div class="header">
+        <button color="basic" mat-mini-fab>
+            <mat-icon class="text-red-600">delete</mat-icon>
+        </button>
+
+        <p class="z-10 text-4xl text-center uppercase"><code>{{ _event$.eventTitle }}</code></p>
+
+        <button color="basic" mat-mini-fab mat-dialog-close="close">
+            <mat-icon class="text-red-600">close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content>
+
+        <mat-card>
+
+            <mat-card-content>
+
+                <div class="grid place-items-center my-4 text-center">
+                    <div class="linedTextDark uppercase text-center text-lg">
+                        <div class="horizontalLine"></div>
+                        Event Details
+                        <div class="horizontalLine"></div>
+                    </div>
+                </div>
+
+                <div class="shortDescription p-6">
+                    <p>
+                        {{ _event$.shortDescription }}
+                    </p>
+                </div>
+
+                <div class="detailRow flex items-center justify-between px-4">
+                    <div class="rowItem">
+                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Date:</span>
+                        <code class="font-semibold">{{ _event$.eventDate }}</code>
+                    </div>
+
+                    <div class="rowItem">
+                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Duration:</span>
+                        <code class="font-semibold">{{ _event$.eventDuration }}</code>
+                    </div>
+                </div>
+
+                <div class="detailRow flex items-center justify-between px-4">
+                    <div class="rowItem">
+                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Venue:</span>
+                        <code class="font-semibold">{{ _event$.venue }}</code>
+                    </div>
+
+                    <div class="rowItem">
+                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Category:</span>
+                        <code class="font-semibold">{{ _event$.eventCategory }}</code>
+                    </div>
+                </div>
+
+                <div class="detailRow flex items-center justify-between px-4">
+                    <div class="rowItem">
+                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Attendee Limit:</span>
+                        <code class="font-semibold">{{ _event$.attendeeLimit }}</code>
+                        <small class="text-xs text-black" [ngClass]="seatsRemaining < 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}} Seats Remaining</small>
+                    </div>
+                </div>
+
+
+            </mat-card-content>
+
+        </mat-card>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="p-4 w-full grid place-items-center">
+        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0">
+            Reserve A Spot
+        </button>
+
+        <div class="favourites">
+            <button color="basic" mat-mini-fab (click)="addToFavorites()">
+                <mat-icon class="text-red-600">{{ favourited ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
+        </div>
+    </mat-dialog-actions>
+
+</section>

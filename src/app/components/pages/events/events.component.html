@@ -99,9 +99,11 @@
                     Scheduled Events
                 </p>
 
-                <ng-container *ngFor="let _event of events$; let index = index">
-                    <app-event-list [_event$]="_event" />
-                </ng-container>
+                <div class="mt-8">
+                    <ng-container *ngFor="let _event of events$; let index = index">
+                        <app-event-list [_event$]="_event" />
+                    </ng-container>
+                </div>
 
             </ng-container>
 

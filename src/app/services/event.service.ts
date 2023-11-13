@@ -53,7 +53,7 @@ export class EventService {
       eventId: "ALU01234",
       eventTitle: "Tech Expo 2023",
       venue: "Convention Center",
-      shortDescription: "Explore the latest in technology innovations",
+      shortDescription: "Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations Explore the latest in technology innovations",
       details: "Join us for a day of exciting tech exhibits and presentations.",
       eventDuration: "3 hours",
       eventDate: "2023-12-15T09:00:00Z",

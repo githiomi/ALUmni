@@ -1,0 +1,98 @@
+#eventDetails {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+.background img {
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    z-index: -10;
+}
+
+/* Dialog Header */
+.header {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Dialog Body */
+mat-dialog-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-card {
+    width: 70%;
+    height: 100%;
+}
+
+mat-card-content {
+    width: 100%;
+}
+
+.detailRow {
+    width: 80%;
+    margin: 0 auto;
+    padding: .5rem 1rem;
+}
+
+span{
+    display: block;
+    font-size: 15px;
+}
+
+code {
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: var(--var-black);
+}
+
+small {
+    margin: 0 1rem;
+}
+
+small::before{
+    content: '*';
+    color: var(--var-primary-red);
+}
+
+/* Dialog Footer */
+mat-dialog-actions{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.favourites {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+}

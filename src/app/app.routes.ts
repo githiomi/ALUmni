@@ -25,6 +25,11 @@ export const routes: Routes = [
         title: 'All Events'
     },
     {
+        path: 'events/1',
+        loadComponent: () => import('./components/utilities/event-details/event-details.component').then( c => c.EventDetailsComponent),
+        title: 'Event Details'
+    },
+    {
         path: ':alumniId/events',
         loadComponent: () => import('./components/pages/alum-events/alum-events.component').then( c => c.AlumEventsComponent),
         title: 'Alumni Events'

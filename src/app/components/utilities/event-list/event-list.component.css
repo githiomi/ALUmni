@@ -1,7 +1,7 @@
 #eventList {
     height: 250px;
     width: 100%;
-    margin: 1rem auto;
+    margin: 2rem auto;
     overflow: hidden;
     border-radius: 1rem;
     background-color: var(--var-white);
@@ -14,9 +14,9 @@
     transition: all .5s ease-in;
 }
 
-#eventList:hover .view button,
+#eventList:hover .viewMore button,
 #eventList:hover .eventBanner img{
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: all .5s ease-in-out;
 }
 
@@ -42,28 +42,29 @@
 /* Event Details */
 .eventDetails {
     margin: 2rem auto;
-    width: 80%;
+    width: 70%;
 }
 
 .shortDescription{
+    width: 85%;
     padding: 0 1rem;
-    max-width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .info{
     width: 80%;
-    margin: 0 auto;
 }
 
-.view{
+.viewMore{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     right: 2rem;
 }
 
-.view button {
+.viewMore button {
     transform: scale(0);
 }
