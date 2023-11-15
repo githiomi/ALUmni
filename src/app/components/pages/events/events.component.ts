@@ -89,7 +89,6 @@ export class EventsComponent {
 
       return;
     }
-    console.log(formValues);
 
     // Filter the events
     this.filterEvents(formValues);

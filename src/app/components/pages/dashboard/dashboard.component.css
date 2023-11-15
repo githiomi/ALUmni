@@ -1,0 +1,18 @@
+#dashboard {
+    min-height: 100vh;
+}
+
+/* Tab Selector */
+.tabs {
+    transform: translateY(-10vh);
+    width: 70%;
+    margin: 0 auto;
+    background-color: var(--var-white);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+/* Tab Content */
+.tabHeader {
+    text-transform: uppercase;
+}

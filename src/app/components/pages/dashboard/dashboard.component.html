@@ -1,1 +1,151 @@
-<p>dashboard works!</p>
+<section id="dashboard">
+
+    <div class="hero flex justify-center items-center flex-col">
+
+        <div class="linedTextLight uppercase text-center text-2xl">
+            <div class="horizontalLine"></div>
+            Manage ALUmni and Events
+            <div class="horizontalLine"></div>
+        </div>
+
+        <p class="uppercase">
+            Your Dashboard
+        </p>
+
+    </div>
+
+    <div class="tabs">
+        <mat-tab-group>
+
+            <!-- Events Tab -->
+            <mat-tab label="EVENTS">
+
+                <ng-container *ngIf="events; else noData">
+
+                    <p class="tabHeader">
+                        All Scheduled Events
+                    </p>
+
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="events">
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> Event ID </th>
+                                <td mat-cell *matCellDef="let event"> {{event.eventId}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef> Event Title </th>
+                                <td mat-cell *matCellDef="let event"> {{event.eventTitle}} </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="venue">
+                                <th mat-header-cell *matHeaderCellDef> Event Venue </th>
+                                <td mat-cell *matCellDef="let event"> {{event.venue}} </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef> Event Date </th>
+                                <td mat-cell *matCellDef="let event"> {{event.eventDate | date}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="category">
+                                <th mat-header-cell *matHeaderCellDef> Event Category </th>
+                                <td mat-cell *matCellDef="let event"> {{event.eventCategory}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="limit">
+                                <th mat-header-cell *matHeaderCellDef> Maximum Attendees </th>
+                                <td mat-cell *matCellDef="let event"> {{event.attendeeLimit}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="createdBy">
+                                <th mat-header-cell *matHeaderCellDef> Created By </th>
+                                <td mat-cell *matCellDef="let event"> {{event.createdBy}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="eventColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: eventColumns;"></tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                            aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                    </div>
+
+                </ng-container>
+
+                <ng-template #noData>
+
+                    <div class="tabHeader"><code>
+                        There was no data found on the database. Try Again Later!
+                    </code></div>
+
+                    <ng-lottie [options]="noDataAnimation" />
+
+                </ng-template>
+
+            </mat-tab>
+
+            <!-- Alumni Tab -->
+            <mat-tab label="ALUMNI">
+
+                <ng-template matTabContent>
+                    <ng-container *ngIf="events; else noData">
+
+                        <p class="tabHeader">
+                            All Active Alumni
+                        </p>
+
+                        <div class="mat-elevation-z8">
+                            <table mat-table [dataSource]="users">
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="username">
+                                    <th mat-header-cell *matHeaderCellDef> Username </th>
+                                    <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="role">
+                                    <th mat-header-cell *matHeaderCellDef> User Role </th>
+                                    <td mat-cell *matCellDef="let user"> {{user.role}} </td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="password">
+                                    <th mat-header-cell *matHeaderCellDef> Password </th>
+                                    <td mat-cell *matCellDef="let user"> {{user.password}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="alumniColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: alumniColumns;"></tr>
+                            </table>
+
+                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                                aria-label="Select page of periodic elements">
+                            </mat-paginator>
+                        </div>
+
+                    </ng-container>
+
+                    <ng-template #noData>
+
+                        <div class="tabHeader"><code>
+                            There was no data found on the database. Try Again Later!
+                        </code></div>
+
+                        <ng-lottie [options]="noDataAnimation" />
+
+                    </ng-template>
+                </ng-template>
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</section>
