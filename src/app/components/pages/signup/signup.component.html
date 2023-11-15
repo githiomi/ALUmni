@@ -50,7 +50,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Gender</mat-label>
                         <mat-select type="text" formControlName="gender">
-                            <mat-option *ngFor="let _gender of genders" [value]="_gender">
+                            <mat-option *ngFor="let _gender of ( genders$ | async )" [value]="_gender">
                                 {{ _gender}}
                             </mat-option>
                         </mat-select>
@@ -62,7 +62,7 @@
                     <mat-form-field class="inputGroup text-lg" appearance="outline">
                         <mat-label>Role</mat-label>
                         <mat-select type="text" name="role" formControlName="role">
-                            <mat-option *ngFor="let _role of roles; let index = index" [value]="_role">
+                            <mat-option *ngFor="let _role of ( roles$ | async ); let index = index" [value]="_role">
                                 {{_role}}
                             </mat-option>
                         </mat-select>
@@ -78,7 +78,7 @@
                     <mat-form-field class="inputGroup text-lg" appearance="outline">
                         <mat-label>Graduation Year</mat-label>
                         <mat-select type="number" name="role" formControlName="graduationYear">
-                            <mat-option *ngFor="let _year of years;" [value]="_year">
+                            <mat-option *ngFor="let _year of ( years$ | async );" [value]="_year">
                                 {{_year}}
                             </mat-option>
                         </mat-select>
@@ -104,7 +104,7 @@
                         <input matInput type="password" formControlName="password">
                         <small
                             *ngIf="(registerForm.controls['password'].dirty || form.submitted) && registerForm.controls['password'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Password is required!</small>
+                            class="text-red-600 text-xs text-end py-1">Password of min 8 characters required!</small>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">

@@ -42,6 +42,7 @@ form {
     align-items: center;
     width: 100%;
     margin: .5rem 0;
+    gap: 2rem;
 }
 
 .inputRow.three {
@@ -49,6 +50,10 @@ form {
 }
 
 /* Input Fields */
+mat-form-field {
+    width: 100%;
+}
+
 mat-label {
     font-size: 13px;
     font-weight: 600;

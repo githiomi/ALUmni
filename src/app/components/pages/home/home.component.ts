@@ -27,12 +27,12 @@ export class HomeComponent implements OnInit {
   private _eventService: EventService = inject(EventService);
 
   // Component Variables
-  events !: Event[];
+  events$ !: Observable<Event[]>;
   isLoggedIn !: Observable<boolean>;
 
   ngOnInit() {
+    this.events$ = this._eventService.getEvents();
     this.isLoggedIn = this._authService.loginStatus$;
-    this.events = this._eventService.events;
   }
 
   readonly aboutStats = [

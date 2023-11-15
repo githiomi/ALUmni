@@ -13,6 +13,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -37,19 +38,19 @@ export class EventsComponent {
   private _eventService: EventService = inject(EventService);
 
   // Component variables
-  events$: any;
   fetching = true;
-  eventYears: number[];
   filterForm: FormGroup;
-  eventCategories: string[];
-  eventLocations: string[];
+  events$: Observable<Event[]>;;
+  eventYears$: Observable<number[]>;
+  eventCategories$: Observable<string[]>;
+  eventLocations$: Observable<string[]>;
 
   constructor() {
 
-    this.events$ = this._eventService.events;
-    this.eventYears = this._eventService.eventYears;
-    this.eventLocations = this._eventService.eventLocations;
-    this.eventCategories = this._eventService.eventCategories;
+    this.events$ = this._eventService.getEvents();
+    this.eventYears$ = this._eventService.getYears();
+    this.eventLocations$ = this._eventService.getEventLocations();
+    this.eventCategories$ = this._eventService.getEventCategories();
 
     this.filterForm = this._formBuilder.group({
       eventCategory: new FormControl(''),
@@ -70,7 +71,7 @@ export class EventsComponent {
 
   clearFilters() {
     this.filterForm.reset();
-    this.events$ = this._eventService.events;
+    // this.events$ = this._eventService.events;
   }
 
   submitForm(filterForm: any): void {
@@ -96,10 +97,10 @@ export class EventsComponent {
 
   // Method to perform filter
   filterEvents({ eventCategory, eventLocation }: any): void {
-    if (eventCategory && eventLocation)
-      this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
+    // if (eventCategory && eventLocation)
+    //   this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
 
-    this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
+    // this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
   }
 
 }

@@ -7,34 +7,25 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { passwordMatchValidator } from 'src/app/validators/passwordMatchValidator';
 import { MatSelectModule } from '@angular/material/select';
 import { EventService } from 'src/app/services/event.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatProgressSpinnerModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatNativeDateModule, MatInputModule, MatDatepickerModule],
+  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatProgressSpinnerModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatInputModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
 
   // Readonly
-  protected readonly roles = [
-    'Manager',
-    'Alumni'
-  ]
-
-  protected readonly genders = [
-    'Male',
-    'Female'
-  ]
-
-  protected readonly years : number[];
+  protected readonly years$ : Observable<number[]>;
+  protected readonly roles$ : Observable<string[]>;
+  protected readonly genders$ : Observable<string[]>;
 
   // Dependency Injection
   private _router: Router = inject(Router);
@@ -50,7 +41,9 @@ export class SignupComponent {
 
   constructor() {
 
-    this.years = this._eventService.eventYears;
+    this.years$ = this._eventService.getYears();
+    this.roles$ = this._eventService.getRoles();
+    this.genders$ = this._eventService.getGenders();
 
     this.registerForm = this._formBuilder.group({
       firstName: new FormControl('', [Validators.required]),

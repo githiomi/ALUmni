@@ -42,7 +42,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Event Category</mat-label>
                         <mat-select formControlName="eventCategory">
-                            <mat-option *ngFor="let _eventCategory of eventCategories" [value]="_eventCategory">
+                            <mat-option *ngFor="let _eventCategory of ( eventCategories$ | async)" [value]="_eventCategory">
                                 {{ _eventCategory }}</mat-option>
                         </mat-select>
                         <button color="basic" class="appButton" *ngIf="filterForm.controls['eventCategory'].value"
@@ -56,7 +56,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Event Location</mat-label>
                             <mat-select formControlName="eventLocation">
-                                <mat-option *ngFor="let _eventLocation of eventLocations" value="{{_eventLocation}}">
+                                <mat-option *ngFor="let _eventLocation of ( eventLocations$ | async )" value="{{_eventLocation}}">
                                     {{ _eventLocation }}</mat-option>
                             </mat-select>
                             <button color="basic" class="appButton" *ngIf="filterForm.controls['eventLocation'].value"
@@ -69,7 +69,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label class="w-full">Alumni Year</mat-label>
                             <mat-select class="w-full" formControlName="eventYear">
-                                <mat-option *ngFor="let _eventYear of eventYears" value="{{_eventYear}}">
+                                <mat-option *ngFor="let _eventYear of ( eventYears$ | async )" value="{{_eventYear}}">
                                     {{ _eventYear }}</mat-option>
                             </mat-select>
                             <button color="basic" class="appButton" *ngIf="filterForm.controls['eventYear'].value"
@@ -104,14 +104,14 @@
 
         <ng-container *ngIf="!fetching; else fetchingEvents">
 
-            <ng-container *ngIf="events$.length > 0; else noEvents">
+            <ng-container *ngIf="(events$ | async)!.length > 0; else noEvents">
 
                 <p class="text-3xl uppercase font-bold">
                     Scheduled Events
                 </p>
 
                 <div class="mt-8">
-                    <ng-container *ngFor="let _event of events$; let index = index">
+                    <ng-container *ngFor="let _event of (events$ | async ); let index = index">
                         <app-event-list [_event$]="_event" />
                     </ng-container>
                 </div>
