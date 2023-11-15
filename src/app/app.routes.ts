@@ -40,6 +40,11 @@ export const routes: Routes = [
         title: 'Connect With Others '
     },
     {
+        path: 'dashboard',
+        loadComponent: () => import('./components/pages/dashboard/dashboard.component').then( c => c.DashboardComponent),
+        title: 'ALUmni Dashboard'
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

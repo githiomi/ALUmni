@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { EventComponent } from '../../utilities/event/event.component';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
-import { AlumEventsComponent } from '../alum-events/alum-events.component';
 
 @Component({
   selector: 'app-home',

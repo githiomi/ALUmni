@@ -1,4 +1,16 @@
 {
+  "users" : [
+    {
+      "username" : "DGITHI280",
+      "password" : "qwertyuiop",
+      "role" : "Alumni"
+    },
+    {
+      "username" : "YPORUN98",
+      "password" : "poiuytrewq",
+      "role" : "Manager"
+    }
+  ],
   "genders": [
     "Male",
     "Female"
