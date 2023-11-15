@@ -35,6 +35,11 @@ export const routes: Routes = [
         title: 'Alumni Events'
     },
     {
+        path: 'connect',
+        loadComponent: () => import('./components/pages/connect/connect.component').then( c => c.ConnectComponent),
+        title: 'Connect With Others '
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

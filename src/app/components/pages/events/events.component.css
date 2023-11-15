@@ -27,9 +27,8 @@ form {
 /* Form Field */
 mat-form-field {
     width: 100%;
-    margin: .5rem 0 !important;
 }
-
+    
 mat-label {
     font-size: 15px !important;
 }

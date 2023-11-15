@@ -11,32 +11,53 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { passwordMatchValidator } from 'src/app/validators/passwordMatchValidator';
+import { MatSelectModule } from '@angular/material/select';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatProgressSpinnerModule, MatButtonModule, MatFormFieldModule, MatNativeDateModule, MatInputModule, MatDatepickerModule],
+  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatProgressSpinnerModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatNativeDateModule, MatInputModule, MatDatepickerModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
 
+  // Readonly
+  protected readonly roles = [
+    'Manager',
+    'Alumni'
+  ]
+
+  protected readonly genders = [
+    'Male',
+    'Female'
+  ]
+
+  protected readonly years : number[];
+
   // Dependency Injection
   private _router: Router = inject(Router);
   private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
+  private _eventService: EventService = inject(EventService);
 
-  // Component Variables
+  // Triggers
   isProcessing: boolean = false;
+  
+  // Component Variables
   registerForm: FormGroup;
 
   constructor() {
+
+    this.years = this._eventService.eventYears;
+
     this.registerForm = this._formBuilder.group({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       age: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
-      role: new FormControl('Alumni', [Validators.required]),
+      role: new FormControl('', [Validators.required]),
       graduationYear: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),

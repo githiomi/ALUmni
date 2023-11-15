@@ -1,18 +1,18 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
+import { Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { EventService } from 'src/app/services/event.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { EventListComponent } from '../../utilities/event-list/event-list.component';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
-import { EventListComponent } from '../../utilities/event-list/event-list.component';
 
 @Component({
   selector: 'app-events',

@@ -8,11 +8,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable, of } from 'rxjs';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatSnackBarModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatSnackBarModule, MatSelectModule],
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css']
 })

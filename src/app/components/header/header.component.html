@@ -42,7 +42,7 @@
 
             <mat-menu #profileDropDown="matMenu">
                 <ng-template id="pro" matMenuContent>
-                    <button class="profileButton" mat-menu-item>
+                    <button class="profileButton" mat-menu-item routerLink="/profile">
                         <mat-icon>person-add</mat-icon>
                         View Profile</button>
                     <button class="profileButton" mat-menu-item (click)="changeStatus(false)">

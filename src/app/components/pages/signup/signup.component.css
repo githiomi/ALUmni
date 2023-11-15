@@ -41,35 +41,26 @@ form {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin: .5rem 0;
 }
 
 .inputRow.three {
     gap: 2rem;
 }
 
-.inputGroup {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 0;
-}
-
 /* Input Fields */
-label {
-    font-size: 15px;
-    font-weight: bold;
+mat-label {
+    font-size: 13px;
+    font-weight: 600;
     text-transform: uppercase;
 }
 
 input {
     width: 100%;
     background-color: var(--var-white);
-    padding: .5rem .5rem;
+    padding: 0 .5rem;
     font-size: 14px;
     outline: none;
-}
-
-input:focus {
-    border: 1.5px solid var(--var-primary-red);
 }
 
 small::before{

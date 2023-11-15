@@ -33,7 +33,7 @@ export class EventComponent implements OnInit {
   }
 
   openDetailsDialog(): void {
-    
+
     const dialogConfig: MatDialogConfig = {
       data: {
         dialogState: 'view',
@@ -53,7 +53,5 @@ export class EventComponent implements OnInit {
 
     eventDetailsDialog.afterClosed().subscribe(console.log);
   }
-
-
 
 }

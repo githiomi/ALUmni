@@ -24,7 +24,8 @@
 
 }
 
-* {
+*, ::before, ::after {
+    border-style: none;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -133,4 +134,29 @@ mat-card-content {
 mat-progress-spinner circle,
 mat-spinner circle {
     stroke: var(--var-primary-red) !important;
+}
+
+/* Animations */
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(1px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(1px, 0, 0);
+    }
 }

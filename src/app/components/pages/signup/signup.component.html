@@ -18,89 +18,103 @@
             <form [formGroup]="registerForm" (ngSubmit)="submitForm(registerForm)" #form="ngForm">
 
                 <div class="inputRow">
-                    <div class="inputGroup text-lg">
-                        <label for="firstName">First Name</label>
-                        <input type="text" name="firstName" formControlName="firstName" id="firstName"
-                            placeholder="First Name">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput type="text" formControlName="firstName">
                         <small
                             *ngIf="(registerForm.controls['firstName'].dirty || form.submitted) && registerForm.controls['firstName'].invalid"
-                            class="text-red-600 text-xs text-end py-1">First Name is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">First Name is required!</small>
+                    </mat-form-field>
 
-                    <div class="inputGroup text-lg">
-                        <label for="alumniPassword">Last Name</label>
-                        <input type="text" name="lastName" formControlName="lastName" id="lastName"
-                            placeholder="Last Name">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput type="text" formControlName="lastName">
                         <small
                             *ngIf="(registerForm.controls['lastName'].dirty || form.submitted) && registerForm.controls['lastName'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Last Name is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Last Name is required!</small>
+                    </mat-form-field>
+
                 </div>
 
                 <div class="inputRow three">
-                    <div class="inputGroup text-lg">
-                        <label for="age">Age</label>
-                        <input type="number" name="age" formControlName="age" id="age" placeholder="Age">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Age</mat-label>
+                        <input matInput type="number" formControlName="age">
                         <small
                             *ngIf="(registerForm.controls['age'].dirty || form.submitted) && registerForm.controls['age'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Age is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Age is required!</small>
+                    </mat-form-field>
 
-                    <div class="inputGroup text-lg">
-                        <label for="gender">Gender</label>
-                        <input type="text" name="gender" formControlName="gender" id="gender" placeholder="Gender">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <mat-select type="text" formControlName="gender">
+                            <mat-option *ngFor="let _gender of genders" [value]="_gender">
+                                {{ _gender}}
+                            </mat-option>
+                        </mat-select>
                         <small
                             *ngIf="(registerForm.controls['gender'].dirty || form.submitted) && registerForm.controls['gender'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Gender is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Gender is required!</small>
+                    </mat-form-field>
 
-                    <div class="inputGroup text-lg">
-                        <label for="role">Role</label>
-                        <input type="text" name="role" formControlName="role" id="role" placeholder="Role">
+                    <mat-form-field class="inputGroup text-lg" appearance="outline">
+                        <mat-label>Role</mat-label>
+                        <mat-select type="text" name="role" formControlName="role">
+                            <mat-option *ngFor="let _role of roles; let index = index" [value]="_role">
+                                {{_role}}
+                            </mat-option>
+                        </mat-select>
                         <small
                             *ngIf="(registerForm.controls['role'].dirty || form.submitted) && registerForm.controls['role'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Role is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Role is Required!</small>
+                    </mat-form-field>
+
                 </div>
 
                 <div class="inputRow">
-                    <div class="inputGroup text-lg">
-                        <label for="role">Graduation Year</label>
-                        <input type="number" name="graduationYear" formControlName="graduationYear" id="graduationYear"
-                            placeholder="Graduation Year">
+
+                    <mat-form-field class="inputGroup text-lg" appearance="outline">
+                        <mat-label>Graduation Year</mat-label>
+                        <mat-select type="number" name="role" formControlName="graduationYear">
+                            <mat-option *ngFor="let _year of years;" [value]="_year">
+                                {{_year}}
+                            </mat-option>
+                        </mat-select>
                         <small
                             *ngIf="(registerForm.controls['graduationYear'].dirty || form.submitted) && registerForm.controls['graduationYear'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Graduation Year is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Graduation Year is required!</small>
+                    </mat-form-field>
 
-                    <div class="inputGroup text-lg">
-                        <label for="role">Email Address</label>
-                        <input type="email" name="emailAddress" formControlName="emailAddress" id="emailAddress"
-                            placeholder="Email Address">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="emailAddress">
                         <small
                             *ngIf="(registerForm.controls['emailAddress'].dirty || form.submitted) && registerForm.controls['emailAddress'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Email Address is Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Email is required!</small>
+                    </mat-form-field>
+
                 </div>
 
                 <div class="inputRow">
-                    <div class="inputGroup text-lg">
-                        <label for="role">Password</label>
-                        <input type="password" name="password" formControlName="password" id="password"
-                            placeholder="Password">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" formControlName="password">
                         <small
                             *ngIf="(registerForm.controls['password'].dirty || form.submitted) && registerForm.controls['password'].invalid"
-                            class="text-red-600 text-xs text-end py-1">Passwordis Required</small>
-                    </div>
+                            class="text-red-600 text-xs text-end py-1">Password is required!</small>
+                    </mat-form-field>
 
-                    <div class="inputGroup text-lg">
-                        <label for="role">Confirm Password</label>
-                        <input type="password" name="confirmPassword" formControlName="confirmPassword"
-                            id="confirmPassword" placeholder="Confirm Password">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput type="password" formControlName="confirmPassword">
                         <small
                             *ngIf="(registerForm.controls['confirmPassword'].dirty || form.submitted) && registerForm.hasError('passwordMatch')"
                             class="text-red-600 text-xs text-end py-1">Passwords do not match.</small>
-                    </div>
+                    </mat-form-field>
+
                 </div>
 
             </form>

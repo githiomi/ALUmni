@@ -81,16 +81,16 @@
 
     </mat-dialog-content>
 
-    <mat-dialog-actions class="p-4 w-full grid place-items-center">
+    <div mat-dialog-actions class="actions p-4">
         <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0" (click)="reserveSpot()">
             Reserve A Spot
         </button>
 
-        <div class="favourites">
+        <div class="favourites" *ngIf="isLoggedIn$ | async">
             <button color="basic" mat-mini-fab (click)="addToFavorites()">
                 <mat-icon class="text-red-600">{{ favourited ? 'favorite' : 'favorite_border' }}</mat-icon>
             </button>
         </div>
-    </mat-dialog-actions>
+    </div>
 
 </section>
