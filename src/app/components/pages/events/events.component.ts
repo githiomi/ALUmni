@@ -38,7 +38,7 @@ export class EventsComponent {
 
   // Component variables
   events$: any;
-  fetching = false;
+  fetching = true;
   eventYears: number[];
   filterForm: FormGroup;
   eventCategories: string[];
@@ -55,14 +55,22 @@ export class EventsComponent {
       eventCategory: new FormControl(''),
       eventLocation: new FormControl(''),
       eventYear: new FormControl('')
+    }, 
+    {
+      updateOn: 'blur'
     });
 
-    // setTimeout ( () => this.fetching = false, 2000);
+    setTimeout ( () => this.fetching = false, 2000);
   }
 
   clearInputControl(event: any, formControlName: string) {
     event.stopPropagation();
     this.filterForm.controls[formControlName].setValue('');
+  }
+
+  clearFilters() {
+    this.filterForm.reset();
+    this.events$ = this._eventService.events;
   }
 
   submitForm(filterForm: any): void {

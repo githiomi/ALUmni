@@ -26,7 +26,7 @@ export class EventDetailsComponent {
   private _authService: AuthService = inject(AuthService);
 
   // Component Variables
-  isLoggedIn$ : Observable<boolean> = of(true);
+  isLoggedIn$ : Observable<boolean>;
   seatsRemaining: number;
   protected _event$: Event;
 
@@ -40,7 +40,7 @@ export class EventDetailsComponent {
   ) {
     this._event$ = this._eventData$.dialogData;
     this.seatsRemaining = this._event$.attendeeLimit;
-    // this.isLoggedIn$ = this._authService.loginStatus$;
+    this.isLoggedIn$ = this._authService.loginStatus$;
   }
 
   // Method to add event to favourites

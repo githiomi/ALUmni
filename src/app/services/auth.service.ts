@@ -15,7 +15,6 @@ export class AuthService {
   }
 
   loginUser(username : string, password : string) : boolean {
-
     // Authenticate
     if (this.authenticate(username, password)){
       this.changeLoginStatus(true);
@@ -23,15 +22,13 @@ export class AuthService {
     }
     else
       return false;
-    
   }
 
-  authenticate(username : string, password : string) : boolean {
+  private authenticate(username : string, password : string) : boolean {
     let expectedUserName = 'DGITHI280';
     let expectedPassword = 'qwertyuiop';
 
     return (username === expectedUserName && password === expectedPassword)
-
   }
 
 }

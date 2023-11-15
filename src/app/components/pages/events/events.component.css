@@ -34,6 +34,16 @@ mat-label {
     font-size: 15px !important;
 }
 
+.clear {
+    cursor: pointer;
+}
+
+.clear:hover {
+    transform: scale(1.01);
+    text-decoration: underline;
+    transition: all .3s ease-in-out;
+}
+
 /* Events */
 .events {
     width: 70%;

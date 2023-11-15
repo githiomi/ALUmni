@@ -33,12 +33,7 @@ export class EventComponent implements OnInit {
   }
 
   openDetailsDialog(): void {
-
-    if (!this.loginStatus) {
-      this._router.navigate(['/login']);
-      return;
-    }
-
+    
     const dialogConfig: MatDialogConfig = {
       data: {
         dialogState: 'view',

@@ -74,6 +74,10 @@
                         </mat-form-field>
                     </div>
 
+                    <div *ngIf="!filterForm.pristine" (click)="clearFilters()" class="clear w-full text-end text-blue-600">
+                        Clear All Filters...
+                    </div>
+
                 </form>
 
             </mat-card-content>
@@ -124,7 +128,7 @@
         <ng-template #fetchingEvents>
 
             <div class="info flex flex-col justify-around items-center">
-                <code class="font-semibold"><em>Fetching data from the database. Please wait...</em></code>
+                <code class="font-semibold"><em>Fetching event data from the database. Please wait...</em></code>
 
                 <div class="animation">
                     <ng-lottie [options]="fetchingAnimationOptions">
