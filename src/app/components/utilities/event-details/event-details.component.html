@@ -9,11 +9,11 @@
     </div>
 
     <div class="header">
-        <button color="basic" mat-mini-fab>
+        <button color="basic" mat-mini-fab *ngIf="isLoggedIn$ | async" class="delete">
             <mat-icon class="text-red-600">delete</mat-icon>
         </button>
 
-        <button color="basic" mat-mini-fab mat-dialog-close="close">
+        <button color="basic" mat-mini-fab mat-dialog-close="close" class="cancel">
             <mat-icon class="text-red-600">close</mat-icon>
         </button>
     </div>
@@ -21,6 +21,12 @@
     <mat-dialog-content>
 
         <mat-card>
+
+            <div class="edit" *ngIf="isLoggedIn$ | async">
+                <button color="basic" mat-mini-fab>
+                    <mat-icon class="text-red-600">create</mat-icon>
+                </button>
+            </div>
 
             <mat-card-content>
 

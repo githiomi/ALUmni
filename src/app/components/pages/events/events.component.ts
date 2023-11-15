@@ -13,7 +13,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
 import { EventListComponent } from '../../utilities/event-list/event-list.component';
-import { Filter } from 'src/app/interfaces/filter';
 
 @Component({
   selector: 'app-events',
@@ -85,17 +84,14 @@ export class EventsComponent {
 
     // Filter the events
     this.filterEvents(formValues);
-
   }
 
   // Method to perform filter
   filterEvents({ eventCategory, eventLocation }: any): void {
-    
     if (eventCategory && eventLocation)
       this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
 
     this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
-
   }
 
 }

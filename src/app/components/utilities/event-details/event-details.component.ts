@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-event-details',
@@ -21,10 +23,12 @@ export class EventDetailsComponent {
 
   // Dependancy Injections
   private _snackBar: MatSnackBar = inject(MatSnackBar)
+  private _authService: AuthService = inject(AuthService);
 
   // Component Variables
-  protected _event$: Event;
+  isLoggedIn$ : Observable<boolean> = of(true);
   seatsRemaining: number;
+  protected _event$: Event;
 
   // Get data passed
   constructor(
@@ -36,6 +40,7 @@ export class EventDetailsComponent {
   ) {
     this._event$ = this._eventData$.dialogData;
     this.seatsRemaining = this._event$.attendeeLimit;
+    // this.isLoggedIn$ = this._authService.loginStatus$;
   }
 
   // Method to add event to favourites

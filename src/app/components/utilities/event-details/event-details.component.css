@@ -63,6 +63,14 @@ mat-dialog-content {
 mat-card {
     width: 70%;
     height: 100%;
+    padding-top: 1rem;
+    position: relative;
+}
+
+.edit{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
 }
 
 .detailRow {
@@ -103,6 +111,42 @@ mat-dialog-actions {
 
 .favourites {
     position: absolute;
-    bottom: .5rem;
-    right: .5rem;
+    bottom: .8rem;
+    right: 1rem;
+}
+
+/* Animations */
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(1px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(1px, 0, 0);
+    }
+}
+
+.cancel:hover mat-icon {
+    transform: rotate(90deg) scale(1.1);
+    transition: all .2s ease-in-out;
+}
+
+.edit:hover mat-icon,
+.delete:hover mat-icon,
+.favourites:hover mat-icon {
+    animation: shake .4s cubic-bezier(.36, .07, .19, .97) both;
 }
