@@ -25,6 +25,8 @@ import { ConfirmationComponent } from '../../utilities/confirmation/confirmation
 })
 export class DashboardComponent {
 
+  readonly defaultImage = "https://preview.redd.it/the-best-poses-for-girls-profile-pictures-v0-k3kxvh4czthb1.jpg?width=911&format=pjpg&auto=webp&s=5928c38dc54f0dbe37fc68519b2f23f2507e6d15";
+
   // Dependancy Injections
   private _dialog : MatDialog = inject(MatDialog);
 
@@ -36,11 +38,11 @@ export class DashboardComponent {
     "venue",
     "date",
     "category",
-    "limit",
     "createdBy",
     "actions"
   ];
   alumniColumns: string[] = [
+    "profilePictureUrl",
     "username",
     "role",
     "password"

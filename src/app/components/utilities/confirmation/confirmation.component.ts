@@ -10,6 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, MatButtonModule, MatDialogModule],
   templateUrl: './confirmation.component.html',
   styles: [`
+    mat-dialog-actions button {
+      width: 100%;
+      flex: 1;
+    }
     code{
       color : var(--var-black);
       font-weight: bold;

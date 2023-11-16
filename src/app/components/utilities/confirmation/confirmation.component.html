@@ -1,18 +1,18 @@
 <section id="confirmation">
 
-    <h2 mat-dialog-title>
+    <h2 mat-dialog-title class="uppercase">
         Confirm Deletion
     </h2>
 
     <div mat-dialog-content class="grid place-items-center">
 
-        <p>Kindly confirm that you want to delete the event with id: <code><em>{{event.eventId}}</em></code></p>
+        <p>Do you want to delete the event with id: <code><em>{{event.eventId}}</em></code></p>
 
         <p>Event name: <code><em>{{event.eventTitle}}</em></code></p>
 
     </div>
 
-    <mat-dialog-actions class="w-full flex flex-1">
+    <mat-dialog-actions class="">
         <button mat-raised-button type="button" color="primary" [mat-dialog-close]="false">
             Cancel
         </button>
