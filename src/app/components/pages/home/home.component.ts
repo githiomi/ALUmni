@@ -17,9 +17,7 @@ import { Event } from 'src/app/interfaces/event';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  readonly username = 'Daniel Githiomi';
-
+  
   // Dependancy Injection
   private _router: Router = inject(Router);
   private _authService : AuthService = inject(AuthService);

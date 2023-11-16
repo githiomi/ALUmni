@@ -1,0 +1,24 @@
+<section id="confirmation">
+
+    <h2 mat-dialog-title>
+        Confirm Deletion
+    </h2>
+
+    <div mat-dialog-content class="grid place-items-center">
+
+        <p>Kindly confirm that you want to delete the event with id: <code><em>{{event.eventId}}</em></code></p>
+
+        <p>Event name: <code><em>{{event.eventTitle}}</em></code></p>
+
+    </div>
+
+    <mat-dialog-actions class="w-full flex flex-1">
+        <button mat-raised-button type="button" color="primary" [mat-dialog-close]="false">
+            Cancel
+        </button>
+        <button mat-raised-button class="appButton" (click)="deleteEvent(event.eventId)">
+            Confirm
+        </button>
+    </mat-dialog-actions>
+
+</section>

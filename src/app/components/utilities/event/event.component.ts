@@ -18,7 +18,6 @@ import { EventDetailsComponent } from '../event-details/event-details.component'
 export class EventComponent implements OnInit {
 
   // Dependancy Injections
-  private _router: Router = inject(Router);
   private _matDialog: MatDialog = inject(MatDialog);
   private _authService: AuthService = inject(AuthService);
 

@@ -6,35 +6,41 @@ import { MatIconModule } from '@angular/material/icon';
 import { Event } from 'src/app/interfaces/event';
 import { AnimationOptions, LottieModule } from 'ngx-lottie';
 import { AnimationService } from 'src/app/services/animation.service';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EventService } from 'src/app/services/event.service';
 import { Alumni } from 'src/app/interfaces/alumni';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationComponent } from '../../utilities/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTabsModule, MatIconModule, MatTableModule, MatPaginatorModule, LottieModule],
+  imports: [CommonModule, MatCardModule, MatTabsModule, MatIconModule, MatTableModule, MatPaginatorModule, MatButtonModule, LottieModule, MatDialogModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
 
-  events : Event[] = [];
-  users : User[] = [];
-  eventColumns : string[] = [
+  // Dependancy Injections
+  private _dialog : MatDialog = inject(MatDialog);
+
+  events: Event[] = [];
+  users: User[] = [];
+  eventColumns: string[] = [
     "id",
     "title",
     "venue",
     "date",
     "category",
     "limit",
-    "createdBy"
+    "createdBy",
+    "actions"
   ];
-  alumniColumns : string[] = [
+  alumniColumns: string[] = [
     "username",
     "role",
     "password"
@@ -47,15 +53,15 @@ export class DashboardComponent {
     // "age",
     // "graduationYear",
   ];
-  
+
   // Dependancy Injections
-  private _authService : AuthService = inject(AuthService);
-  private _eventService : EventService = inject(EventService);
-  private _animationService : AnimationService = inject(AnimationService);
+  private _authService: AuthService = inject(AuthService);
+  private _eventService: EventService = inject(EventService);
+  private _animationService: AnimationService = inject(AnimationService);
 
   // Animation Options
-  loadingAnimation : AnimationOptions = { path : this._animationService.getLoadingAnimationPath() };
-  noDataAnimation : AnimationOptions = { path : this._animationService.getNoDataAnimationPath() };
+  loadingAnimation: AnimationOptions = { path: this._animationService.getLoadingAnimationPath() };
+  noDataAnimation: AnimationOptions = { path: this._animationService.getNoDataAnimationPath() };
   eventDataSource = new MatTableDataSource<Event>();
   alumniDataSource = new MatTableDataSource<Alumni>();
 
@@ -74,6 +80,30 @@ export class DashboardComponent {
 
   ngAfterViewInit() {
     this.eventDataSource.paginator = this.paginator;
+  }
+
+  deleteEvent(event : Event) {
+
+    const confirmationDialogConfig : MatDialogConfig = {
+      data : event,
+      autoFocus: false,
+      enterAnimationDuration: 500,
+      exitAnimationDuration: 500,
+      disableClose: true
+    }
+
+    // Open confirmation dialog
+    let confirmationDialogRef = this._dialog.open(ConfirmationComponent, confirmationDialogConfig);
+
+    confirmationDialogRef.afterClosed().subscribe(
+      (confirmation : boolean) => {
+        if (confirmation) 
+          console.log('Deletion confirmed. Deleting now!');
+        else
+          console.log('Deletion was cancelled!');
+      }
+    )
+
   }
 
 }
