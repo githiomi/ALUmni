@@ -22,58 +22,100 @@
 
         <mat-card>
 
-            <div class="edit" *ngIf="isLoggedIn$ | async">
-                <button color="basic" mat-mini-fab>
-                    <mat-icon class="text-red-600">create</mat-icon>
-                </button>
-            </div>
-
             <mat-card-content>
 
-                <div class="grid place-items-center text-center">
-                    <p class="text-3xl font-bold text-center uppercase"><code
-                            class="text-red-600">{{ _event$.eventTitle }}</code></p>
-                </div>
+                <ng-container *ngIf="!editMode; else editEvent">
 
-                <div class="shortDescription p-6">
-                    <p>
-                        {{ _event$.shortDescription }}
-                    </p>
-                </div>
-
-                <div class="detailRow flex items-center justify-between px-4">
-                    <div class="rowItem">
-                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Date:</span>
-                        <code class="font-semibold">{{ _event$.eventDate | date }}</code>
+                    <div class="grid place-items-center text-center">
+                        <p class="text-3xl font-bold text-center uppercase"><code
+                                class="text-red-600">{{ _event$.eventTitle }}</code></p>
                     </div>
 
-                    <div class="rowItem">
-                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Duration:</span>
-                        <code class="font-semibold">{{ _event$.eventDuration }}</code>
-                    </div>
-                </div>
-
-                <div class="detailRow flex items-center justify-between px-4">
-                    <div class="rowItem">
-                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Venue:</span>
-                        <code class="font-semibold">{{ _event$.venue }}</code>
+                    <div class="shortDescription p-6">
+                        <p>
+                            {{ _event$.shortDescription }}
+                        </p>
                     </div>
 
-                    <div class="rowItem">
-                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Category:</span>
-                        <code class="font-semibold">{{ _event$.eventCategory }}</code>
-                    </div>
-                </div>
+                    <div class="detailRow flex items-center justify-between px-4">
+                        <div class="rowItem">
+                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Date:</span>
+                            <code class="font-semibold">{{ _event$.eventDate | date }}</code>
+                        </div>
 
-                <div class="detailRow flex items-center justify-between px-4">
-                    <div class="rowItem">
-                        <span class="label text-base uppercase font-semibold text-red-600 mr-2">Attendee Limit:</span>
-                        <code class="font-semibold">{{ _event$.attendeeLimit }}</code>
-                        <small class="text-xs text-black"
-                            [ngClass]="seatsRemaining <= 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}} Seats
-                            Remaining</small>
+                        <div class="rowItem">
+                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event
+                                Duration:</span>
+                            <code class="font-semibold">{{ _event$.eventDuration }}</code>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="detailRow flex items-center justify-between px-4">
+                        <div class="rowItem">
+                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Venue:</span>
+                            <code class="font-semibold">{{ _event$.venue }}</code>
+                        </div>
+
+                        <div class="rowItem">
+                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event
+                                Category:</span>
+                            <code class="font-semibold">{{ _event$.eventCategory }}</code>
+                        </div>
+                    </div>
+
+                    <div class="detailRow flex items-center justify-between px-4">
+                        <div class="rowItem">
+                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Attendee
+                                Limit:</span>
+                            <code class="font-semibold">{{ _event$.attendeeLimit }}</code>
+                            <small class="text-xs text-black"
+                                [ngClass]="seatsRemaining <= 10 ? 'text-red-600' : 'text-black'">{{seatsRemaining}}
+                                Seats
+                                Remaining</small>
+                        </div>
+                    </div>
+
+                </ng-container>
+
+                <ng-template #editEvent>
+
+                    <form [formGroup]="editEventForm" (ngSubmit)="submitForm(editEventForm)" #form="ngForm">
+
+                        <div class="row">
+
+                            <mat-form-field class="w-full" appearance="outline">
+                                <mat-label>Event Title</mat-label>
+                                <input matInput type="text" formControlName="eventTitle">
+                                <small
+                                    *ngIf="(editEventForm.controls['eventTitle'].dirty || form.submitted) && editEventForm.controls['eventTitle'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Title is required!</small>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="row">
+
+                            <mat-form-field class="w-full" appearance="outline">
+                                <mat-label>Event Title</mat-label>
+                                <input matInput type="text" formControlName="eventTitle">
+                                <small
+                                    *ngIf="(editEventForm.controls['eventTitle'].dirty || form.submitted) && editEventForm.controls['eventTitle'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Title is required!</small>
+                            </mat-form-field>
+                            
+                            <mat-form-field class="w-full" appearance="outline">
+                                <mat-label>Event Title</mat-label>
+                                <input matInput type="text" formControlName="eventTitle">
+                                <small
+                                    *ngIf="(editEventForm.controls['eventTitle'].dirty || form.submitted) && editEventForm.controls['eventTitle'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Title is required!</small>
+                            </mat-form-field>
+
+                        </div>
+
+                    </form>
+
+                </ng-template>
 
             </mat-card-content>
 
@@ -82,11 +124,11 @@
     </mat-dialog-content>
 
     <div mat-dialog-actions class="actions p-4">
-        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0" (click)="reserveSpot()">
-            Reserve A Spot
+        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0" (click)="editMode ? reserveSpot() : submitForm(editEventForm)">
+            {{ editMode ? 'Update Event' : 'Reserve A Spot' }}
         </button>
 
-        <div class="favourites" *ngIf="isLoggedIn$ | async">
+        <div class="favourites" *ngIf="(isLoggedIn$ | async) && !editMode">
             <button color="basic" mat-mini-fab (click)="addToFavorites()">
                 <mat-icon class="text-red-600">{{ favourited ? 'favorite' : 'favorite_border' }}</mat-icon>
             </button>

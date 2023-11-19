@@ -1,6 +1,7 @@
 // Routing Imports
 const express = require('express');
 const eventRouter = express.Router();
+const { check, validationResult } = require('express-validator');
 
 // Controller Imports
 const eventsController = require('./../controllers/eventsController');
@@ -26,6 +27,13 @@ eventRouter.delete('/events/:eventId', eventsController.delete_event_by_id);
 eventRouter.get('/events/:eventId/atendees', eventsController.get_atendees_per_event);
 
 eventRouter.post('/events/:eventId/atendees', eventsController.add_atendees_to_event);
+
+function authMiddleware (req, res, next) {
+
+    // Get user login token
+    const token = req.headers.get('Authorization').split(' ')[1];
+
+}
 
 // Module Exports
 module.exports = eventRouter;

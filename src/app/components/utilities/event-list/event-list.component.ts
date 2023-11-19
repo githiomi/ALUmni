@@ -21,11 +21,11 @@ export class EventListComponent {
   @Input() _event$ !: Event;
 
   // Method to open the dialog
-  openDetailsDialog() : void {
+  openDetailsDialog(state : boolean) : void {
     
     const dialogConfig : MatDialogConfig = {
       data : {
-        dialogState : 'view',
+        editState : state,
         dialogData : this._event$
       },
       width: '70%',

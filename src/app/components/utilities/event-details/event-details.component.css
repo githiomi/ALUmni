@@ -72,7 +72,6 @@ mat-dialog-content {
 
 mat-card {
     width: 70%;
-    height: 100%;
     padding-top: 1rem;
     position: relative;
 }

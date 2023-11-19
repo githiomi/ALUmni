@@ -31,11 +31,11 @@ export class EventComponent implements OnInit {
     )
   }
 
-  openDetailsDialog(): void {
+  openDetailsDialog(state : boolean): void {
 
     const dialogConfig: MatDialogConfig = {
       data: {
-        dialogState: 'view',
+        editState: state,
         dialogData: this.event
       },
       width: '70%',

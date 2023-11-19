@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Global variables
-const PORT_NUMBER = 3000;
+const PORT_NUMBER = 3001;
 
 // Routers
 const alumniRouter = require('./routes/alumniRoutes');
