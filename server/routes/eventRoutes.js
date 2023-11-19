@@ -1,12 +1,13 @@
 // Routing Imports
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const eventRouter = express.Router();
 const { check, validationResult } = require('express-validator');
 
 // Controller Imports
 const eventsController = require('./../controllers/eventsController');
 
-eventRouter.get('/events', eventsController.get_all_events);
+eventRouter.get('/events', authMiddleware, eventsController.get_all_events);
 
 eventRouter.post('/events/new', [
     check('eventTitle').not().isEmpty().trim().escape().withMessage('Event Title cannot be empty.'),
@@ -28,11 +29,29 @@ eventRouter.get('/events/:eventId/atendees', eventsController.get_atendees_per_e
 
 eventRouter.post('/events/:eventId/atendees', eventsController.add_atendees_to_event);
 
-function authMiddleware (req, res, next) {
+function authMiddleware(req, res, next) {
 
     // Get user login token
-    const token = req.headers.get('Authorization').split(' ')[1];
+    const authToken = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
+    console.log('Auth token: ' + authToken);
 
+    if (!authToken || authToken == null)
+        return res.status(401).json({
+            error: 'No Authorization Header was found in the request!',
+            timestamp: Date.now()
+        })
+
+    jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+        if (err)
+            return res.status(403).json({
+                error: "Authorization Token passed but is no longer valid. Refresh Token and try again",
+                timestamp: Date.now()
+            })
+
+        req.authorisedUser = payload;
+        res.status(200).send(req.authorisedUser)
+        next();
+    });
 }
 
 // Module Exports

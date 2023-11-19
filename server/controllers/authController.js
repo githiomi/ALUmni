@@ -1,6 +1,8 @@
 // Corresponding DB connection
-const nedb = require('gray-nedb');
+require('dotenv').config();
 const bcrypt = require('bcrypt');
+const nedb = require('gray-nedb');
+const jwt = require('jsonwebtoken');
 const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 
 // Data Models
@@ -25,20 +27,28 @@ exports.log_in = (req, res) => {
                 timestamp: Date.now()
             });
         else {
-            console.log(alumni);
-            console.log(password);
-            console.log(alumni[0].password);
-            if (await bcrypt.compare(password, alumni[0].password))
+            if (await bcrypt.compare(password, alumni[0].password)){
+
+                // Authentication using JWT
+                const payload = {
+                    alumniId : alumni[0].alumniId,
+                    username : alumni[0].username,
+                    role : alumni[0].role
+                }
+
+                const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+
                 res.status(200).json({
                     success: `Login Successful`,
+                    accessToken : accessToken,
                     timestamp: Date.now()
                 })
+            }
             else
                 res.status(401).json({
                     error: `Incorrect Password. Authentication failed. Try Again.`,
                     timestamp: Date.now()
                 });
-
         }
     });
 

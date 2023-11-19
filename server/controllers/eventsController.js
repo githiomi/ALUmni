@@ -3,7 +3,6 @@ const eventsDB = new nedb({ filename: "./database/events.db", autoload: true });
 
 // Data Model Classes
 const Event = require('./../models/event');
-const EventCategory = require('./../models/eventCategories');
 
 exports.create_new_event = (req, res) => {
 
@@ -14,7 +13,6 @@ exports.create_new_event = (req, res) => {
         venue,
         description,
         eventDuration,
-        //new Date(2023, 10, 20),
         eventDate,
         attendeeLimit,
         eventCategory,
@@ -37,17 +35,17 @@ exports.create_new_event = (req, res) => {
 }
 
 exports.get_all_events = (req, res) => {
-
     console.log("Retrieving all events from the database...");
 
     eventsDB.find({}, (err, events) => {
         if (err)
             console.error('There was an error retrieving all the events from the database', err);
         else {
-            res.json(events)
+            res.status(200).json({
+                events
+            })
         }
     });
-
 }
 
 exports.get_event_by_id = (req, res) => {
