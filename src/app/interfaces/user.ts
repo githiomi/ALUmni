@@ -1,8 +1,18 @@
 export interface User {
 
+    alumniId: string;
+    firstName: string;
+    lastName: string;
     username: string;
-    password: string;
+    gender: string;
+    age: number;
+    profilePictureUrl: string;
+    startYear: number;
+    graduationYear: number;
+    emailAddress: string;
     role: string;
-    profilePictureUrl ?: string;
+    password: string;
+    eventsToAttend: string[];
+    _id: string;
     
 }

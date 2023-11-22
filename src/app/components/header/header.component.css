@@ -64,6 +64,13 @@ ul li:hover{
 }
 
 /* Profile Info */
+.profilePicture {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .profileButton:hover {
     background-color: var(--var-primary-red) !important;
     color: var(--var-white) !important;

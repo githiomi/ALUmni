@@ -7,6 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthResponse } from 'src/app/interfaces/authResponse';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent {
 
   // Dependency Injection
   private _router: Router = inject(Router);
-  private _snackbar: MatSnackBar = inject(MatSnackBar);
+  private _matSnackBar: MatSnackBar = inject(MatSnackBar);
   private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
 
@@ -48,21 +49,26 @@ export class LoginComponent {
     let alumniId = formValue.alumniId;
     let alumniPassword = formValue.alumniPassword;
 
-    if (this._authService.loginUser(alumniId, alumniPassword))
-      setTimeout(
-        () => {
-          this._router.navigate(['/home']);
-        }, 1000
-      )
-    else {
-      this.isProcessing = false;
-      this._snackbar.open('Login Failed. Try again!', "CLOSE",
-        {
-          duration: 3000,
-          horizontalPosition: 'start',
-          verticalPosition: 'bottom'
+    // this._authService.loginUser(alumniId, alumniPassword);
+    this._authService.loginUser(alumniId, alumniPassword).subscribe(
+      ( _res : AuthResponse ) => {
+        this._matSnackBar.open(_res.message, "CLOSE", {
+          duration: 2000,
+          horizontalPosition: 'start'
+        })
+
+        // Navigate to home page
+        this._router.navigate(['/home']);
+      },
+      _err => {
+        this.isProcessing = false;
+        this._matSnackBar.open(_err.message, "CLOSE", {
+          duration: 2000,
+          horizontalPosition: 'start'
         });
-    }
+      }
+    );
+
   }
 
 }

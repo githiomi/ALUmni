@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { LoggedInUser } from 'src/app/interfaces/logged-in-user';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,13 @@ export class HeaderComponent {
 
   // Component Variables
   isLoggedIn: Observable<boolean> = this._authService.loginStatus$;
+  // currentUser$ : Observable<LoggedInUser> = this._authService.loggedInUser$;
+  currentUser$ !: LoggedInUser;
+
+  constructor(){
+    this._authService.loggedInUser$.subscribe(
+      res => this.currentUser$ = res);
+  }
 
   changeStatus(status:boolean) : void {
 

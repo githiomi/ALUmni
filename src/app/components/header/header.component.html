@@ -17,7 +17,7 @@
                 <li class="cursor-pointer" routerLink="/home" routerLinkActive="active">Home</li>
                 <li class="cursor-pointer" routerLink="/events" routerLinkActive="active">Events</li>
                 <li class="cursor-pointer" routerLink="/connect" routerLinkActive="active">Connect</li>
-                <li  class="cursor-pointer" routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
+                <li class="cursor-pointer" routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
             </ul>
         </nav>
 
@@ -25,17 +25,18 @@
             <!-- Vertical Divider goes here -->
         </mat-divider>
 
-        <button *ngIf="!(isLoggedIn | async)" mat-raised-button class="loginBtn uppercase" routerLink="/login">
+        <button *ngIf="!currentUser$" mat-raised-button class="loginBtn uppercase" routerLink="/login">
             login
         </button>
 
-        <div class="cursor-pointer flex justify-between items-center gap-2" *ngIf="isLoggedIn | async" [mat-menu-trigger-for]="profileDropDown">
+        <div class="cursor-pointer flex justify-between items-center gap-2" *ngIf="currentUser$"
+            [mat-menu-trigger-for]="profileDropDown">
 
-            <img [src]="profilePictureUrl" alt="./../../../assets/images/ALUmni_logo.png" width="40px" height="40px">
+            <img [src]="currentUser$.profilePictureUrl" alt="Profile Picture" class="profilePicture img-thumbnail">
 
             <div class="content flex flex-col items-start">
                 <small class="font-extralight">Welcome Back,</small>
-                <span class="font-semibold tracking-wider">{{ username }}</span>
+                <span class="font-semibold tracking-wider">{{ currentUser$.username }}</span>
             </div>
 
             <mat-icon class="text-red-600">expand_more</mat-icon>
@@ -46,7 +47,7 @@
                         <mat-icon>person-add</mat-icon>
                         View Profile</button>
                     <button class="profileButton" mat-menu-item (click)="changeStatus(false)">
-                        <mat-icon>exit_to_app</mat-icon> 
+                        <mat-icon>exit_to_app</mat-icon>
                         Log Out</button>
                 </ng-template>
             </mat-menu>

@@ -18,40 +18,47 @@ exports.log_in = (req, res) => {
 
         if (err)
             res.status(500).json({
-                error: 'An Internal Error occurred',
+                message: 'An Internal Error occurred',
                 timestamp: Date.now()
             })
         else if (alumni.length === 0)
             res.status(401).json({
-                error: `There is no user with the username: "${req.body.username}"`,
+                message: `There is no user with the username: "${req.body.username}"`,
                 timestamp: Date.now()
             });
         else {
             if (await bcrypt.compare(password, alumni[0].password)){
 
+                const alum = alumni[0];
+
                 // Authentication using JWT
                 const payload = {
-                    alumniId : alumni[0].alumniId,
-                    username : alumni[0].username,
-                    role : alumni[0].role
+                    alumniId : alum.alumniId,
+                    username : alum.username,
+                    role : alum.role
                 }
 
                 const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
 
                 res.status(200).json({
-                    success: `Login Successful`,
+                    message: `Login Successful. Welcome ${alum.firstName}`,
                     accessToken : accessToken,
+                    resource : {
+                        alumniId :alum.alumniId,
+                        username : alum.username,
+                        role : alum.role,
+                        profilePictureUrl : alum.profilePictureUrl
+                    },
                     timestamp: Date.now()
                 })
             }
             else
                 res.status(401).json({
-                    error: `Incorrect Password. Authentication failed. Try Again.`,
+                    message: `Incorrect Password. Authentication failed. Try Again.`,
                     timestamp: Date.now()
                 });
         }
     });
-
 }
 
 exports.register = async (req, res) => {
@@ -76,11 +83,15 @@ exports.register = async (req, res) => {
     alumniDB.insert(alum, (err, newAlum) => {
         if (err)
             res.status(500).json({
-                error: 'An Internal Error occurred',
+                message: 'An Internal Error occurred',
                 timestamp: Date.now()
             });
         else
-            res.status(200).json(newAlum);
+            res.status(200).json({
+                message : 'The new user was created successfully',
+                resource : newAlum,
+                timestamp: Date.now()
+            });
     });
 
 }

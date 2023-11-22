@@ -26,9 +26,16 @@ exports.get_alumni_by_id = (req, res) => {
             console.error(err);
         else {
             if (alumni.length > 0)
-                res.json(alumni)
+                res.status(200).json({
+                    message: "An Alumni with the ID: " + alumni.alumniId + " has been found in the database!",
+                    resource: alumni,
+                    timestamp: Date.now()
+                })
             else
-                res.send(`No user with the id "${alumId}" was found in the database.`)
+                res.status(417).json({
+                    message: `No user with the id "${alumId}" was found in the database.`,
+                    timestamp: Date.now()
+                })
         }
     })
 

@@ -14,7 +14,7 @@ class Alumnni {
         this.username = this.firstName.charAt(0).toUpperCase() + this.lastName.substring(0, 5).toUpperCase() + Math.floor(Math.random() * (MAX - MIN)) + MIN;
         this.gender = gender;
         this.age = age;
-        this.profilePictureUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F26619142-default-avatar-profile-icon-vector-of-social-media-user-photo-image&psig=AOvVaw3K8ksj0n4xFeE9_KD5FRvV&ust=1698997009532000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIibgp3npIIDFQAAAAAdAAAAABAE";
+        this.profilePictureUrl = "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg";
         this.startYear = parseInt(graduationYear) - 4;
         this.graduationYear = graduationYear;
         this.emailAddress = emailAddress;

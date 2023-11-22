@@ -7,6 +7,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Lottie Module Imports
 import { LottieModule } from 'ngx-lottie';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Lottie Animation
 export function playerFactory(): any {
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
               provideAnimations(),
               importProvidersFrom(
                 HttpClientModule,
+                MatSnackBarModule,
                 LottieModule.forRoot(
                   {player : playerFactory}
                 )
