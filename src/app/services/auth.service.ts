@@ -2,8 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, catchError, concatMap, map, of, tap, throwError } from 'rxjs';
 import { User } from '../interfaces/user';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { AuthResponse } from '../interfaces/authResponse';
 import { LoggedInUser } from '../interfaces/logged-in-user';
 
@@ -18,11 +16,15 @@ export class AuthService {
   // Dependancy Injections
   private _httpClient: HttpClient = inject(HttpClient);
 
-  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(this.getAccessToken());
   loginStatus$ = this.isLoggedIn.asObservable();
 
   private loggedInUser: Subject<LoggedInUser> = new Subject();
-  loggedInUser$ : Observable<LoggedInUser> = this.loggedInUser.asObservable();
+  loggedInUser$: Observable<LoggedInUser> = this.loggedInUser.asObservable();
+
+  private getAccessToken(): boolean {
+    return !!localStorage.getItem('auth_access_token');
+  }
 
   getAllUsers(): Observable<User[]> {
     return this._httpClient.get<User[]>(`${this.BASE_URL}users`);
@@ -46,7 +48,7 @@ export class AuthService {
           if (_res.accessToken) {
             // Store access token in local storage
             localStorage.setItem('auth_access_token', `Bearer ${_res.accessToken}`);
-            
+
             // Get the user
             const resource = _res.resource;
 
@@ -58,22 +60,17 @@ export class AuthService {
             });
 
             // change login status
-            this.changeLoginStatus(!!localStorage.getItem('auth_access_token'));
+            this.changeLoginStatus(this.getAccessToken());
           }
           return _res;
         }),
       );
   }
 
-  getLoggedInUser(username: string, password: string): Observable<User> {
-    return this._httpClient.post<AuthResponse>(`${this.BASE_URL}auth/login`, { username, password })
-      .pipe(
-        concatMap(_authResponse => {
-          let alumniId = _authResponse.resource.alumniId;
-
-          return this._httpClient.get<User>(`${this.BASE_URL}alumni/${alumniId}`);
-        })
-      );
+  logoutUser() {
+    // Remove the token from the local storage
+    localStorage.removeItem('auth_access_token');
+    this.changeLoginStatus(this.getAccessToken());
   }
 
 }

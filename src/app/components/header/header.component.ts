@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { LoggedInUser } from 'src/app/interfaces/logged-in-user';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-header',
@@ -16,26 +17,28 @@ import { LoggedInUser } from 'src/app/interfaces/logged-in-user';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   // Const variables
-  readonly username : string = 'DGITHI280';
+  readonly username: string = 'DGITHI280';
   readonly profilePictureUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png';
 
   // Dependancy Injection
+  private _router: Router = inject(Router);
   private _authService: AuthService = inject(AuthService);
 
   // Component Variables
-  isLoggedIn: Observable<boolean> = this._authService.loginStatus$;
-  // currentUser$ : Observable<LoggedInUser> = this._authService.loggedInUser$;
   currentUser$ !: LoggedInUser;
+  private userSubscription$: Subscription | undefined;
+  isLoggedIn: Observable<boolean> = this._authService.loginStatus$;
 
-  constructor(){
-    this._authService.loggedInUser$.subscribe(
-      res => this.currentUser$ = res);
+  ngOnInit() {
+    this.userSubscription$ = this._authService.loggedInUser$.subscribe(
+      res => this.currentUser$ = res
+    )
   }
 
-  changeStatus(status:boolean) : void {
+  changeStatus(status: boolean): void {
 
     if (status === false)
       if (confirm(`${this.username}, are you sure you want to log out?`))
@@ -44,6 +47,18 @@ export class HeaderComponent {
         return;
 
     this._authService.changeLoginStatus(status);
+  }
+
+  logoutUser(): void {
+    this._authService.logoutUser();
+
+    // Route back to home page
+    this._router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription$ !== null && this.userSubscription$ !== undefined)
+      this.userSubscription$.unsubscribe();
   }
 
 }

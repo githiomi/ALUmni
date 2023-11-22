@@ -25,11 +25,11 @@
             <!-- Vertical Divider goes here -->
         </mat-divider>
 
-        <button *ngIf="!currentUser$" mat-raised-button class="loginBtn uppercase" routerLink="/login">
+        <button *ngIf="!(isLoggedIn | async)" mat-raised-button class="loginBtn uppercase" routerLink="/login">
             login
         </button>
 
-        <div class="cursor-pointer flex justify-between items-center gap-2" *ngIf="currentUser$"
+        <div class="cursor-pointer flex justify-between items-center gap-2" *ngIf="isLoggedIn | async"
             [mat-menu-trigger-for]="profileDropDown">
 
             <img [src]="currentUser$.profilePictureUrl" alt="Profile Picture" class="profilePicture img-thumbnail">
@@ -46,7 +46,7 @@
                     <button class="profileButton" mat-menu-item routerLink="/profile">
                         <mat-icon>person-add</mat-icon>
                         View Profile</button>
-                    <button class="profileButton" mat-menu-item (click)="changeStatus(false)">
+                    <button class="profileButton" mat-menu-item (click)="logoutUser()">
                         <mat-icon>exit_to_app</mat-icon>
                         Log Out</button>
                 </ng-template>
