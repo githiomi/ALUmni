@@ -15,7 +15,7 @@
             Create a new event
         </h1>
         
-        <button color="basic" mat-mini-fab mat-dialog-close="close" class="cancel">
+        <button color="basic" mat-mini-fab mat-dialog-close class="cancel">
             <mat-icon class="text-red-600">close</mat-icon>
         </button>
     </div>
@@ -96,13 +96,12 @@
 
                     <div class="flex items-center justify-between gap-8">
 
-                        <mat-form-field class="w-full" appearance="outline">
+                        <mat-form-field appearance="outline">
                             <mat-label>Attendee Limit</mat-label>
-                            <input matInput type="number" formControlName="attendeeLimit"
-                                placeholder="Maximum capacity possible">
+                            <input matInput type="number" formControlName="attendeeLimit">
                             <small
                                 *ngIf="(newEventForm.controls['attendeeLimit'].dirty || form.submitted) && newEventForm.controls['attendeeLimit'].invalid"
-                                class="text-red-600 text-xs text-end py-1">Number of attendees is required!</small>
+                                class="text-red-600 text-xs text-end py-1">Attendee Limit is required!</small>
                         </mat-form-field>
 
                         <mat-form-field class="w-full" appearance="outline">
@@ -125,10 +124,12 @@
     </mat-dialog-content>
 
     <div mat-dialog-actions class="actions p-4">
-        <button class="appButton" mat-raised-button [disabled]="newEventForm.invalid"
+        <button *ngIf="!loading" class="appButton" mat-raised-button [disabled]="newEventForm.invalid"
             (click)="submitForm(newEventForm)">
-            <mat-icon>create</mat-icon>Create New Event
+            <mat-icon>create</mat-icon>Create Event
         </button>
+
+        <mat-progress-spinner *ngIf="loading" />
     </div>
 
 </section>

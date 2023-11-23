@@ -6,19 +6,18 @@ const Event = require('./../models/event');
 
 exports.create_new_event = (req, res) => {
 
-    const { eventTitle, eventBanner, description, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
+    const { eventTitle, eventBanner, shortDescription, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
 
     const event = new Event(
         eventTitle,
         eventBanner,
+        shortDescription,
         venue,
-        description,
         eventDuration,
         eventDate,
         attendeeLimit,
         eventCategory,
-        createdBy,
-        Date.now()
+        createdBy
     )
 
     eventsDB.insert(event, (err, newEvent) => {
@@ -45,14 +44,14 @@ exports.get_all_events = (req, res) => {
     eventsDB.find({}, (err, events) => {
         if (err) {
             console.error('There was an error retrieving all the events from the database', err);
-            res.status(417).send({
+            res.status(500).send({
                 message: `There was an error retrieving all the events from the database. Error: ${err}`,
                 timestamp: Date.now()
             })
         }
         else {
             res.status(200).json({
-                message : `Successfully retrieved all events from the database`,
+                message: `Successfully retrieved all events from the database`,
                 resource: events,
                 timestamp: Date.now()
             })
@@ -65,13 +64,26 @@ exports.get_event_by_id = (req, res) => {
     const eventId = (req.params.eventId).toUpperCase();
 
     eventsDB.find({ eventId: eventId }, (err, event) => {
-        if (err)
+        if (err) {
             console.error(err);
-        else
+            res.status(500).send({
+                message: `There was an error retrieving the event with id ${eventId} from the database. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        }
+        else {
             if (event.length == 0)
-                res.send(`No Event with the id ${eventId} was found in the database.`);
+                res.status(404).send({
+                    message: `No event with the id: ${eventId} was found on the database. Error: ${err}`,
+                    timestamp: Date.now()
+                })
             else
-                res.json(event);
+                res.status(200).json({
+                    message: `Successfully retrieved the event with id: ${eventId} from the database`,
+                    resource: event,
+                    timestamp: Date.now()
+                })
+        }
     });
 
 }
@@ -82,14 +94,27 @@ exports.update_event_by_id = (req, res) => {
 
     const updatedEvent = req.body;
 
+    // const { eventTitle, eventBanner, description, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
+
+    // const event = new Event(
+    //     eventTitle,
+    //     eventBanner,
+    //     description,
+    //     venue,
+    //     eventDuration,
+    //     eventDate,
+    //     attendeeLimit,
+    //     eventCategory,
+    //     createdBy
+    // )
+
     if (!eventId) return next();
 
     eventsDB.find({ eventId: eventId }, (err, event) => {
 
         if (err) {
-            console.log(err);
-            res.status(400).send({
-                error: `No event with the id ${eventId} was found in the database.`,
+            res.status(404).send({
+                message: `No event with the id ${eventId} was found in the database. Error: ${err}`,
                 timestamp: Date.now()
             })
         }
@@ -97,15 +122,26 @@ exports.update_event_by_id = (req, res) => {
             eventsDB.update({ eventId: eventId }, { $set: updatedEvent }, {}, (err, replaced) => {
                 if (err)
                     res.status(500).json({
-                        error: 'An Internal Error occurred',
+                        message: `There was an error updating the event with id ${eventId} with new data. Error: ${err}`,
                         timestamp: Date.now()
                     })
                 else
-                    if (replaced == 1)
-                        res.status(200).json(updatedEvent);
+                    if (replaced == 1) {
+
+                        eventsDB.find({ eventId: eventId }, (err, event) => {
+                            if (err)
+                                console.log(err);
+
+                            res.status(200).json({
+                                message: `Successfully updated the event with id: ${eventId} with new data`,
+                                resource: updatedEvent,
+                                timestamp: Date.now()
+                            })
+                        })
+                    }
                     else {
                         res.status(200).send({
-                            error: `An Internal Error occurred. Could not update event with Id: ${eventId}`,
+                            message: `An unknown error occured. Could not update event with Id: ${eventId}`,
                             timestamp: Date.now()
                         })
                     }
@@ -124,8 +160,8 @@ exports.delete_event_by_id = (req, res) => {
     eventsDB.remove({ eventId: eventId }, {}, (err, removedEvent) => {
         if (err) {
             console.log(err);
-            res.status(417).json({
-                message: `There was an error when deleting event from the database -> ${err}`,
+            res.status(500).json({
+                message: `There was an error deleting event with id: ${eventId} from the database. Error: ${err}`,
                 timestamp: Date.now()
             })
         }

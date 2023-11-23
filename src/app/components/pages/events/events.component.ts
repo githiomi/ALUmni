@@ -43,20 +43,24 @@ export class EventsComponent {
 
   // Component variables
   fetching = true;
-  filterForm: FormGroup;
-  eventYears$: Observable<number[]>;
-  // events$: Observable<ServerResponse>;
   events!: Event[];
+  filterForm!: FormGroup;
+  eventYears$: Observable<number[]>;
   eventCategories$: Observable<string[]>;
   eventLocations$: Observable<string[]>;
 
   constructor() {
-
-    // this.events$ = this._eventService.getAllEvents();
     this.eventYears$ = this._eventService.getYears();
     this.eventLocations$ = this._eventService.getEventLocations();
     this.eventCategories$ = this._eventService.getEventCategories();
+  }
 
+  ngOnInit(): void {
+    this.getEvents();
+    this.filterFormInit();
+  }
+
+  private filterFormInit(): void {
     this.filterForm = this._formBuilder.group({
       eventCategory: new FormControl(''),
       eventLocation: new FormControl(''),
@@ -65,21 +69,19 @@ export class EventsComponent {
       {
         updateOn: 'blur'
       });
-
-    setTimeout(() => this.fetching = false, 2000);
   }
 
-  ngOnInit(): void {
+  private getEvents(): void {
+    this.fetching = true;
     this._eventService.getAllEvents().subscribe(
       _response => {
-
-        // Get the events array
+        this.fetching = false;
         this.events = _response.resource
-
       },
-      _err => this._matSnackBar.open(_err, 'CLOSE', {
-        duration: 2000
-      })
+      _err => {
+        this.fetching = false;
+        this._matSnackBar.open(_err, 'CLOSE', { duration: 2000 });
+      }
     )
   }
 
@@ -88,12 +90,12 @@ export class EventsComponent {
     this.filterForm.controls[formControlName].setValue('');
   }
 
-  clearFilters() {
+  clearFilters(): void {
     this.filterForm.reset();
-    // this.events$ = this._eventService.events;
+    this.getEvents();
   }
 
-  submitForm(filterForm: any): void {
+  submitFilterForm(filterForm: any): void {
     const formValues = filterForm.value;
 
     if (!formValues.eventCategory && !formValues.eventLocation && !formValues.eventYear) {
@@ -113,15 +115,14 @@ export class EventsComponent {
     this.filterEvents(formValues);
   }
 
-  // Method to perform filter
   filterEvents({ eventCategory, eventLocation }: any): void {
-    // if (eventCategory && eventLocation)
-    //   this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
+    if (eventCategory && eventLocation)
+      this.events = this.events.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
 
-    // this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
+    this.events = this.events.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
   }
 
-  createNewEvent() {
+  createNewEvent(): void {
     const newEventDialogConfig: MatDialogConfig = {
       data: {
         editState: true,
@@ -135,7 +136,26 @@ export class EventsComponent {
       exitAnimationDuration: 700
     }
 
-    this._matDialog.open(NewEventComponent, newEventDialogConfig)
+    this._matDialog.open(NewEventComponent, newEventDialogConfig).afterClosed().subscribe(
+      (_res: boolean) => {
+
+        switch (_res) {
+          case true:
+            this._matSnackBar.open("You have successfully created a new event.", "Close", {
+              duration: 3000,
+              horizontalPosition: 'start'
+            });
+            this.getEvents();
+            break;
+          case false:
+            this._matSnackBar.open("Error creating a new event. Try again later.", "Close", {
+              duration: 3000
+            });
+            break;
+        }
+
+      }
+    )
   }
 
 }
