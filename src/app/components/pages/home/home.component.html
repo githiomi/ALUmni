@@ -87,7 +87,7 @@
                 </p>
 
                 <div class="events flex gap-3 items-center overflow-y-scroll">
-                    <ng-container *ngFor="let event of ( events$ | async)">
+                    <ng-container *ngFor="let event of events$">
                         <app-event [event]="event" /></ng-container>
                 </div>
 

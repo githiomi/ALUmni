@@ -13,7 +13,7 @@
             <mat-icon class="text-red-600">delete</mat-icon>
         </button>
 
-        <button color="basic" mat-mini-fab mat-dialog-close="close" class="cancel">
+        <button color="basic" mat-mini-fab mat-dialog-close class="cancel">
             <mat-icon class="text-red-600">close</mat-icon>
         </button>
     </div>
@@ -31,9 +31,9 @@
                                 class="text-red-600">{{ _event$.eventTitle }}</code></p>
                     </div>
 
-                    <div class="shortDescription p-6">
+                    <div class="p-6">
                         <p>
-                            {{ _event$.shortDescription }}
+                            {{ _event$.eventDescription }}
                         </p>
                     </div>
 
@@ -84,7 +84,7 @@
                                 class="text-red-600">Edit Event Details</code></p>
                     </div>
 
-                    <form [formGroup]="editEventForm" (ngSubmit)="submitForm(editEventForm)" #form="ngForm">
+                    <form [formGroup]="editEventForm" (ngSubmit)="submitUpdateForm(editEventForm)" #form="ngForm">
 
                         <div class="row">
 
@@ -114,7 +114,9 @@
 
                             <mat-form-field class="w-full" appearance="outline">
                                 <mat-label>Event Date</mat-label>
-                                <input matInput type="text" formControlName="eventDate">
+                                <input matInput [matDatepicker]="picker" formControlName="eventDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
                                 <small
                                     *ngIf="(editEventForm.controls['eventDate'].dirty || form.submitted) && editEventForm.controls['eventDate'].invalid"
                                     class="text-red-600 text-xs text-end py-1">Event Date is required!</small>
@@ -184,10 +186,12 @@
     </mat-dialog-content>
 
     <div mat-dialog-actions class="actions p-4">
-        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0"
-            (click)="editMode ? submitForm(editEventForm) : reserveSpot()">
+        <button *ngIf="!submitting" class="appButton" mat-raised-button [disabled]="seatsRemaining === 0"
+            (click)="editMode ? submitUpdateForm(editEventForm) : reserveSpot()">
             {{ editMode ? 'Update Event' : 'Reserve A Spot' }}
         </button>
+
+        <mat-progress-spinner *ngIf="submitting" />
 
         <div class="favourites" *ngIf="(isLoggedIn$ | async) && !editMode">
             <button color="basic" mat-mini-fab (click)="addToFavorites()">

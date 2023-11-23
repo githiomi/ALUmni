@@ -3,10 +3,10 @@ export interface Event {
     eventBanner: string;
     eventTitle: string;
     venue: string;
-    shortDescription: string;
+    eventDescription: string;
     details: string;
     eventDuration: string;
-    eventDate: string;
+    eventDate: Date;
     attendeeLimit: number;
     eventCategory: string;
     createdBy: string;

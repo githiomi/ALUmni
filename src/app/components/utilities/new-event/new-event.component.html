@@ -8,13 +8,13 @@
         <!-- Overlay goes here -->
     </div>
 
-    
+
 
     <div class="header">
         <h1 mat-dialog-title class="uppercase text-red-600 font-semibold">
             Create a new event
         </h1>
-        
+
         <button color="basic" mat-mini-fab mat-dialog-close class="cancel">
             <mat-icon class="text-red-600">close</mat-icon>
         </button>
@@ -56,7 +56,9 @@
 
                         <mat-form-field class="w-full" appearance="outline">
                             <mat-label>Event Date</mat-label>
-                            <input matInput type="text" formControlName="eventDate">
+                            <input matInput [matDatepicker]="picker" formControlName="eventDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
                             <small
                                 *ngIf="(newEventForm.controls['eventDate'].dirty || form.submitted) && newEventForm.controls['eventDate'].invalid"
                                 class="text-red-600 text-xs text-end py-1">Event Date is required!</small>
@@ -106,8 +108,7 @@
 
                         <mat-form-field class="w-full" appearance="outline">
                             <mat-label>Event Banner URL</mat-label>
-                            <input matInput type="text" formControlName="eventBanner"
-                                placeholder="Image URL">
+                            <input matInput type="text" formControlName="eventBanner" placeholder="Image URL">
                             <small
                                 *ngIf="(newEventForm.controls['eventBanner'].dirty || form.submitted) && newEventForm.controls['eventBanner'].invalid"
                                 class="text-red-600 text-xs text-end py-1">Event Banner is required!</small>

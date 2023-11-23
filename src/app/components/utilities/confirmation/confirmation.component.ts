@@ -34,7 +34,6 @@ export class ConfirmationComponent {
 
   // Method to delete event after confirmation
   deleteEvent(eventId : string) : void {
-    console.log(eventId);
     this.dialogReference.close(true);
   }
 }

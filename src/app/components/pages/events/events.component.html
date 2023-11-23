@@ -120,7 +120,7 @@
 
                 <div class="mt-8">
                     <ng-container *ngFor="let _event of events; let index = index">
-                        <app-event-list [_event$]="_event" />
+                        <app-event-list (eventListEmitter)="getEvents()" [_event$]="_event" />
                     </ng-container>
                 </div>
 

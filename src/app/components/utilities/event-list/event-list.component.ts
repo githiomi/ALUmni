@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Event } from 'src/app/interfaces/event';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +19,7 @@ export class EventListComponent {
   private _matDialog : MatDialog = inject(MatDialog);
 
   @Input() _event$ !: Event;
+  @Output() eventListEmitter = new EventEmitter<boolean>;
 
   // Method to open the dialog
   openDetailsDialog(state : boolean) : void {
@@ -36,11 +37,9 @@ export class EventListComponent {
       exitAnimationDuration: 700
     }
 
-    const eventDetailsDialog = this._matDialog.open(
-      EventDetailsComponent, dialogConfig
+    this._matDialog.open(EventDetailsComponent, dialogConfig).afterClosed().subscribe(
+      (_res : boolean) => this.eventListEmitter.emit(_res)
     );
-
-    eventDetailsDialog.afterClosed().subscribe(console.log);
 
   }
 

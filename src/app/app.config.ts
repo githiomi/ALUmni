@@ -8,6 +8,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 // Lottie Module Imports
 import { LottieModule } from 'ngx-lottie';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 // Lottie Animation
 export function playerFactory(): any {
@@ -24,6 +26,8 @@ export const appConfig: ApplicationConfig = {
               importProvidersFrom(
                 HttpClientModule,
                 MatSnackBarModule,
+                MatDatepickerModule,
+                MatNativeDateModule,
                 LottieModule.forRoot(
                   {player : playerFactory}
                 )

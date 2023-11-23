@@ -14,19 +14,23 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule],
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css']
 })
 export class EventDetailsComponent implements OnInit {
 
   // Triggers
-  protected favourited: boolean = false;
   protected editMode: boolean;
+  protected submitting = false;
+  protected favourited: boolean = false;
 
   // Dependancy Injections
   private _matDialog: MatDialog = inject(MatDialog);
@@ -65,7 +69,7 @@ export class EventDetailsComponent implements OnInit {
     if (this.editMode)
       this.editEventForm = this._formBuilder.group({
         eventTitle: new FormControl(this._event$.eventTitle, [Validators.required]),
-        eventDescription: new FormControl(this._event$.shortDescription, [Validators.required]),
+        eventDescription: new FormControl(this._event$.eventDescription, [Validators.required]),
         eventDate: new FormControl(this._event$.eventDate, [Validators.required]),
         eventDuration: new FormControl(this._event$.eventDuration, [Validators.required]),
         eventCategory: new FormControl(this._event$.eventCategory, [Validators.required]),
@@ -91,11 +95,21 @@ export class EventDetailsComponent implements OnInit {
     confirmationDialogRef.afterClosed().subscribe(
       (confirmation: boolean) => {
         if (confirmation) {
-          console.log('Deletion confirmed. Deleting now!');
-
           this._eventService.deleteEventById(this._event$.eventId).subscribe(
-            res => console.log(res),
-            err => console.warn(err)
+            res => {
+              this._snackBar.open(res.message, 'CLOSE', {
+                duration: 3000,
+                horizontalPosition: 'start'
+              });
+              this._eventDialogReference.close();
+            },
+            err => {
+              this._snackBar.open(err.message, 'CLOSE', {
+                duration: 3000,
+                horizontalPosition: 'start'
+              });
+              this._eventDialogReference.close();
+            }
           )
         }
       });
@@ -125,10 +139,28 @@ export class EventDetailsComponent implements OnInit {
     });
   }
 
-  submitForm(form: any): void {
+  submitUpdateForm(form: any): void {
+
+    if (form.invalid) {
+      console.warn("Update Form is invalid");
+      return;
+    }
+
+    this.submitting = true;
     const formValues = form.value;
 
-    console.log(formValues);
+    this._eventService.updateEventById(this._event$.eventId, formValues).subscribe(
+      _res => {
+        console.log(_res);
+        this.submitting = false;
+        this._eventDialogReference.close(true);
+      },
+      _err => {
+        console.log(_err);
+        this.submitting = false;
+        this._eventDialogReference.close(false);
+      }
+    )
   }
 
 }

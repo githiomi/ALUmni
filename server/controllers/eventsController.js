@@ -6,12 +6,12 @@ const Event = require('./../models/event');
 
 exports.create_new_event = (req, res) => {
 
-    const { eventTitle, eventBanner, shortDescription, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
+    const { eventTitle, eventBanner, eventDescription, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
 
     const event = new Event(
         eventTitle,
         eventBanner,
-        shortDescription,
+        eventDescription,
         venue,
         eventDuration,
         eventDate,

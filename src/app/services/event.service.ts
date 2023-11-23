@@ -17,39 +17,27 @@ export class EventService {
 
   // Data Retrieval Methods
   getEvents(): Observable<Event[]> {
-    return this._httpClient.get<Event[]>(`${this.BASE_URL}events`).pipe(
-      tap(console.log)
-    );
+    return this._httpClient.get<Event[]>(`${this.BASE_URL}events`);
   }
 
   getYears(): Observable<number[]> {
-    return this._httpClient.get<number[]>(`${this.BASE_URL}years`).pipe(
-      tap(console.log)
-    );
+    return this._httpClient.get<number[]>(`${this.BASE_URL}years`);
   }
 
   getEventLocations(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}eventLocations`).pipe(
-      tap(console.log)
-    );
+    return this._httpClient.get<string[]>(`${this.BASE_URL}eventLocations`);
   }
 
   getEventCategories(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}eventCategories`).pipe(
-      tap(console.log)
-    );
+    return this._httpClient.get<string[]>(`${this.BASE_URL}eventCategories`);
   }
 
   getGenders(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}genders`).pipe(
-      tap(console.log)
-    );
+    return this._httpClient.get<string[]>(`${this.BASE_URL}genders`);
   }
 
   getRoles(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}roles`).pipe(
-      tap(console.log)
-    );
+    return this._httpClient.get<string[]>(`${this.BASE_URL}roles`);
   }
 
   deleteEventById(eventId: string): Observable<ServerResponse> {
@@ -75,6 +63,14 @@ export class EventService {
       }),
       catchError( _err => {
         return of(_err.message)
+      })
+    );
+  }
+
+  updateEventById(eventId: string, payload : any): Observable<ServerResponse> {
+    return this._httpClient.put<ServerResponse>(`http://localhost:3001/events/${eventId}`, payload).pipe(
+      tap({
+        error: console.log
       })
     );
   }

@@ -1,21 +1,23 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCardModule } from '@angular/material/card';
-import { EventService } from 'src/app/services/event.service';
 import { Observable } from 'rxjs';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { EventService } from 'src/app/services/event.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-event',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './new-event.component.html',
   styleUrls: ['./new-event.component.css']
 })
@@ -56,7 +58,7 @@ export class NewEventComponent {
   submitForm(form: any): void {
 
     if (form.invalid) {
-      console.log('form is invalid');
+      console.log('Form is invalid');
       return;
     }
 
@@ -67,7 +69,7 @@ export class NewEventComponent {
       eventTitle: formValue.eventTitle,
       eventBanner: formValue.eventBanner,
       venue: formValue.venue,
-      shortDescription: formValue.eventDescription,
+      eventDescription: formValue.eventDescription,
       eventDuration: formValue.eventDuration,
       eventDate: formValue.eventDate,
       attendeeLimit: formValue.attendeeLimit,
@@ -79,12 +81,10 @@ export class NewEventComponent {
       res => {
         this.loading = false;
         this._dialogReference.close(true);
-        console.log(res);
       },
       err => {
         this.loading = false;
         this._dialogReference.close(false);
-        console.warn(err)
       }
     );
 

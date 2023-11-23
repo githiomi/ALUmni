@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { EventComponent } from '../../utilities/event/event.component';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -20,15 +21,21 @@ export class HomeComponent implements OnInit {
   
   // Dependancy Injection
   private _router: Router = inject(Router);
+  private _snackBar: MatSnackBar = inject(MatSnackBar);
   private _authService : AuthService = inject(AuthService);
   private _eventService: EventService = inject(EventService);
 
   // Component Variables
-  events$ !: Observable<Event[]>;
+  events$ !: Event[];
   isLoggedIn !: Observable<boolean>;
 
   ngOnInit() {
-    this.events$ = this._eventService.getEvents();
+    this._eventService.getAllEvents().subscribe(
+      _events => this.events$ = _events.resource,
+      _err => this._snackBar.open(_err.message, "Close", {
+        duration: 3000
+      })
+    );
     this.isLoggedIn = this._authService.loginStatus$;
   }
 

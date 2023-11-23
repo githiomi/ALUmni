@@ -6,7 +6,7 @@
 
     <div class="info flex items-center justify-between">
         <div class="date uppercase">
-            <small>OCT 2023</small>
+            <small>{{ event.eventDate | date:'mediumDate'}}</small>
         </div>
 
         <div>
@@ -21,8 +21,8 @@
             {{ event.eventTitle }}
         </h2>
 
-        <p class="shortDescription">
-            {{ event.shortDescription }}
+        <p class="eventDescription">
+            {{ event.eventDescription }}
         </p>
     </section>
 </div>

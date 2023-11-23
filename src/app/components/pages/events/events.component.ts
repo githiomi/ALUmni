@@ -71,7 +71,7 @@ export class EventsComponent {
       });
   }
 
-  private getEvents(): void {
+  getEvents(): void {
     this.fetching = true;
     this._eventService.getAllEvents().subscribe(
       _response => {
