@@ -44,13 +44,13 @@
     position: relative;
 }
 
-.delete{
+.delete {
     position: absolute;
     left: 1rem;
     top: 0;
 }
 
-.cancel{
+.cancel {
     position: absolute;
     right: 1rem;
     top: 0;
@@ -76,7 +76,7 @@ mat-card {
     position: relative;
 }
 
-.edit{
+.edit {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -86,6 +86,10 @@ mat-card {
     width: 80%;
     margin: 0 auto;
     padding: .5rem 1rem;
+}
+
+div>mat-form-field {
+    flex: 1;
 }
 
 span {
@@ -123,6 +127,17 @@ small::before {
     position: absolute;
     bottom: .8rem;
     right: 1rem;
+}
+
+/* Edit Section */
+textarea {
+    height: 200px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+textarea::-webkit-scrollbar {
+    display: none;
 }
 
 /* Animations */

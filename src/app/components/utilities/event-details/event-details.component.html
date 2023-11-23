@@ -79,6 +79,11 @@
 
                 <ng-template #editEvent>
 
+                    <div class="grid place-items-center text-center mb-4">
+                        <p class="text-3xl font-bold text-center uppercase"><code
+                                class="text-red-600">Edit Event Details</code></p>
+                    </div>
+
                     <form [formGroup]="editEventForm" (ngSubmit)="submitForm(editEventForm)" #form="ngForm">
 
                         <div class="row">
@@ -96,19 +101,65 @@
                         <div class="row">
 
                             <mat-form-field class="w-full" appearance="outline">
-                                <mat-label>Event Title</mat-label>
-                                <input matInput type="text" formControlName="eventTitle">
+                                <mat-label>Short Description</mat-label>
+                                <textarea matInput type="text" formControlName="eventDescription"></textarea>
                                 <small
-                                    *ngIf="(editEventForm.controls['eventTitle'].dirty || form.submitted) && editEventForm.controls['eventTitle'].invalid"
-                                    class="text-red-600 text-xs text-end py-1">Event Title is required!</small>
+                                    *ngIf="(editEventForm.controls['eventDescription'].dirty || form.submitted) && editEventForm.controls['eventDescription'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Description is required!</small>
                             </mat-form-field>
-                            
+
+                        </div>
+
+                        <div class="flex items-center justify-between gap-8">
+
                             <mat-form-field class="w-full" appearance="outline">
-                                <mat-label>Event Title</mat-label>
-                                <input matInput type="text" formControlName="eventTitle">
+                                <mat-label>Event Date</mat-label>
+                                <input matInput type="text" formControlName="eventDate">
                                 <small
-                                    *ngIf="(editEventForm.controls['eventTitle'].dirty || form.submitted) && editEventForm.controls['eventTitle'].invalid"
-                                    class="text-red-600 text-xs text-end py-1">Event Title is required!</small>
+                                    *ngIf="(editEventForm.controls['eventDate'].dirty || form.submitted) && editEventForm.controls['eventDate'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Date is required!</small>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full" appearance="outline">
+                                <mat-label>Event Duration</mat-label>
+                                <input matInput type="text" formControlName="eventDuration">
+                                <small
+                                    *ngIf="(editEventForm.controls['eventDuration'].dirty || form.submitted) && editEventForm.controls['eventDuration'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Duration is required!</small>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="flex items-center justify-between gap-8">
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Event Category</mat-label>
+                                <mat-select formControlName="eventCategory">
+                                    <mat-option *ngFor="let _eventCategory of ( eventCategories$ | async)"
+                                        [value]="_eventCategory">
+                                        {{ _eventCategory }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Event Venue</mat-label>
+                                <mat-select formControlName="venue">
+                                    <mat-option *ngFor="let _eventLocation of ( eventLocations$ | async )"
+                                        value="{{_eventLocation}}">
+                                        {{ _eventLocation }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="flex items-center justify-between gap-8">
+
+                            <mat-form-field class="w-full" appearance="outline">
+                                <mat-label>Attendee Limit</mat-label>
+                                <input matInput type="number" formControlName="attendeeLimit" placeholder="Maximum capacity possible">
+                                <small
+                                    *ngIf="(editEventForm.controls['attendeeLimit'].dirty || form.submitted) && editEventForm.controls['attendeeLimit'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Number of attendees is required!</small>
                             </mat-form-field>
 
                         </div>
@@ -124,7 +175,8 @@
     </mat-dialog-content>
 
     <div mat-dialog-actions class="actions p-4">
-        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0" (click)="editMode ? reserveSpot() : submitForm(editEventForm)">
+        <button class="appButton" mat-raised-button [disabled]="seatsRemaining === 0"
+            (click)="editMode ? submitForm(editEventForm) : reserveSpot()">
             {{ editMode ? 'Update Event' : 'Reserve A Spot' }}
         </button>
 

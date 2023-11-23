@@ -33,9 +33,13 @@
 
     </div>
 
-    <div class="viewMore grid place-items-center">
+    <div class="viewMore flex flex-col gap-4 justify-center items-center">
         <button (click)="openDetailsDialog(true)" color="basic" mat-mini-fab class="appButton">
-            <mat-icon>play_arrow</mat-icon>
+            <mat-icon>create</mat-icon>
+        </button>
+
+        <button (click)="openDetailsDialog(false)" color="basic" mat-mini-fab class="appButton">
+            <mat-icon>arrow_forward</mat-icon>
         </button>
     </div>
 

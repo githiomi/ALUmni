@@ -4,6 +4,7 @@ import { User } from '../interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { AuthResponse } from '../interfaces/authResponse';
 import { LoggedInUser } from '../interfaces/logged-in-user';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -11,26 +12,29 @@ import { LoggedInUser } from '../interfaces/logged-in-user';
 export class AuthService {
 
   // Readonly Variables
-  private readonly BASE_URL = 'http://localhost:3001/';
+  private readonly BASE_URL = environment.alumni_base_url;
 
   // Dependancy Injections
   private _httpClient: HttpClient = inject(HttpClient);
 
-  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(this.getAccessToken());
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(this.isTokenPresent());
   loginStatus$ = this.isLoggedIn.asObservable();
 
   private loggedInUser: Subject<LoggedInUser> = new Subject();
   loggedInUser$: Observable<LoggedInUser> = this.loggedInUser.asObservable();
 
-  private getAccessToken(): boolean {
+  private isTokenPresent(): boolean {
     return !!localStorage.getItem('auth_access_token');
+  }
+
+  getAccessToken() {
+    return localStorage.getItem('auth_access_token');
   }
 
   getAllUsers(): Observable<User[]> {
     return this._httpClient.get<User[]>(`${this.BASE_URL}users`);
   }
 
-  // Method to change login status
   changeLoginStatus(newStatus: boolean): void {
     this.isLoggedIn.next(newStatus);
   }
@@ -60,7 +64,7 @@ export class AuthService {
             });
 
             // change login status
-            this.changeLoginStatus(this.getAccessToken());
+            this.changeLoginStatus(this.isTokenPresent());
           }
           return _res;
         }),
@@ -70,7 +74,7 @@ export class AuthService {
   logoutUser() {
     // Remove the token from the local storage
     localStorage.removeItem('auth_access_token');
-    this.changeLoginStatus(this.getAccessToken());
+    this.changeLoginStatus(this.isTokenPresent());
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Event } from 'src/app/interfaces/event';
@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-event-details',
@@ -20,22 +21,25 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css']
 })
-export class EventDetailsComponent {
+export class EventDetailsComponent implements OnInit {
 
   // Triggers
   protected favourited: boolean = false;
-  protected editMode : boolean;
+  protected editMode: boolean;
 
   // Dependancy Injections
   private _snackBar: MatSnackBar = inject(MatSnackBar)
   private _authService: AuthService = inject(AuthService);
-  private _formBuilder : FormBuilder = inject(FormBuilder);
+  private _formBuilder: FormBuilder = inject(FormBuilder);
+  private _eventService: EventService = inject(EventService);
 
   // Component Variables
   seatsRemaining: number;
   protected _event$: Event;
-  editEventForm : FormGroup;
-  isLoggedIn$ : Observable<boolean>;
+  editEventForm!: FormGroup;
+  isLoggedIn$: Observable<boolean>;
+  eventLocations$: Observable<string[]> = this._eventService.getEventLocations();
+  eventCategories$: Observable<string[]> = this._eventService.getEventCategories();
 
   // Get data passed
   constructor(
@@ -49,11 +53,20 @@ export class EventDetailsComponent {
     this._event$ = this._eventData$.dialogData;
     this.seatsRemaining = this._event$.attendeeLimit;
     this.isLoggedIn$ = this._authService.loginStatus$;
+  }
 
+  ngOnInit() {
     // Event Form Initialization
-    this.editEventForm = this._formBuilder.group( {
-      eventTitle : new FormControl(this._event$.eventTitle, [Validators.required])
-    })
+    if (this.editMode)
+      this.editEventForm = this._formBuilder.group({
+        eventTitle: new FormControl(this._event$.eventTitle, [Validators.required]),
+        eventDescription: new FormControl(this._event$.shortDescription, [Validators.required]),
+        eventDate: new FormControl(this._event$.eventDate, [Validators.required]),
+        eventDuration: new FormControl(this._event$.eventDuration, [Validators.required]),
+        eventCategory: new FormControl(this._event$.eventCategory, [Validators.required]),
+        venue: new FormControl(this._event$.venue, [Validators.required]),
+        attendeeLimit: new FormControl(this._event$.attendeeLimit, [Validators.required, Validators.minLength(1)]),
+      })
   }
 
   // Method to add event to favourites
@@ -71,8 +84,8 @@ export class EventDetailsComponent {
   }
 
   // Method to reserve a seat
-  reserveSpot() : void {
-    this.seatsRemaining -- ;
+  reserveSpot(): void {
+    this.seatsRemaining--;
 
     this._snackBar.open(`You have successfully reserved a spot for the ${this._event$.eventTitle} event!`, 'CLOSE', {
       duration: 3000,
@@ -80,7 +93,7 @@ export class EventDetailsComponent {
     });
   }
 
-  submitForm(form : any) : void {
+  submitForm(form: any): void {
     const formValues = form.value;
 
     console.log(formValues);

@@ -1,7 +1,7 @@
 // Port Configuration
-const port = 3000;
+const port = 3001;
 
 export const environment = {
     production: false,
-    alumni_base_url : `http://localhost:${port}`
+    alumni_base_url : `http://localhost:${port}/`
 };

@@ -19,10 +19,6 @@ import { User } from 'src/app/interfaces/user';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  // Const variables
-  readonly username: string = 'DGITHI280';
-  readonly profilePictureUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png';
-
   // Dependancy Injection
   private _router: Router = inject(Router);
   private _authService: AuthService = inject(AuthService);
@@ -39,20 +35,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeStatus(status: boolean): void {
-
     if (status === false)
-      if (confirm(`${this.username}, are you sure you want to log out?`))
+      if (confirm(`${this.currentUser$.username}, are you sure you want to log out?`))
         this._authService.changeLoginStatus(status);
       else
         return;
-
     this._authService.changeLoginStatus(status);
   }
 
   logoutUser(): void {
     this._authService.logoutUser();
-
-    // Route back to home page
     this._router.navigate(['/home']);
   }
 
