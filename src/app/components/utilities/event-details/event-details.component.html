@@ -162,6 +162,15 @@
                                     class="text-red-600 text-xs text-end py-1">Number of attendees is required!</small>
                             </mat-form-field>
 
+                            <mat-form-field class="w-full" appearance="outline">
+                                <mat-label>Event Banner URL</mat-label>
+                                <input matInput type="text" formControlName="eventBanner"
+                                    placeholder="Image URL">
+                                <small
+                                    *ngIf="(editEventForm.controls['eventBanner'].dirty || form.submitted) && editEventForm.controls['eventBanner'].invalid"
+                                    class="text-red-600 text-xs text-end py-1">Event Banner is required!</small>
+                            </mat-form-field>
+
                         </div>
 
                     </form>

@@ -1,0 +1,134 @@
+<section id="newEvent">
+
+    <div class="background">
+        <img src="./../../../../assets/images/campus_background.jpg" alt="New Event Background Image">
+    </div>
+
+    <div class="overlay">
+        <!-- Overlay goes here -->
+    </div>
+
+    
+
+    <div class="header">
+        <h1 mat-dialog-title class="uppercase text-red-600 font-semibold">
+            Create a new event
+        </h1>
+        
+        <button color="basic" mat-mini-fab mat-dialog-close="close" class="cancel">
+            <mat-icon class="text-red-600">close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content>
+
+        <mat-card>
+
+            <mat-card-content>
+
+                <form [formGroup]="newEventForm" (ngSubmit)="submitForm(newEventForm)" #form="ngForm">
+
+                    <div class="row">
+
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Event Title</mat-label>
+                            <input matInput type="text" formControlName="eventTitle">
+                            <small
+                                *ngIf="(newEventForm.controls['eventTitle'].dirty || form.submitted) && newEventForm.controls['eventTitle'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Event Title is required!</small>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="row">
+
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Short Description</mat-label>
+                            <textarea matInput type="text" formControlName="eventDescription"></textarea>
+                            <small
+                                *ngIf="(newEventForm.controls['eventDescription'].dirty || form.submitted) && newEventForm.controls['eventDescription'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Event Description is required!</small>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="flex items-center justify-between gap-8">
+
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Event Date</mat-label>
+                            <input matInput type="text" formControlName="eventDate">
+                            <small
+                                *ngIf="(newEventForm.controls['eventDate'].dirty || form.submitted) && newEventForm.controls['eventDate'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Event Date is required!</small>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Event Duration</mat-label>
+                            <input matInput type="text" formControlName="eventDuration">
+                            <small
+                                *ngIf="(newEventForm.controls['eventDuration'].dirty || form.submitted) && newEventForm.controls['eventDuration'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Event Duration is required!</small>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="flex items-center justify-between gap-8">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Event Category</mat-label>
+                            <mat-select formControlName="eventCategory">
+                                <mat-option *ngFor="let _eventCategory of ( eventCategories$ | async)"
+                                    [value]="_eventCategory">
+                                    {{ _eventCategory }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Event Venue</mat-label>
+                            <mat-select formControlName="venue">
+                                <mat-option *ngFor="let _eventLocation of ( eventLocations$ | async )"
+                                    value="{{_eventLocation}}">
+                                    {{ _eventLocation }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="flex items-center justify-between gap-8">
+
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Attendee Limit</mat-label>
+                            <input matInput type="number" formControlName="attendeeLimit"
+                                placeholder="Maximum capacity possible">
+                            <small
+                                *ngIf="(newEventForm.controls['attendeeLimit'].dirty || form.submitted) && newEventForm.controls['attendeeLimit'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Number of attendees is required!</small>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Event Banner URL</mat-label>
+                            <input matInput type="text" formControlName="eventBanner"
+                                placeholder="Image URL">
+                            <small
+                                *ngIf="(newEventForm.controls['eventBanner'].dirty || form.submitted) && newEventForm.controls['eventBanner'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Event Banner is required!</small>
+                        </mat-form-field>
+
+                    </div>
+
+                </form>
+
+            </mat-card-content>
+
+        </mat-card>
+
+    </mat-dialog-content>
+
+    <div mat-dialog-actions class="actions p-4">
+        <button class="appButton" mat-raised-button [disabled]="newEventForm.invalid"
+            (click)="submitForm(newEventForm)">
+            <mat-icon>create</mat-icon>Create New Event
+        </button>
+    </div>
+
+</section>

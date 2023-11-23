@@ -29,7 +29,7 @@ export class EventDetailsComponent implements OnInit {
   protected editMode: boolean;
 
   // Dependancy Injections
-  private _matDialog : MatDialog = inject(MatDialog);
+  private _matDialog: MatDialog = inject(MatDialog);
   private _snackBar: MatSnackBar = inject(MatSnackBar)
   private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
@@ -58,7 +58,10 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Event Form Initialization
+    this.eventFormInit();
+  }
+
+  private eventFormInit(): void {
     if (this.editMode)
       this.editEventForm = this._formBuilder.group({
         eventTitle: new FormControl(this._event$.eventTitle, [Validators.required]),
@@ -68,12 +71,12 @@ export class EventDetailsComponent implements OnInit {
         eventCategory: new FormControl(this._event$.eventCategory, [Validators.required]),
         venue: new FormControl(this._event$.venue, [Validators.required]),
         attendeeLimit: new FormControl(this._event$.attendeeLimit, [Validators.required, Validators.minLength(1)]),
+        eventBanner: new FormControl(this._event$.eventBanner, [Validators.required])
       })
   }
 
   // Method to delete an event
   deleteEvent(): void {
-
     const validationConfig: MatDialogConfig = {
       data: this._event$,
       autoFocus: false,
@@ -86,18 +89,16 @@ export class EventDetailsComponent implements OnInit {
     let confirmationDialogRef = this._matDialog.open(ConfirmationComponent, validationConfig);
 
     confirmationDialogRef.afterClosed().subscribe(
-      (confirmation : boolean) => {
+      (confirmation: boolean) => {
         if (confirmation) {
           console.log('Deletion confirmed. Deleting now!');
 
           this._eventService.deleteEventById(this._event$.eventId).subscribe(
             res => console.log(res),
-            err => console.warn(err)            
+            err => console.warn(err)
           )
         }
-      }
-    )
-
+      });
   }
 
   // Method to add event to favourites

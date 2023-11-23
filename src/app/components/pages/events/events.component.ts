@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Event } from 'src/app/interfaces/event';
 import { Component, inject } from '@angular/core';
@@ -7,13 +8,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { EventService } from 'src/app/services/event.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { NewEventComponent } from '../../utilities/new-event/new-event.component';
 import { EventListComponent } from '../../utilities/event-list/event-list.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
-import { Observable } from 'rxjs';
+import { ServerResponse } from 'src/app/interfaces/serverResponse';
 
 @Component({
   selector: 'app-events',
@@ -33,6 +36,7 @@ export class EventsComponent {
   fetchingAnimationOptions: AnimationOptions = { path: this.fetchingAnimation }
 
   // Dependency injection
+  private _matDialog: MatDialog = inject(MatDialog);
   private _matSnackBar: MatSnackBar = inject(MatSnackBar);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
@@ -40,14 +44,15 @@ export class EventsComponent {
   // Component variables
   fetching = true;
   filterForm: FormGroup;
-  events$: Observable<Event[]>;;
   eventYears$: Observable<number[]>;
+  // events$: Observable<ServerResponse>;
+  events!: Event[];
   eventCategories$: Observable<string[]>;
   eventLocations$: Observable<string[]>;
 
   constructor() {
 
-    this.events$ = this._eventService.getEvents();
+    // this.events$ = this._eventService.getAllEvents();
     this.eventYears$ = this._eventService.getYears();
     this.eventLocations$ = this._eventService.getEventLocations();
     this.eventCategories$ = this._eventService.getEventCategories();
@@ -56,12 +61,26 @@ export class EventsComponent {
       eventCategory: new FormControl(''),
       eventLocation: new FormControl(''),
       eventYear: new FormControl('')
-    }, 
-    {
-      updateOn: 'blur'
-    });
+    },
+      {
+        updateOn: 'blur'
+      });
 
-    setTimeout ( () => this.fetching = false, 2000);
+    setTimeout(() => this.fetching = false, 2000);
+  }
+
+  ngOnInit(): void {
+    this._eventService.getAllEvents().subscribe(
+      _response => {
+
+        // Get the events array
+        this.events = _response.resource
+
+      },
+      _err => this._matSnackBar.open(_err, 'CLOSE', {
+        duration: 2000
+      })
+    )
   }
 
   clearInputControl(event: any, formControlName: string) {
@@ -100,6 +119,23 @@ export class EventsComponent {
     //   this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory && _event.venue === eventLocation)
 
     // this.events$ = this.events$.filter((_event: Event) => _event.eventCategory === eventCategory || _event.venue === eventLocation)
+  }
+
+  createNewEvent() {
+    const newEventDialogConfig: MatDialogConfig = {
+      data: {
+        editState: true,
+        dialogData: null
+      },
+      width: '70%',
+      height: '80%',
+      autoFocus: false,
+      disableClose: true,
+      enterAnimationDuration: 700,
+      exitAnimationDuration: 700
+    }
+
+    this._matDialog.open(NewEventComponent, newEventDialogConfig)
   }
 
 }

@@ -6,10 +6,11 @@ const Event = require('./../models/event');
 
 exports.create_new_event = (req, res) => {
 
-    const { eventTitle, venue, description, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
+    const { eventTitle, eventBanner, description, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
 
     const event = new Event(
         eventTitle,
+        eventBanner,
         venue,
         description,
         eventDuration,
@@ -20,29 +21,40 @@ exports.create_new_event = (req, res) => {
         Date.now()
     )
 
-    console.log(`Adding new event ${JSON.stringify(event)} to the database`);
-
     eventsDB.insert(event, (err, newEvent) => {
         if (err) {
             console.error(err);
-            console.log("Error adding the new event with the name {} to the databse", newEvent);
+            res.status(417).send({
+                message: `Error adding the new event with the name ${newEvent} to the database`,
+                timestamp: Date.now()
+            })
         } else {
             console.log("Inserted the event document into the database", newEvent);
-            res.json(newEvent)
+            res.status(201).send({
+                message: 'Successfully added an event to the database',
+                resource: newEvent,
+                timestamp: Date.now()
+            })
         }
 
     });
 }
 
 exports.get_all_events = (req, res) => {
-    console.log("Retrieving all events from the database...");
 
     eventsDB.find({}, (err, events) => {
-        if (err)
+        if (err) {
             console.error('There was an error retrieving all the events from the database', err);
+            res.status(417).send({
+                message: `There was an error retrieving all the events from the database. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        }
         else {
             res.status(200).json({
-                events
+                message : `Successfully retrieved all events from the database`,
+                resource: events,
+                timestamp: Date.now()
             })
         }
     });
