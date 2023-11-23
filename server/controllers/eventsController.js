@@ -91,7 +91,7 @@ exports.update_event_by_id = (req, res) => {
                 else
                     if (replaced == 1)
                         res.status(200).json(updatedEvent);
-                    else{
+                    else {
                         res.status(200).send({
                             error: `An Internal Error occurred. Could not update event with Id: ${eventId}`,
                             timestamp: Date.now()
@@ -110,8 +110,13 @@ exports.delete_event_by_id = (req, res) => {
     if (!eventId) return next();
 
     eventsDB.remove({ eventId: eventId }, {}, (err, removedEvent) => {
-        if (err)
-            console.log(err)
+        if (err) {
+            console.log(err);
+            res.status(417).json({
+                message: `There was an error when deleting event from the database -> ${err}`,
+                timestamp: Date.now()
+            })
+        }
         else {
             if (removedEvent == 1) {
                 console.log(`Removed event with ID: ${eventId}`);
@@ -122,7 +127,7 @@ exports.delete_event_by_id = (req, res) => {
             }
             else {
                 res.status(500).json({
-                    error: `Could not delete event with the ID: ${eventId} from the database.`,
+                    error: `Could not delete event with the ID: ${eventId}. Event does not exist in the database!.`,
                     timestamp: Date.now()
                 })
             }

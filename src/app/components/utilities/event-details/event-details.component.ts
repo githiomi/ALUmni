@@ -1,6 +1,6 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Event } from 'src/app/interfaces/event';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
+import { ConfirmationComponent } from '../confirmation/confirmation.component';
 
 @Component({
   selector: 'app-event-details',
@@ -28,6 +29,7 @@ export class EventDetailsComponent implements OnInit {
   protected editMode: boolean;
 
   // Dependancy Injections
+  private _matDialog : MatDialog = inject(MatDialog);
   private _snackBar: MatSnackBar = inject(MatSnackBar)
   private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
@@ -67,6 +69,35 @@ export class EventDetailsComponent implements OnInit {
         venue: new FormControl(this._event$.venue, [Validators.required]),
         attendeeLimit: new FormControl(this._event$.attendeeLimit, [Validators.required, Validators.minLength(1)]),
       })
+  }
+
+  // Method to delete an event
+  deleteEvent(): void {
+
+    const validationConfig: MatDialogConfig = {
+      data: this._event$,
+      autoFocus: false,
+      enterAnimationDuration: 500,
+      exitAnimationDuration: 500,
+      disableClose: true
+    }
+
+    // Open confirmation dialog
+    let confirmationDialogRef = this._matDialog.open(ConfirmationComponent, validationConfig);
+
+    confirmationDialogRef.afterClosed().subscribe(
+      (confirmation : boolean) => {
+        if (confirmation) {
+          console.log('Deletion confirmed. Deleting now!');
+
+          this._eventService.deleteEventById(this._event$.eventId).subscribe(
+            res => console.log(res),
+            err => console.warn(err)            
+          )
+        }
+      }
+    )
+
   }
 
   // Method to add event to favourites

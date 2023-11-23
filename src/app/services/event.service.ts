@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Event } from '../interfaces/event';
 import { Observable, tap } from 'rxjs';
+import { ServerResponse } from '../interfaces/serverResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,14 @@ export class EventService {
   getRoles() : Observable<string[]> {
     return this._httpClient.get<string[]>(`${this.BASE_URL}roles`).pipe(
       tap(console.log)
+    );
+  }
+
+  deleteEventById(eventId : string) : Observable<ServerResponse> {
+    return this._httpClient.delete<ServerResponse>(`http://localhost:3001/events/${eventId}`).pipe(
+      tap({
+        error : console.log
+      })
     );
   }
 

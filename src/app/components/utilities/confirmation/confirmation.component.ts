@@ -29,7 +29,7 @@ export class ConfirmationComponent {
     @Inject(MAT_DIALOG_DATA) private _eventData : Event,
     private dialogReference : MatDialogRef<ConfirmationComponent>
   ) {
-    this.event = _eventData;
+    this.event = this._eventData;
   }
 
   // Method to delete event after confirmation

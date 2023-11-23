@@ -17,6 +17,13 @@ export class AuthService {
   // Dependancy Injections
   private _httpClient: HttpClient = inject(HttpClient);
 
+  constructor() {
+    if (this.isTokenPresent()) {
+      localStorage.removeItem('auth_access_token');
+      this.changeLoginStatus(false);
+    }
+  }
+
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(this.isTokenPresent());
   loginStatus$ = this.isLoggedIn.asObservable();
 
