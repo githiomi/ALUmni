@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthResponse } from '../interfaces/authResponse';
 import { LoggedInUser } from '../interfaces/logged-in-user';
 import { environment } from 'src/environments/environment.development';
+import { ServerResponse } from '../interfaces/serverResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,18 @@ export class AuthService {
 
   changeLoginStatus(newStatus: boolean): void {
     this.isLoggedIn.next(newStatus);
+  }
+
+  createNewUser(newUser: any): Observable<ServerResponse> {
+    return this._httpClient.post<ServerResponse>(`${this.BASE_URL}auth/register`, newUser).pipe(
+      tap({
+        error: console.log
+      }),
+      catchError(_err => {
+        console.log(_err);
+        return throwError("Unexpected error occured when creating a new user");
+      })
+    )
   }
 
   loginUser(username: string, password: string): Observable<AuthResponse> {

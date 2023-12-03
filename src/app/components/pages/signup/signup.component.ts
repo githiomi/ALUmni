@@ -12,6 +12,8 @@ import { passwordMatchValidator } from 'src/app/validators/passwordMatchValidato
 import { MatSelectModule } from '@angular/material/select';
 import { EventService } from 'src/app/services/event.service';
 import { Observable } from 'rxjs';
+import { ServerResponse } from 'src/app/interfaces/serverResponse';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-signup',
@@ -23,19 +25,20 @@ import { Observable } from 'rxjs';
 export class SignupComponent {
 
   // Readonly
-  protected readonly years$ : Observable<number[]>;
-  protected readonly roles$ : Observable<string[]>;
-  protected readonly genders$ : Observable<string[]>;
+  protected readonly years$: Observable<number[]>;
+  protected readonly roles$: Observable<string[]>;
+  protected readonly genders$: Observable<string[]>;
 
   // Dependency Injection
   private _router: Router = inject(Router);
+  private _snackBarService: SnackbarService = inject(SnackbarService);
   private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
 
   // Triggers
   isProcessing: boolean = false;
-  
+
   // Component Variables
   registerForm: FormGroup;
 
@@ -82,13 +85,34 @@ export class SignupComponent {
     let password = formValue.password;
     let confirmPassword = formValue.confirmPassword;
 
-    this._authService.changeLoginStatus(true);
+    const newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      gender: gender,
+      age: age,
+      graduationYear: graduationYear,
+      emailAddress: emailAddress,
+      role: role,
+      password: password === confirmPassword ? password : ''
+    }
 
-    setTimeout(
-      () => {
-        this._router.navigate(['/home']);
-      }, 1000
+    // Make service call
+    this._authService.createNewUser(newUser).subscribe(
+      (_response: ServerResponse) => {
+        const newUser = _response.resource;
+        console.log(newUser);
+
+        this._snackBarService.openSnackBar(`${_response.message}. Username: ${newUser.username}`, 'CLOSE', Infinity);
+        this._router.navigateByUrl('/login');
+
+      },
+      (err) => {
+        this.isProcessing = false;
+        this._snackBarService.openSnackBar(err);
+      }
     )
+
+    // this._authService.changeLoginStatus(true);
 
   }
 

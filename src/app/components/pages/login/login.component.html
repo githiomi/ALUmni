@@ -15,18 +15,23 @@
         <!-- Mat Card Content -->
         <mat-card-content>
 
-            <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm)">
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm)" #form="ngForm">
 
-                <div class="inputGroup text-lg">
-                    <label for="alumniId">Alumni ID</label>
-                    <input type="text" name="alumniId" formControlName="alumniId" id="alumniId" placeholder="Alumni ID">
-                </div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" formControlName="username" name="username">
+                    <small
+                        *ngIf="(loginForm.controls['username'].dirty || form.submitted) && loginForm.controls['username'].invalid"
+                        class="text-red-600 text-xs text-end py-1">Username is required!</small>
+                </mat-form-field>
 
-                <div class="inputGroup text-lg">
-                    <label for="alumniPassword">Alumni Password</label>
-                    <input type="password" name="alumniPassword" formControlName="alumniPassword" id="alumniPassword"
-                        placeholder="Alumni Password">
-                </div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="alumniPassword" name="alumniPassword">
+                    <small
+                        *ngIf="(loginForm.controls['alumniPassword'].dirty || form.submitted) && loginForm.controls['alumniPassword'].invalid"
+                        class="text-red-600 text-xs text-end py-1">Password is required!</small>
+                </mat-form-field>
 
             </form>
 

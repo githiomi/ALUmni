@@ -36,25 +36,11 @@ form {
     margin: 0 auto;
 }
 
-.inputGroup {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 0;
-}
-
 /* Input Fields */
-label {
-    font-size: 15px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
 input {
     width: 100%;
     background-color: var(--var-white);
-    padding: .5rem .5rem;
     font-size: 14px;
-    outline: none;
 }
 
 input:focus {

@@ -8,11 +8,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthResponse } from 'src/app/interfaces/authResponse';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatButtonModule, MatProgressSpinnerModule, MatSnackBarModule],
+  imports: [CommonModule, RouterModule, MatCardModule, ReactiveFormsModule, MatButtonModule, MatProgressSpinnerModule, MatSnackBarModule, MatFormFieldModule, MatInputModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -30,7 +32,7 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = this._formBuilder.group({
-      alumniId: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       alumniPassword: new FormControl('', [Validators.required])
     })
   }
@@ -46,11 +48,11 @@ export class LoginComponent {
 
     // Getting Form Content
     let formValue = form.value;
-    let alumniId = formValue.alumniId;
-    let alumniPassword = formValue.alumniPassword;
+    let username = formValue.username;
+    let password = formValue.alumniPassword;
 
     // this._authService.loginUser(alumniId, alumniPassword);
-    this._authService.loginUser(alumniId, alumniPassword).subscribe(
+    this._authService.loginUser(username, password).subscribe(
       ( _res : AuthResponse ) => {
         this._matSnackBar.open(_res.message, "CLOSE", {
           duration: 2000,
