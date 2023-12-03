@@ -8,7 +8,7 @@ class Alumnni {
     constructor(
         firstName, lastName, gender, age, graduationYear, emailAddress, role = Roles.alumni, password
     ) {
-        this.alumniId = 'ALU0' + alumniCounter;
+        this.alumniId = 'ALU00' + alumniCounter;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = this.firstName.charAt(0).toUpperCase() + this.lastName.substring(0, 5).toUpperCase() + Math.floor(Math.random() * (MAX - MIN)) + MIN;

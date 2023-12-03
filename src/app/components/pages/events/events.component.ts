@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Event } from 'src/app/interfaces/event';
 import { Component, inject } from '@angular/core';
@@ -17,6 +17,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
 import { ServerResponse } from 'src/app/interfaces/serverResponse';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -37,6 +38,7 @@ export class EventsComponent {
 
   // Dependency injection
   private _matDialog: MatDialog = inject(MatDialog);
+  private _authService: AuthService = inject(AuthService);
   private _matSnackBar: MatSnackBar = inject(MatSnackBar);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
@@ -44,12 +46,18 @@ export class EventsComponent {
   // Component variables
   fetching = true;
   events!: Event[];
+  username !: string;
   filterForm!: FormGroup;
   eventYears$: Observable<number[]>;
   eventCategories$: Observable<string[]>;
   eventLocations$: Observable<string[]>;
 
   constructor() {
+
+    this._authService.loggedInUser$.pipe(
+      map ( _user => _user.username )
+    ).subscribe( _username => this.username = _username);
+
     this.eventYears$ = this._eventService.getYears();
     this.eventLocations$ = this._eventService.getEventLocations();
     this.eventCategories$ = this._eventService.getEventCategories();

@@ -1,4 +1,4 @@
-import { Observable, tap } from 'rxjs';
+import { Observable} from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
@@ -34,12 +34,11 @@ export class NewEventComponent {
   eventCategories$: Observable<string[]>;
 
   constructor(
-    private _dialogReference : MatDialogRef<NewEventComponent>
+    private _dialogReference: MatDialogRef<NewEventComponent>
   ) {
     this.newEventFormInit()
-
-    this.eventCategories$ = this._eventService.getEventCategories();
     this.eventLocations$ = this._eventService.getEventLocations();
+    this.eventCategories$ = this._eventService.getEventCategories();
   }
 
   private newEventFormInit(): void {
@@ -74,11 +73,15 @@ export class NewEventComponent {
       eventDate: formValue.eventDate,
       attendeeLimit: formValue.attendeeLimit,
       eventCategory: formValue.eventCategory,
-      createdBy: 'TBD'
+      createdBy:  'TBD'
     }
+
+    console.log(newEvent.createdBy)
 
     this._eventService.postNewEvent(newEvent).subscribe(
       res => {
+        console.log(res);
+        console.log('new event', newEvent);
         this.loading = false;
         this._dialogReference.close(true);
       },

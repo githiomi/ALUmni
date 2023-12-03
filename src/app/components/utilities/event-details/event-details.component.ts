@@ -17,6 +17,7 @@ import { ConfirmationComponent } from '../confirmation/confirmation.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-event-details',
@@ -34,10 +35,10 @@ export class EventDetailsComponent implements OnInit {
 
   // Dependancy Injections
   private _matDialog: MatDialog = inject(MatDialog);
-  private _snackBar: MatSnackBar = inject(MatSnackBar)
   private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
+  private _snackBarService: SnackbarService = inject(SnackbarService);
 
   // Component Variables
   seatsRemaining: number;
@@ -62,7 +63,8 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventFormInit();
+    if (this._eventData$.dialogData != null)
+      this.eventFormInit();
   }
 
   private eventFormInit(): void {
@@ -82,7 +84,7 @@ export class EventDetailsComponent implements OnInit {
   // Method to delete an event
   deleteEvent(): void {
     const validationConfig: MatDialogConfig = {
-      data: this._event$,
+      data: this._event$.eventId,
       autoFocus: false,
       enterAnimationDuration: 500,
       exitAnimationDuration: 500,
@@ -97,17 +99,11 @@ export class EventDetailsComponent implements OnInit {
         if (confirmation) {
           this._eventService.deleteEventById(this._event$.eventId).subscribe(
             res => {
-              this._snackBar.open(res.message, 'CLOSE', {
-                duration: 3000,
-                horizontalPosition: 'start'
-              });
+              this._snackBarService.openSnackBar(`The event with ID: ${this._event$.eventId} has successfully been deleted from the database.`, 'CLOSE');
               this._eventDialogReference.close();
             },
             err => {
-              this._snackBar.open(err.message, 'CLOSE', {
-                duration: 3000,
-                horizontalPosition: 'start'
-              });
+              this._snackBarService.openSnackBar(err.message, 'CLOSE');
               this._eventDialogReference.close();
             }
           )
@@ -115,28 +111,15 @@ export class EventDetailsComponent implements OnInit {
       });
   }
 
-  // Method to add event to favourites
   addToFavorites(): void {
     this.favourited = !this.favourited;
-
     let statusMessage = this.favourited ? `${this._event$.eventTitle} has been added to your favorites!` : `${this._event$.eventTitle} has been removed from your favorites!`;
-
-    this._snackBar.open(statusMessage, "CLOSE",
-      {
-        duration: 3000,
-        horizontalPosition: 'start'
-      }
-    );
+    this._snackBarService.openSnackBar(statusMessage);
   }
 
-  // Method to reserve a seat
   reserveSpot(): void {
     this.seatsRemaining--;
-
-    this._snackBar.open(`You have successfully reserved a spot for the ${this._event$.eventTitle} event!`, 'CLOSE', {
-      duration: 3000,
-      horizontalPosition: 'start'
-    });
+    this._snackBarService.openSnackBar(`You have successfully reserved a spot for the ${this._event$.eventTitle} event!`);
   }
 
   submitUpdateForm(form: any): void {

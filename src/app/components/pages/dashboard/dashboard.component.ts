@@ -112,8 +112,6 @@ export class DashboardComponent implements OnInit {
           this._snackbarService.openSnackBar(`The event with ID: ${event.eventId} was updated successfully.`);
           this.getEvents()
         }
-        else
-          this._snackbarService.openSnackBar(`The event with ID: ${event.eventId} could not be updated.`)
       }
     );
 
@@ -137,7 +135,7 @@ export class DashboardComponent implements OnInit {
         if (confirmation) {
           this._eventService.deleteEventById(event.eventId).subscribe(
             _deleteResponse => {
-              this._snackbarService.openSnackBar('The event has successfully been deleted from the database.')
+              this._snackbarService.openSnackBar(`The event with ID: ${event.eventId} has successfully been deleted from the database.`)
               this.getEvents();
             })
         }
