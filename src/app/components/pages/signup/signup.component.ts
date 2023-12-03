@@ -82,8 +82,6 @@ export class SignupComponent {
     let password = formValue.password;
     let confirmPassword = formValue.confirmPassword;
 
-    alert(firstName + ', ' + lastName + ', ' + age + ', ' + gender + ', ' + role + ', ' + graduationYear + ', ' + emailAddress + ', ' + password + ', ' + confirmPassword)
-
     this._authService.changeLoginStatus(true);
 
     setTimeout(

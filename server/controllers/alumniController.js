@@ -1,43 +1,51 @@
-// Corresponding DB connection
-const nedb = require('gray-nedb');
-const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
+// Data Access
+const dao = require('./../daos/alumniDAO');
+
+// Instantiation
+const alumniDAO = new dao('alumni.db');
 
 exports.get_all_alumni = (req, res) => {
-
-    alumniDB.find({}, (err, alumni) => {
-        if (err)
-            console.error(err);
-        else {
-            if (alumni)
-                res.json(alumni);
-            else
-                res.send("No users found in the database.");
-        }
-    });
-
-};
+    alumniDAO.getAllAlumni()
+        .then(_alumni => {
+            res.status(200).json({
+                message: `Successfully retrieved all alumni from the database`,
+                resource: _alumni,
+                timestamp: Date.now()
+            })
+        })
+        .catch(err => {
+            console.error('There was an error retrieving all the alumni from the database', err);
+            res.status(500).send({
+                message: `There was an error retrieving all the alumni from the database. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        })
+}
 
 exports.get_alumni_by_id = (req, res) => {
 
-    const alumId = (req.params.alumniId).toUpperCase();
+    const alumniId = (req.params.alumniId).toUpperCase();
 
-    alumniDB.find({ alumniId: alumId }, (err, alumni) => {
-        if (err)
-            console.error(err);
-        else {
-            if (alumni.length > 0)
+    alumniDAO.getAlumniById(alumniId)
+        .then(_foundAlumni => {
+            if (_foundAlumni.length > 0)
                 res.status(200).json({
-                    message: "An Alumni with the ID: " + alumni.alumniId + " has been found in the database!",
-                    resource: alumni,
+                    message: "An Alumni with the ID: " + alumniId + " has been found in the database!",
+                    resource: _foundAlumni,
                     timestamp: Date.now()
                 })
             else
                 res.status(417).json({
-                    message: `No user with the id "${alumId}" was found in the database.`,
+                    message: `No user with the id ${alumniId} was found in the database.`,
                     timestamp: Date.now()
                 })
-        }
-    })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `There was an error retrieving an alumni from the database with id ${alumniId}. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        })
 
 }
 
@@ -49,34 +57,28 @@ exports.update_existing_alumni_by_id = (req, res) => {
 
     if (!alumniId) return next();
 
-    alumniDB.find({ alumniId: alumniId }, (err, event) => {
-
-        if (err) {
-            console.log(err);
-            res.status(400).send({
-                error: `No alumni with the id ${alumniId} was found in the database.`,
+    alumniDAO.updateExistingAlumni(alumniId, updatedAlumni)
+        .then(_updatedStatus => {
+            if (_updatedStatus === 1)
+                res.status(200).json({
+                    message: `Successfully updated the alumni with id: ${alumniId} with new data`,
+                    resource: _updatedStatus,
+                    timestamp: Date.now()
+                })
+            else
+                res.status(417).json({
+                    message: `Unexpected update error. Kindly confirm the alumni id. Received: ${eventId}`,
+                    resource: _updatedStatus,
+                    timestamp: Date.now()
+                })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `There was an error updating the alumni with id ${eventId} with new data. Error: ${err}`,
                 timestamp: Date.now()
             })
-        }
-        else {
-            alumniDB.update({ alumniId: alumniId }, { $set: updatedAlumni }, {}, (err, replaced) => {
-                if (err)
-                    res.status(500).json({
-                        error: 'An Internal Error occurred',
-                        timestamp: Date.now()
-                    })
-                else
-                    if (replaced == 1)
-                        res.status(200).json(updatedAlumni);
-                    else {
-                        res.status(200).send({
-                            error: `An Internal Error occurred. Could not update alumni with Id: ${alumniId}`,
-                            timestamp: Date.now()
-                        })
-                    }
-            });
-        }
-    });
+        });
+
 }
 
 exports.delete_alumni_by_id = (req, res) => {
@@ -85,25 +87,27 @@ exports.delete_alumni_by_id = (req, res) => {
 
     if (!alumniId) return next();
 
-    alumniDB.remove({ alumniId: alumniId }, {}, (err, removedAlumni) => {
-        if (err)
-            console.log(err)
-        else {
-            if (removedAlumni == 1) {
-                console.log(`Removed alumni with ID: ${alumniId}`);
+    alumniDAO.deleteAlumniById(alumniId)
+        .then(_deletedStatus => {
+            if (_deletedStatus === 1)
                 res.status(200).json({
-                    message: `The alumni with the ID ${alumniId} was successfully deleted from the database.`,
+                    message: `Successfully deleted the alumni with id: ${alumniId} from the database.`,
+                    resource: _deletedStatus,
                     timestamp: Date.now()
                 })
-            }
-            else {
-                res.status(500).json({
-                    error: `Could not delete alumni with the ID: ${alumniId} from the database.`,
+            else
+                res.status(417).json({
+                    message: `Unexpected deletion error. Could not delete ${alumniId} from the database.`,
+                    resource: _deletedStatus,
                     timestamp: Date.now()
                 })
-            }
-        }
-    });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: `There was an error deleting the alumni with id: ${alumniId} from the database. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        });
 }
 
 exports.get_alumni_events = (req, res) => {

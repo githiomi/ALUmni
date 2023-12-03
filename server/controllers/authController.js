@@ -66,8 +66,7 @@ exports.register = async (req, res) => {
     const { firstName, lastName, gender, age, graduationYear, emailAddress, role, password } = req.body;
 
     // Password hashing
-    const salt = await bcrypt.genSalt(process.env.BCRYPT_SALT);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const alum = new Alumni(
         firstName,

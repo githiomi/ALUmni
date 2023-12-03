@@ -21,19 +21,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 const PORT_NUMBER = 3001;
 
 // Routers
-const alumniRouter = require('./routes/alumniRoutes');
-const eventRouter = require('./routes/eventRoutes');
-const authRouter = require('./routes/authRoutes');
+const alumniRouter = require('./routers/alumniRoutes');
+const eventRouter = require('./routers/eventRoutes');
+const authRouter = require('./routers/authRoutes');
 
 app.use(cors({
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
     origin: 'http://localhost:4200'
 }));
-
-app.use((req, res, next) => {
-    console.log("Time:", value);
-    next();
-});
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(public, 'index.html'));
@@ -41,38 +36,14 @@ app.get("/", (req, res) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-// AUTHENTICATION
-app.post("/auth/login", authRouter);
+// AUTHENTICATION ROUTES
+app.use("/auth", authRouter);
 
-app.post('/auth/register', authRouter);
-
-// EVENTS
-app.get('/events', eventRouter);
-
-app.post("/events/new", eventRouter);
-
-app.get('/events/:eventId', eventRouter);
-
-app.put('/events/:eventId', eventRouter);
-
-app.delete('/events/:eventId', eventRouter);
-
-app.get('/events/:eventId/atendees', eventRouter);
-
-app.post('/events/:eventId/atendees', eventRouter);
+// EVENTS ROUTES
+app.use('/events', eventRouter);
 
 // ALUMNI ROUTES
-app.get('/alumni', alumniRouter);
-
-app.get('/alumni/:alumniId', alumniRouter);
-
-app.put('/alumni/:alumniId', alumniRouter);
-
-app.delete('/alumni/:alumniId', alumniRouter);
-
-app.get('/alumni/:alumniId/events', alumniRouter);
-
-app.post('/alumni/:alumniId/events', alumniRouter);
+app.use('/alumni', alumniRouter);
 
 // --------------------------------------------------------------------------------------------------------------------
 app.get('/close', function (req, res) {
@@ -93,5 +64,6 @@ app.use((req, res) => {
 
 app.listen(process.env.port || PORT_NUMBER, (req, res) => {
     console.log(`ALUmni Server Started Successfully on port: ${PORT_NUMBER}. URL: http://localhost:${PORT_NUMBER}.`);
+    console.log(`Server started at: ${value}`);
     console.warn('Use Ctrl^c to quit the application.');
 });

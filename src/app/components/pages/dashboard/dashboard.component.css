@@ -15,6 +15,11 @@
 /* Tab Content */
 .tabHeader {
     text-transform: uppercase;
+    text-align: center;
+    color: var(--var-primary-red);
+    padding: 2rem 0;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 /* Table */

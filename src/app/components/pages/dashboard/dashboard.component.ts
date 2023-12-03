@@ -1,4 +1,4 @@
-import { AfterViewInit, ViewChild, Component, inject } from '@angular/core';
+import { ViewChild, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../utilities/confirmation/confirmation.component';
+import { AlumniService } from 'src/app/services/alumni.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,24 +40,20 @@ export class DashboardComponent {
     "actions"
   ];
   alumniColumns: string[] = [
+    "alumniId",
     "profilePictureUrl",
     "username",
-    "role",
-    "password"
-    // "profilePictureUrl",
-    // "alumniId",
-    // "username",
-    // "firstName",
-    // "lastName",
-    // "gender",
-    // "age",
-    // "graduationYear",
+    "fullName",
+    "gender",
+    "age",
+    "graduationYear",
   ];
 
   // Dependancy Injections
-  private _dialog : MatDialog = inject(MatDialog);
+  private _dialog: MatDialog = inject(MatDialog);
   private _authService: AuthService = inject(AuthService);
   private _eventService: EventService = inject(EventService);
+  private _alumniService: AlumniService = inject(AlumniService);
   private _animationService: AnimationService = inject(AnimationService);
 
   // Animation Options
@@ -66,13 +63,13 @@ export class DashboardComponent {
   alumniDataSource = new MatTableDataSource<Alumni>();
 
   constructor() {
-    this._eventService.getEvents().subscribe(
-      _events => this.events = _events
+    this._eventService.getAllEvents().subscribe(
+      _events => this.events = _events.resource
     );
     this.eventDataSource = new MatTableDataSource<Event>(this.events);
 
-    this._authService.getAllUsers().subscribe(
-      _users => this.users = _users
+    this._alumniService.getAllAlumni().subscribe(
+      _response => this.users = _response.resource
     )
   }
 
@@ -82,13 +79,13 @@ export class DashboardComponent {
     this.eventDataSource.paginator = this.paginator;
   }
 
-  deleteEvent(event : Event) {
+  deleteEvent(event: Event) {
 
-    const confirmationDialogConfig : MatDialogConfig = {
-      data : event,
+    const confirmationDialogConfig: MatDialogConfig = {
+      data: event,
       autoFocus: false,
-      enterAnimationDuration: 500,
-      exitAnimationDuration: 500,
+      enterAnimationDuration: 700,
+      exitAnimationDuration: 700,
       disableClose: true
     }
 
@@ -96,8 +93,8 @@ export class DashboardComponent {
     let confirmationDialogRef = this._dialog.open(ConfirmationComponent, confirmationDialogConfig);
 
     confirmationDialogRef.afterClosed().subscribe(
-      (confirmation : boolean) => {
-        if (confirmation) 
+      (confirmation: boolean) => {
+        if (confirmation)
           console.log('Deletion confirmed. Deleting now!');
         else
           console.log('Deletion was cancelled!');

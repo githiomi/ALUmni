@@ -1,5 +1,8 @@
-const nedb = require('gray-nedb');
-const eventsDB = new nedb({ filename: "./database/events.db", autoload: true });
+// Data Access
+const dao = require('./../daos/eventDAO');
+
+// Instantiation
+const eventDAO = new dao('events.db');
 
 // Data Model Classes
 const Event = require('./../models/event');
@@ -20,71 +23,95 @@ exports.create_new_event = (req, res) => {
         createdBy
     )
 
-    eventsDB.insert(event, (err, newEvent) => {
-        if (err) {
-            console.error(err);
-            res.status(417).send({
-                message: `Error adding the new event with the name ${newEvent} to the database`,
-                timestamp: Date.now()
-            })
-        } else {
-            console.log("Inserted the event document into the database", newEvent);
+    eventDAO.createNewEvent(event)
+        .then(_newEvent => {
+            console.log("Inserted the event document into the database", _newEvent);
             res.status(201).send({
                 message: 'Successfully added an event to the database',
-                resource: newEvent,
+                resource: _newEvent,
                 timestamp: Date.now()
             })
-        }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(417).send({
+                message: `Error adding the new event with the name ${_newEvent.eventTitle} to the database`,
+                timestamp: Date.now()
+            })
+        });
 
-    });
 }
 
 exports.get_all_events = (req, res) => {
-
-    eventsDB.find({}, (err, events) => {
-        if (err) {
+    eventDAO.getAllEvents()
+        .then(_events => {
+            res.status(200).json({
+                message: `Successfully retrieved all events from the database`,
+                resource: _events,
+                timestamp: Date.now()
+            })
+        })
+        .catch(err => {
             console.error('There was an error retrieving all the events from the database', err);
             res.status(500).send({
                 message: `There was an error retrieving all the events from the database. Error: ${err}`,
                 timestamp: Date.now()
             })
-        }
-        else {
-            res.status(200).json({
-                message: `Successfully retrieved all events from the database`,
-                resource: events,
-                timestamp: Date.now()
-            })
-        }
-    });
+        })
 }
 
 exports.get_event_by_id = (req, res) => {
 
     const eventId = (req.params.eventId).toUpperCase();
 
-    eventsDB.find({ eventId: eventId }, (err, event) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send({
-                message: `There was an error retrieving the event with id ${eventId} from the database. Error: ${err}`,
-                timestamp: Date.now()
-            })
-        }
-        else {
-            if (event.length == 0)
+    eventDAO.getEventById(eventId)
+        .then(_event => {
+            if (_event.length == 0)
                 res.status(404).send({
-                    message: `No event with the id: ${eventId} was found on the database. Error: ${err}`,
+                    message: `No event with the id: ${eventId} was found on the database.`,
                     timestamp: Date.now()
                 })
             else
                 res.status(200).json({
                     message: `Successfully retrieved the event with id: ${eventId} from the database`,
-                    resource: event,
+                    resource: _event,
                     timestamp: Date.now()
                 })
-        }
-    });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
+                message: `There was an error retrieving the event with id ${eventId} from the database. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        });
+
+}
+
+exports.get_events_for_alumni = (req, res) => {
+
+    const alumniId = (req.params.alumniId).toUpperCase();
+
+    eventDAO.getAlumniEvents(alumniId)
+        .then(_events => {
+            if (_events.length == 0)
+                res.status(404).send({
+                    message: `No event was found on the database for user: ${alumniId}.`,
+                    timestamp: Date.now()
+                })
+            else
+                res.status(200).json({
+                    message: `Successfully retrieved the follwing events from the database for the user: ${alumniId}`,
+                    resource: _events,
+                    timestamp: Date.now()
+                })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `There was an error retrieving the events for user ${alumniId} from the database. Error: ${err}`,
+                timestamp: Date.now()
+            })
+        });
 
 }
 
@@ -94,61 +121,29 @@ exports.update_event_by_id = (req, res) => {
 
     const updatedEvent = req.body;
 
-    // const { eventTitle, eventBanner, description, venue, eventDuration, eventDate, attendeeLimit, eventCategory, createdBy } = req.body;
-
-    // const event = new Event(
-    //     eventTitle,
-    //     eventBanner,
-    //     description,
-    //     venue,
-    //     eventDuration,
-    //     eventDate,
-    //     attendeeLimit,
-    //     eventCategory,
-    //     createdBy
-    // )
-
     if (!eventId) return next();
 
-    eventsDB.find({ eventId: eventId }, (err, event) => {
-
-        if (err) {
-            res.status(404).send({
-                message: `No event with the id ${eventId} was found in the database. Error: ${err}`,
+    eventDAO.updateExistingEvent(eventId, updatedEvent)
+        .then(_updatedStatus => {
+            if (_updatedStatus === 1)
+                res.status(200).json({
+                    message: `Successfully updated the event with id: ${eventId} with new data`,
+                    resource: _updatedStatus,
+                    timestamp: Date.now()
+                })
+            else
+                res.status(417).json({
+                    message: `Unexpected update error. Kindly confirm the event id. Received: ${eventId}`,
+                    resource: _updatedStatus,
+                    timestamp: Date.now()
+                })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `There was an error updating the event with id ${eventId} with new data. Error: ${err}`,
                 timestamp: Date.now()
             })
-        }
-        else {
-            eventsDB.update({ eventId: eventId }, { $set: updatedEvent }, {}, (err, replaced) => {
-                if (err)
-                    res.status(500).json({
-                        message: `There was an error updating the event with id ${eventId} with new data. Error: ${err}`,
-                        timestamp: Date.now()
-                    })
-                else
-                    if (replaced == 1) {
-
-                        eventsDB.find({ eventId: eventId }, (err, event) => {
-                            if (err)
-                                console.log(err);
-
-                            res.status(200).json({
-                                message: `Successfully updated the event with id: ${eventId} with new data`,
-                                resource: updatedEvent,
-                                timestamp: Date.now()
-                            })
-                        })
-                    }
-                    else {
-                        res.status(200).send({
-                            message: `An unknown error occured. Could not update event with Id: ${eventId}`,
-                            timestamp: Date.now()
-                        })
-                    }
-            });
-        }
-
-    });
+        });
 }
 
 exports.delete_event_by_id = (req, res) => {
@@ -157,31 +152,27 @@ exports.delete_event_by_id = (req, res) => {
 
     if (!eventId) return next();
 
-    eventsDB.remove({ eventId: eventId }, {}, (err, removedEvent) => {
-        if (err) {
-            console.log(err);
+    eventDAO.deleteEventById(eventId)
+        .then(_deletedStatus => {
+            if (_deletedStatus === 1)
+                res.status(200).json({
+                    message: `Successfully deleted the event with id: ${eventId} from the database.`,
+                    resource: _deletedStatus,
+                    timestamp: Date.now()
+                })
+            else
+                res.status(417).json({
+                    message: `Unexpected deletion error. Could not delete ${eventId} from the database.`,
+                    resource: _deletedStatus,
+                    timestamp: Date.now()
+                })
+        })
+        .catch(err => {
             res.status(500).json({
                 message: `There was an error deleting event with id: ${eventId} from the database. Error: ${err}`,
                 timestamp: Date.now()
             })
-        }
-        else {
-            if (removedEvent == 1) {
-                console.log(`Removed event with ID: ${eventId}`);
-                res.status(200).json({
-                    message: `The event with the ID ${eventId} was successfully deleted from the database.`,
-                    timestamp: Date.now()
-                })
-            }
-            else {
-                res.status(500).json({
-                    error: `Could not delete event with the ID: ${eventId}. Event does not exist in the database!.`,
-                    timestamp: Date.now()
-                })
-            }
-        }
-    });
-
+        });
 }
 
 exports.get_atendees_per_event = (req, res) => {
