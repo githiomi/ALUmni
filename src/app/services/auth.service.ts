@@ -38,10 +38,6 @@ export class AuthService {
     return localStorage.getItem('auth_access_token');
   }
 
-  getAllUsers(): Observable<User[]> {
-    return this._httpClient.get<User[]>(`${this.BASE_URL}users`);
-  }
-
   changeLoginStatus(newStatus: boolean): void {
     this.isLoggedIn.next(newStatus);
   }

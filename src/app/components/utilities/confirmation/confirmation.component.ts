@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Event } from 'src/app/interfaces/event';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -23,17 +22,10 @@ import { MatButtonModule } from '@angular/material/button';
 export class ConfirmationComponent {
 
   // Readonly variables
-  readonly event : Event;
+  readonly id : string;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private _eventData : Event,
-    private dialogReference : MatDialogRef<ConfirmationComponent>
-  ) {
-    this.event = this._eventData;
+  constructor(@Inject(MAT_DIALOG_DATA) private _receivedId : string) {
+    this.id = this._receivedId;
   }
 
-  // Method to delete event after confirmation
-  deleteEvent(eventId : string) : void {
-    this.dialogReference.close(true);
-  }
 }

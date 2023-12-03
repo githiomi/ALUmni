@@ -58,9 +58,9 @@
 }
 
 .statsCard:hover {
-    transform: scale(1.05);
-    box-shadow: 5px 5px 10px var(--var-primary-red);
-    transition: all .5s ease-in-out;
+    transform: scale(1.02);
+    box-shadow: 4px 4px 8px var(--var-primary-red);
+    transition: all .3s ease-in-out;
 }
 
 .digit {
@@ -94,8 +94,8 @@
 }
 
 .optionCard:hover {
-    transform: scale(1.03);
-    transition: all .5s ease-in-out;
+    transform: scale(1.02);
+    transition: all .3s ease-in-out;
 }
 
 .optionButton {

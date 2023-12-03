@@ -21,9 +21,7 @@ export class EventListComponent {
   @Input() _event$ !: Event;
   @Output() eventListEmitter = new EventEmitter<boolean>;
 
-  // Method to open the dialog
   openDetailsDialog(state : boolean) : void {
-    
     const dialogConfig : MatDialogConfig = {
       data : {
         editState : state,
@@ -40,7 +38,6 @@ export class EventListComponent {
     this._matDialog.open(EventDetailsComponent, dialogConfig).afterClosed().subscribe(
       (_res : boolean) => this.eventListEmitter.emit(_res)
     );
-
   }
 
 }

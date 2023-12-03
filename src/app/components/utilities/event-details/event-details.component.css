@@ -88,6 +88,10 @@ mat-card {
     padding: .5rem 1rem;
 }
 
+.rowItem {
+    flex: 1;
+}
+
 div>mat-form-field {
     flex: 1;
 }

@@ -40,6 +40,12 @@ export class EventService {
     return this._httpClient.get<string[]>(`${this.BASE_URL}roles`);
   }
 
+  getEventById(eventId: string): Observable<Event> {
+    return this._httpClient.get<ServerResponse>(`http://localhost:3001/events/${eventId}`).pipe(
+      map((_response: ServerResponse) => _response.resource)
+    );
+  }
+
   deleteEventById(eventId: string): Observable<ServerResponse> {
     return this._httpClient.delete<ServerResponse>(`http://localhost:3001/events/${eventId}`).pipe(
       tap({

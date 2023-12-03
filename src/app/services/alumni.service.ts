@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ServerResponse } from '../interfaces/serverResponse';
 
 @Injectable({
@@ -18,8 +18,11 @@ export class AlumniService {
   constructor() { }
 
   getAllAlumni(): Observable<ServerResponse> {
-    return this._httpClient.get<ServerResponse>(`${this.BASE_URL}alumni`).pipe(
-      tap( console.log )
-    )
+    return this._httpClient.get<ServerResponse>(`${this.BASE_URL}alumni`);
   }
+
+  deleteAlumniById(alumniId : string): Observable<ServerResponse> {
+    return this._httpClient.delete<ServerResponse>(`${this.BASE_URL}alumni/${alumniId}`);
+  };
+
 }

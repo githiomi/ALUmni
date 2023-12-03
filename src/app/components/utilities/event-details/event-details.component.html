@@ -37,14 +37,14 @@
                         </p>
                     </div>
 
-                    <div class="detailRow flex items-center justify-between px-4">
+                    <div class="detailRow flex items-center justify-around px-4">
                         <div class="rowItem">
                             <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event Date:</span>
                             <code class="font-semibold">{{ _event$.eventDate | date }}</code>
                         </div>
 
-                        <div class="rowItem">
-                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event
+                        <div class="rowItem text-end">
+                            <span class="label text-base uppercase font-semibold text-red-600">Event
                                 Duration:</span>
                             <code class="font-semibold">{{ _event$.eventDuration }}</code>
                         </div>
@@ -56,8 +56,8 @@
                             <code class="font-semibold">{{ _event$.venue }}</code>
                         </div>
 
-                        <div class="rowItem">
-                            <span class="label text-base uppercase font-semibold text-red-600 mr-2">Event
+                        <div class="rowItem text-end">
+                            <span class="label text-base uppercase font-semibold text-red-600">Event
                                 Category:</span>
                             <code class="font-semibold">{{ _event$.eventCategory }}</code>
                         </div>

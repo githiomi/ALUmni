@@ -25,10 +25,10 @@
             <!-- Events Tab -->
             <mat-tab label="EVENTS">
 
-                <ng-container *ngIf="events; else noData">
+                <ng-container *ngIf="events.length != 0; else noData">
 
                     <p class="tabHeader">
-                        All Scheduled Events
+                        Scheduled Events
                     </p>
 
                     <div class="mat-elevation-z8">
@@ -67,7 +67,7 @@
                             <ng-container matColumnDef="actions">
                                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                                 <td mat-cell *matCellDef="let event">
-                                    <button class="mx-1" color="basic">
+                                    <button class="mx-1" color="basic" (click)="updateEvent(true, event)">
                                         <mat-icon class="text-xl text-green-700">
                                             create
                                         </mat-icon>
@@ -93,11 +93,13 @@
 
                 <ng-template #noData>
 
-                    <div class="tabHeader"><code>
-                        There was no data found on the database. Try Again Later!
-                    </code></div>
+                    <div class="animationContainer">
+                        <div class="tabHeader"><code>
+                            Sorry. No Events Data Found!
+                        </code></div>
 
-                    <ng-lottie [options]="noDataAnimation" />
+                        <ng-lottie [options]="noDataAnimationOptions" />
+                    </div>
 
                 </ng-template>
 
@@ -106,8 +108,8 @@
             <!-- Alumni Tab -->
             <mat-tab label="ALUMNI">
 
-                <ng-template matTabContent>
-                    <ng-container *ngIf="events; else noData">
+                <ng-template matTabContent #usersTab>
+                    <ng-container *ngIf="users.length != 0; else noData">
 
                         <p class="tabHeader">
                             Active Alumni
@@ -155,6 +157,17 @@
                                     <td mat-cell *matCellDef="let user"> {{user.graduationYear}} </td>
                                 </ng-container>
 
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                    <td mat-cell *matCellDef="let event">
+                                        <button class="mx-1" color="basic" (click)="deleteAlumni(event)">
+                                            <mat-icon class="text-xl text-red-600">
+                                                delete
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
                                 <tr mat-header-row *matHeaderRowDef="alumniColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: alumniColumns;"></tr>
                             </table>
@@ -168,11 +181,13 @@
 
                     <ng-template #noData>
 
-                        <div class="tabHeader"><code>
-                            There was no data found on the database. Try Again Later!
-                        </code></div>
-
-                        <ng-lottie [options]="noDataAnimation" />
+                        <div class="animationContainer">
+                            <div class="tabHeader"><code>
+                                Sorry. No Alumni Data Found!
+                            </code></div>
+    
+                            <ng-lottie [options]="noDataAnimationOptions" />
+                        </div>
 
                     </ng-template>
                 </ng-template>

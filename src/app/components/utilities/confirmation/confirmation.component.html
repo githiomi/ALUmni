@@ -6,15 +6,15 @@
 
     <div mat-dialog-content class="grid place-items-center">
 
-        <p>Are you want to delete the event with id: <code><em>{{event.eventTitle}}</em></code></p>
+        <p>Are you want to delete the {{ id.startsWith('A') ? 'alumni' : 'event' }} with id: <code><em>{{ id }}</em></code></p>
 
     </div>
 
     <mat-dialog-actions class="">
-        <button mat-raised-button type="button" color="primary" [mat-dialog-close]="false">
+        <button mat-raised-button type="button" class="uppercase" color="primary" [mat-dialog-close]="false">
             Cancel
         </button>
-        <button mat-raised-button class="appButton" (click)="deleteEvent(event.eventId)">
+        <button mat-raised-button class="appButton" [mat-dialog-close]="true">
             Confirm
         </button>
     </mat-dialog-actions>

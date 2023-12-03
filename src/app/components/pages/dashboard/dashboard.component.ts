@@ -1,4 +1,4 @@
-import { ViewChild, Component, inject } from '@angular/core';
+import { ViewChild, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -11,11 +11,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EventService } from 'src/app/services/event.service';
 import { Alumni } from 'src/app/interfaces/alumni';
 import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../utilities/confirmation/confirmation.component';
 import { AlumniService } from 'src/app/services/alumni.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { EventDetailsComponent } from '../../utilities/event-details/event-details.component';
+import { ServerResponse } from 'src/app/interfaces/serverResponse';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,8 +26,9 @@ import { AlumniService } from 'src/app/services/alumni.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
+  // Read only properties
   readonly defaultImage = "https://preview.redd.it/the-best-poses-for-girls-profile-pictures-v0-k3kxvh4czthb1.jpg?width=911&format=pjpg&auto=webp&s=5928c38dc54f0dbe37fc68519b2f23f2507e6d15";
 
   events: Event[] = [];
@@ -47,42 +50,105 @@ export class DashboardComponent {
     "gender",
     "age",
     "graduationYear",
+    "actions"
   ];
 
   // Dependancy Injections
   private _dialog: MatDialog = inject(MatDialog);
-  private _authService: AuthService = inject(AuthService);
+  private _matDialog: MatDialog = inject(MatDialog);
   private _eventService: EventService = inject(EventService);
   private _alumniService: AlumniService = inject(AlumniService);
+  private _snackbarService: SnackbarService = inject(SnackbarService);
   private _animationService: AnimationService = inject(AnimationService);
 
   // Animation Options
-  loadingAnimation: AnimationOptions = { path: this._animationService.getLoadingAnimationPath() };
-  noDataAnimation: AnimationOptions = { path: this._animationService.getNoDataAnimationPath() };
   eventDataSource = new MatTableDataSource<Event>();
   alumniDataSource = new MatTableDataSource<Alumni>();
-
-  constructor() {
-    this._eventService.getAllEvents().subscribe(
-      _events => this.events = _events.resource
-    );
-    this.eventDataSource = new MatTableDataSource<Event>(this.events);
-
-    this._alumniService.getAllAlumni().subscribe(
-      _response => this.users = _response.resource
-    )
-  }
+  noDataAnimationOptions: AnimationOptions = { path: this._animationService.getNoDataAnimationPath() };
+  loadingAnimationOptions: AnimationOptions = { path: this._animationService.getLoadingAnimationPath() };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngOnInit() {
+    this.getEvents();
+    this.getAlumni();
+  }
 
   ngAfterViewInit() {
     this.eventDataSource.paginator = this.paginator;
   }
 
+  getEvents() {
+    this._eventService.getAllEvents().subscribe(
+      _events => this.events = _events.resource
+    );
+    this.eventDataSource = new MatTableDataSource<Event>(this.events);
+  }
+
+  getAlumni() {
+    this._alumniService.getAllAlumni().subscribe(
+      _response => this.users = _response.resource
+    )
+  }
+
+  updateEvent(state: boolean, event: Event): void {
+
+    const dialogConfig: MatDialogConfig = {
+      data: {
+        editState: state,
+        dialogData: event
+      },
+      width: '70%',
+      height: '80%',
+      autoFocus: false,
+      disableClose: true,
+      enterAnimationDuration: 700,
+      exitAnimationDuration: 700
+    }
+
+    this._matDialog.open(EventDetailsComponent, dialogConfig).afterClosed().subscribe(
+      (_res: boolean) => {
+        if (_res) {
+          this._snackbarService.openSnackBar(`The event with ID: ${event.eventId} was updated successfully.`);
+          this.getEvents()
+        }
+        else
+          this._snackbarService.openSnackBar(`The event with ID: ${event.eventId} could not be updated.`)
+      }
+    );
+
+  }
+
   deleteEvent(event: Event) {
 
     const confirmationDialogConfig: MatDialogConfig = {
-      data: event,
+      data: event.eventId,
+      autoFocus: false,
+      enterAnimationDuration: 700,
+      exitAnimationDuration: 700,
+      disableClose: true
+    }
+
+    // Open confirmation dialog
+    let confirmationDialogRef = this._dialog.open(ConfirmationComponent, confirmationDialogConfig);
+
+    confirmationDialogRef.afterClosed().subscribe(
+      (confirmation: boolean) => {
+        if (confirmation) {
+          this._eventService.deleteEventById(event.eventId).subscribe(
+            _deleteResponse => {
+              this._snackbarService.openSnackBar('The event has successfully been deleted from the database.')
+              this.getEvents();
+            })
+        }
+      });
+
+  }
+
+  deleteAlumni(alumni: Alumni) {
+
+    const confirmationDialogConfig: MatDialogConfig = {
+      data: alumni.alumniId,
       autoFocus: false,
       enterAnimationDuration: 700,
       exitAnimationDuration: 700,
@@ -95,9 +161,14 @@ export class DashboardComponent {
     confirmationDialogRef.afterClosed().subscribe(
       (confirmation: boolean) => {
         if (confirmation)
-          console.log('Deletion confirmed. Deleting now!');
-        else
-          console.log('Deletion was cancelled!');
+          this._alumniService.deleteAlumniById(alumni.alumniId).subscribe(
+            (_res: ServerResponse) => {
+              this._snackbarService.openSnackBar(`The Alumni with ID ${alumni.alumniId} has successfully been deleted from the database.`)
+              this.getAlumni();
+            },
+            (_err) =>
+              this._snackbarService.openSnackBar(`Could not delete alumni with ID: ${alumni.alumniId}`)
+          )
       }
     )
 
