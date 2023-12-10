@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-alum-events',
@@ -39,7 +39,9 @@ export class AlumEventsComponent {
   ]
 
   constructor() {
-    this.events$ = this._eventService.getEvents();
+    this.events$ = this._eventService.getAllEvents().pipe(
+      map(_serverResponse => _serverResponse.resource)
+    );
   }
 
   goToPage(routerLink : string) : void {

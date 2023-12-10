@@ -45,8 +45,8 @@ export class EventDetailsComponent implements OnInit {
   protected _event$: Event;
   editEventForm!: FormGroup;
   isLoggedIn$: Observable<boolean>;
-  eventLocations$: Observable<string[]> = this._eventService.getEventLocations();
-  eventCategories$: Observable<string[]> = this._eventService.getEventCategories();
+  eventLocations$: string[] = this._eventService.eventLocations;
+  eventCategories$: string[] = this._eventService.eventCategories;
 
   // Get data passed
   constructor(

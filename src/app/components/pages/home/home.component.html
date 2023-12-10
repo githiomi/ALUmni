@@ -76,7 +76,7 @@
 
     </section>
 
-    <div class="eventsPreview" *ngIf="events$.length != 0">
+    <div class="eventsPreview" *ngIf="(events$ | async)?.length != 0">
 
         <mat-card>
 
@@ -87,7 +87,7 @@
                 </p>
 
                 <div class="events flex gap-3 items-center overflow-y-scroll">
-                    <ng-container *ngFor="let event of events$">
+                    <ng-container *ngFor="let event of (events$ | async)">
                         <app-event [event]="event" /></ng-container>
                 </div>
 

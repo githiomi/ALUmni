@@ -9,36 +9,55 @@ import { ServerResponse } from '../interfaces/serverResponse';
 })
 export class EventService {
 
-  // Readonly Variables
-  private readonly BASE_URL = 'http://localhost:3000/';
+  genders : string[] = [
+    "Male",
+    "Female"
+  ]
+  roles : string[] = [
+    "Alumni",
+    "Manager"
+  ]
+  eventCategories : string[] = [
+    "Art",
+    "Food",
+    "Music",
+    "Sports",
+    "Science",
+    "Fashion",
+    "Business",
+    "Literature",
+    "Networking",
+    "Technology",
+    "Campus Event",
+    "Health and Wellness",
+    "Professional Development"
+  ]
+  eventLocations : string[] = [
+    "Convention Center",
+    "Art Studio",
+    "City Park",
+    "Outdoor Amphitheater",
+    "Community Hall",
+    "Beach Resort",
+    "Historical Museum",
+    "Botanical Garden",
+    "Sports Arena",
+    "Rooftop Lounge",
+    "Tech Hub",
+    "Downtown Square",
+    "Culinary School",
+    "University Auditorium",
+    "Co-working Space",
+    "Public Library",
+    "Golf Course",
+    "Warehouse Loft",
+    "Luxury Hotel",
+    "Fitness Center"
+  ]
+  years : number[] = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2018, 2019, 2020, 2021, 2022, 2023]
 
   // Dependacy Injection
   private _httpClient: HttpClient = inject(HttpClient);
-
-  // Data Retrieval Methods
-  getEvents(): Observable<Event[]> {
-    return this._httpClient.get<Event[]>(`${this.BASE_URL}events`);
-  }
-
-  getYears(): Observable<number[]> {
-    return this._httpClient.get<number[]>(`${this.BASE_URL}years`);
-  }
-
-  getEventLocations(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}eventLocations`);
-  }
-
-  getEventCategories(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}eventCategories`);
-  }
-
-  getGenders(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}genders`);
-  }
-
-  getRoles(): Observable<string[]> {
-    return this._httpClient.get<string[]>(`${this.BASE_URL}roles`);
-  }
 
   getEventById(eventId: string): Observable<Event> {
     return this._httpClient.get<ServerResponse>(`http://localhost:3001/events/${eventId}`).pipe(

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
 
@@ -22,12 +23,8 @@ export const routes: Routes = [
     {
         path: 'events',
         loadComponent: () => import('./components/pages/events/events.component').then( c => c.EventsComponent),
+        canActivate : [authGuard],
         title: 'All Events'
-    },
-    {
-        path: 'events/1',
-        loadComponent: () => import('./components/utilities/event-details/event-details.component').then( c => c.EventDetailsComponent),
-        title: 'Event Details'
     },
     {
         path: ':alumniId/events',

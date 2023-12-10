@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { EventComponent } from '../../utilities/event/event.component';
 import { EventService } from 'src/app/services/event.service';
@@ -26,15 +26,12 @@ export class HomeComponent implements OnInit {
   private _eventService: EventService = inject(EventService);
 
   // Component Variables
-  events$ !: Event[];
+  events$ !: Observable<Event[]>;
   isLoggedIn !: Observable<boolean>;
 
   ngOnInit() {
-    this._eventService.getAllEvents().subscribe(
-      _events => this.events$ = _events.resource,
-      _err => this._snackBar.open(_err.message, "Close", {
-        duration: 3000
-      })
+    this.events$ = this._eventService.getAllEvents().pipe(
+      map ( _serverResponse => _serverResponse.resource)
     );
     this.isLoggedIn = this._authService.loginStatus$;
   }

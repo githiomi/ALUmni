@@ -33,15 +33,15 @@ export class NewEventComponent {
   username !: string;
   newEventForm!: FormGroup;
   loading: boolean = false;
-  eventLocations$: Observable<string[]>;
-  eventCategories$: Observable<string[]>;
+  eventLocations$: string[];
+  eventCategories$: string[];
 
   constructor(
     private _dialogReference: MatDialogRef<NewEventComponent>
   ) {
     this.newEventFormInit()
-    this.eventLocations$ = this._eventService.getEventLocations();
-    this.eventCategories$ = this._eventService.getEventCategories();
+    this.eventLocations$ = this._eventService.eventLocations;
+    this.eventCategories$ = this._eventService.eventCategories;
   }
 
   private newEventFormInit(): void {

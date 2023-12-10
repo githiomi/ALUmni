@@ -25,9 +25,9 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class SignupComponent {
 
   // Readonly
-  protected readonly years$: Observable<number[]>;
-  protected readonly roles$: Observable<string[]>;
-  protected readonly genders$: Observable<string[]>;
+  protected readonly years$: number[];
+  protected readonly roles$: string[];
+  protected readonly genders$: string[];
 
   // Dependency Injection
   private _router: Router = inject(Router);
@@ -44,9 +44,9 @@ export class SignupComponent {
 
   constructor() {
 
-    this.years$ = this._eventService.getYears();
-    this.roles$ = this._eventService.getRoles();
-    this.genders$ = this._eventService.getGenders();
+    this.years$ = this._eventService.years;
+    this.roles$ = this._eventService.roles;
+    this.genders$ = this._eventService.genders;
 
     this.registerForm = this._formBuilder.group({
       firstName: new FormControl('', [Validators.required]),

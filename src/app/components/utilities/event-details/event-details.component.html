@@ -137,7 +137,7 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Event Category</mat-label>
                                 <mat-select formControlName="eventCategory">
-                                    <mat-option *ngFor="let _eventCategory of ( eventCategories$ | async)"
+                                    <mat-option *ngFor="let _eventCategory of eventCategories$"
                                         [value]="_eventCategory">
                                         {{ _eventCategory }}</mat-option>
                                 </mat-select>
@@ -146,7 +146,7 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Event Venue</mat-label>
                                 <mat-select formControlName="venue">
-                                    <mat-option *ngFor="let _eventLocation of ( eventLocations$ | async )"
+                                    <mat-option *ngFor="let _eventLocation of eventLocations$"
                                         value="{{_eventLocation}}">
                                         {{ _eventLocation }}</mat-option>
                                 </mat-select>

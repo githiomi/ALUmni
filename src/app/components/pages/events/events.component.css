@@ -21,7 +21,8 @@ form {
     display: flex !important;
     justify-content: space-between;
     align-items: center;
-    gap: 10rem;
+    margin: 1rem 0;
+    gap: 6rem;
 }
 
 /* Form Field */

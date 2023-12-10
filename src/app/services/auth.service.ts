@@ -30,7 +30,7 @@ export class AuthService {
   private loggedInUser: Subject<LoggedInUser> = new Subject();
   loggedInUser$: Observable<LoggedInUser> = this.loggedInUser.asObservable();
 
-  private isTokenPresent(): boolean {
+  isTokenPresent(): boolean {
     return !!localStorage.getItem('auth_access_token');
   }
 

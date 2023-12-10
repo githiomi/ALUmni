@@ -42,14 +42,14 @@ export class EventsComponent {
   fetching = true;
   events!: Event[];
   filterForm!: FormGroup;
-  eventYears$: Observable<number[]>;
-  eventLocations$: Observable<string[]>;
-  eventCategories$: Observable<string[]>;
+  eventYears$: number[];
+  eventLocations$: string[];
+  eventCategories$: string[];
 
   constructor() {
-    this.eventYears$ = this._eventService.getYears();
-    this.eventLocations$ = this._eventService.getEventLocations();
-    this.eventCategories$ = this._eventService.getEventCategories();
+    this.eventYears$ = this._eventService.years;
+    this.eventLocations$ = this._eventService.eventLocations;
+    this.eventCategories$ = this._eventService.eventCategories;
   }
 
   ngOnInit(): void {
@@ -60,8 +60,7 @@ export class EventsComponent {
   private filterFormInit(): void {
     this.filterForm = this._formBuilder.group({
       eventCategory: new FormControl(''),
-      eventLocation: new FormControl(''),
-      eventYear: new FormControl('')
+      eventLocation: new FormControl('')
     },
       {
         updateOn: 'blur'
@@ -95,7 +94,7 @@ export class EventsComponent {
   submitFilterForm(filterForm: any): void {
     const formValues = filterForm.value;
 
-    if (!formValues.eventCategory && !formValues.eventLocation && !formValues.eventYear) {
+    if (!formValues.eventCategory && !formValues.eventLocation) {
       this._matSnackBar.open(
         'No filter action was specified.',
         'CLOSE',

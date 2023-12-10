@@ -39,42 +39,29 @@
 
                 <form [formGroup]="filterForm">
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Event Category</mat-label>
-                        <mat-select formControlName="eventCategory">
-                            <mat-option *ngFor="let _eventCategory of ( eventCategories$ | async)" [value]="_eventCategory">
-                                {{ _eventCategory }}</mat-option>
-                        </mat-select>
-                        <button color="basic" class="appButton" *ngIf="filterForm.controls['eventCategory'].value"
-                            matSuffix mat-mini-fab aria-label="clear"
-                            (click)="clearInputControl($event, 'eventCategory')">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
-
                     <div class="formRow">
                         <mat-form-field appearance="outline">
-                            <mat-label>Event Location</mat-label>
-                            <mat-select formControlName="eventLocation">
-                                <mat-option *ngFor="let _eventLocation of ( eventLocations$ | async )" value="{{_eventLocation}}">
-                                    {{ _eventLocation }}</mat-option>
+                            <mat-label>Event Category</mat-label>
+                            <mat-select formControlName="eventCategory">
+                                <mat-option *ngFor="let _eventCategory of eventCategories$" [value]="_eventCategory">
+                                    {{ _eventCategory }}</mat-option>
                             </mat-select>
-                            <button color="basic" class="appButton" *ngIf="filterForm.controls['eventLocation'].value"
+                            <button color="basic" class="appButton" *ngIf="filterForm.controls['eventCategory'].value"
                                 matSuffix mat-mini-fab aria-label="clear"
-                                (click)="clearInputControl($event, 'eventLocation')">
+                                (click)="clearInputControl($event, 'eventCategory')">
                                 <mat-icon>close</mat-icon>
                             </button>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline">
-                            <mat-label class="w-full">Alumni Year</mat-label>
-                            <mat-select class="w-full" formControlName="eventYear">
-                                <mat-option *ngFor="let _eventYear of ( eventYears$ | async )" value="{{_eventYear}}">
-                                    {{ _eventYear }}</mat-option>
+                            <mat-label>Event Location</mat-label>
+                            <mat-select formControlName="eventLocation">
+                                <mat-option *ngFor="let _eventLocation of eventLocations$" value="{{_eventLocation}}">
+                                    {{ _eventLocation }}</mat-option>
                             </mat-select>
-                            <button color="basic" class="appButton" *ngIf="filterForm.controls['eventYear'].value"
+                            <button color="basic" class="appButton" *ngIf="filterForm.controls['eventLocation'].value"
                                 matSuffix mat-mini-fab aria-label="clear"
-                                (click)="clearInputControl($event, 'eventYear')">
+                                (click)="clearInputControl($event, 'eventLocation')">
                                 <mat-icon>close</mat-icon>
                             </button>
                         </mat-form-field>
