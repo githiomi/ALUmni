@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-new-event',
@@ -24,10 +25,12 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 export class NewEventComponent {
 
   // Dependancy injections
+  private _authService: AuthService = inject(AuthService);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
 
   // Component Variables
+  username !: string;
   newEventForm!: FormGroup;
   loading: boolean = false;
   eventLocations$: Observable<string[]>;
@@ -62,6 +65,14 @@ export class NewEventComponent {
     }
 
     this.loading = true;
+
+    this._authService.loggedInUser$.subscribe(
+      _loggedInUser => {
+        console.log('User', _loggedInUser);
+        this.username = _loggedInUser.username;
+      }
+    )
+
     const formValue = form.value
 
     const newEvent = {

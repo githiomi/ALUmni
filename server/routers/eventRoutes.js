@@ -28,9 +28,9 @@ eventRouter.put('/:eventId', eventsController.update_event_by_id);
 
 eventRouter.delete('/:eventId', eventsController.delete_event_by_id);
 
-eventRouter.get('/:eventId/atendees', eventsController.get_atendees_per_event);
+// eventRouter.get('/:eventId/atendees', eventsController.get_atendees_per_event);
 
-eventRouter.post('/:eventId/atendees', eventsController.add_atendees_to_event);
+// eventRouter.post('/:eventId/atendees', eventsController.add_atendees_to_event);
 
 function authMiddleware(req, res, next) {
 

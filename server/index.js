@@ -15,7 +15,7 @@ const value = date.format(now, "DD/MM/YYYY HH:mm:ss");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Global variables
 const PORT_NUMBER = 3001;
@@ -26,7 +26,7 @@ const eventRouter = require('./routers/eventRoutes');
 const authRouter = require('./routers/authRoutes');
 
 app.use(cors({
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     origin: 'http://localhost:4200'
 }));
 

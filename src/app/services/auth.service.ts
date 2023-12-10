@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, catchError, concatMap, map, of, tap, throwError } from 'rxjs';
-import { User } from '../interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { AuthResponse } from '../interfaces/authResponse';
 import { LoggedInUser } from '../interfaces/logged-in-user';
@@ -25,7 +24,7 @@ export class AuthService {
     }
   }
 
-  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(this.isTokenPresent());
+  private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(this.isTokenPresent());
   loginStatus$ = this.isLoggedIn.asObservable();
 
   private loggedInUser: Subject<LoggedInUser> = new Subject();
@@ -60,11 +59,10 @@ export class AuthService {
     // Authenticate
     return this._httpClient.post<AuthResponse>(`${this.BASE_URL}auth/login`, { username, password })
       .pipe(
-        tap(console.log),
         catchError(_err => throwError({
           message: "Incorrect username or password. Please check and try again"
         })),
-        map((_res: AuthResponse) => {
+        tap((_res: AuthResponse) => {
           if (_res.accessToken) {
             // Store access token in local storage
             localStorage.setItem('auth_access_token', `Bearer ${_res.accessToken}`);

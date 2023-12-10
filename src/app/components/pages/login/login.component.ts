@@ -27,8 +27,8 @@ export class LoginComponent {
   private _formBuilder: FormBuilder = inject(FormBuilder);
 
   // Component Variables
-  isProcessing: boolean = false;
   loginForm: FormGroup;
+  isProcessing: boolean = false;
 
   constructor() {
     this.loginForm = this._formBuilder.group({

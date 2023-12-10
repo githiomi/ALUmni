@@ -10,7 +10,6 @@ alumniRouter.get('/', alumniController.get_all_alumni);
 
 alumniRouter.get('/:alumniId', alumniController.get_alumni_by_id);
 
-// alumniRouter.put('/:alumniId', isAuthenticated, alumniController.update_existing_alumni_by_id);
 alumniRouter.put('/:alumniId', alumniController.update_existing_alumni_by_id);
 
 alumniRouter.delete('/:alumniId', alumniController.delete_alumni_by_id);

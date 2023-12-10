@@ -7,7 +7,6 @@ const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 
 // Data Models
 const Alumni = require('./../models/alumni');
-const Roles = require('./../models/roles');
 
 exports.log_in = (req, res) => {
 

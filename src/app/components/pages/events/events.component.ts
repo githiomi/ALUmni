@@ -1,4 +1,4 @@
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Event } from 'src/app/interfaces/event';
 import { Component, inject } from '@angular/core';
@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { EventService } from 'src/app/services/event.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AnimationService } from 'src/app/services/animation.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NewEventComponent } from '../../utilities/new-event/new-event.component';
 import { EventListComponent } from '../../utilities/event-list/event-list.component';
@@ -16,8 +17,6 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
-import { ServerResponse } from 'src/app/interfaces/serverResponse';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -28,36 +27,26 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class EventsComponent {
 
-  // Const Paths
-  private readonly fetchingAnimation = './../../../../assets/animations/fetching.json'
-  private readonly noDataAnimation = './../../../../assets/animations/no_data.json'
-
-  // Animation Options
-  noDataAnimationOptions: AnimationOptions = { path: this.noDataAnimation }
-  fetchingAnimationOptions: AnimationOptions = { path: this.fetchingAnimation }
-
   // Dependency injection
   private _matDialog: MatDialog = inject(MatDialog);
-  private _authService: AuthService = inject(AuthService);
   private _matSnackBar: MatSnackBar = inject(MatSnackBar);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
+  private _animationService: AnimationService = inject(AnimationService);
+
+  // Animation Options
+  noDataAnimationOptions: AnimationOptions = { path: this._animationService.getNoDataAnimationPath() };
+  fetchingAnimationOptions: AnimationOptions = { path: this._animationService.getLoadingAnimationPath() }
 
   // Component variables
   fetching = true;
   events!: Event[];
-  username !: string;
   filterForm!: FormGroup;
   eventYears$: Observable<number[]>;
-  eventCategories$: Observable<string[]>;
   eventLocations$: Observable<string[]>;
+  eventCategories$: Observable<string[]>;
 
   constructor() {
-
-    this._authService.loggedInUser$.pipe(
-      map ( _user => _user.username )
-    ).subscribe( _username => this.username = _username);
-
     this.eventYears$ = this._eventService.getYears();
     this.eventLocations$ = this._eventService.getEventLocations();
     this.eventCategories$ = this._eventService.getEventCategories();

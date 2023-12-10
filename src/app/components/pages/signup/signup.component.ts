@@ -102,18 +102,14 @@ export class SignupComponent {
         const newUser = _response.resource;
         console.log(newUser);
 
-        this._snackBarService.openSnackBar(`${_response.message}. Username: ${newUser.username}`, 'CLOSE', Infinity);
+        this._snackBarService.openSnackBar(`${_response.message}. Username: ${newUser.username}`, 'CLOSE', 10000);
         this._router.navigateByUrl('/login');
-
       },
       (err) => {
         this.isProcessing = false;
         this._snackBarService.openSnackBar(err);
       }
     )
-
-    // this._authService.changeLoginStatus(true);
-
   }
 
 }
