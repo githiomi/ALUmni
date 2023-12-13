@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Event } from '../interfaces/event';
-import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ServerResponse } from '../interfaces/serverResponse';
 import { SnackbarService } from './snackbar.service';
 import { AuthService } from './auth.service';
@@ -101,9 +101,10 @@ export class EventService {
     );
   }
 
-  getUserEvents(): Observable<ServerResponse> {
-    return this._httpClient.get<ServerResponse>(`http://localhost:3001/alumni/${this._authService.authenticatedUser()?.alumniId}/events}`).pipe(
+  getUserEvents(): Observable<Event[]> {
+    return this._httpClient.get<ServerResponse>(`http://localhost:3001/alumni/${this._authService.authenticatedUser()?.username}/events`).pipe(
       tap({error: console.log}),
+      map((response) => response.resource),
       catchError( _err => throwError(_err.message))
     )
   }

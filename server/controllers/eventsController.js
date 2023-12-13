@@ -90,23 +90,25 @@ exports.get_events_for_alumni = (req, res) => {
 
     const alumni = req.authorisedUser;
 
-    eventDAO.getAlumniEvents(alumni.alumniId)
+    eventDAO.getAlumniEvents(alumni.username)
         .then(_events => {
             if (_events.length == 0)
-                res.status(404).send({
-                    message: `No event was found on the database for user: ${alumniId}.`,
+                res.status(200).send({
+                    message: `No event was found on the database for user: ${alumni.alumniId}.`,
+                    resource: [],
                     timestamp: Date.now()
                 })
             else
                 res.status(200).json({
-                    message: `Successfully retrieved the follwing events from the database for the user: ${alumniId}`,
+                    message: `Successfully retrieved the events for the user: ${alumni.alumniId}`,
                     resource: _events,
                     timestamp: Date.now()
                 })
         })
         .catch(err => {
+            console.log(err);
             res.status(500).send({
-                message: `There was an error retrieving the events for user ${alumniId} from the database. Error: ${err}`,
+                message: `There was an error retrieving the events for user ${alumni.alumniId} from the database. Error: ${err}`,
                 timestamp: Date.now()
             })
         });

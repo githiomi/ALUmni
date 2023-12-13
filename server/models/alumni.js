@@ -1,6 +1,6 @@
 let alumniCounter = 1;
-const MAX = 110;
-const MIN = 100;
+const MAX = 101;
+const MIN = 1;
 class Alumnni {
 
     constructor(

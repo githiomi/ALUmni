@@ -54,8 +54,10 @@ class EventDAO {
             this.eventDB.find({ createdBy: alumniId }, (err, _events) => {
                 if (err)
                     reject(err);
-                else
+                else {
+                    console.log(_events);
                     resolve(_events);
+                }
             })
         })
     }

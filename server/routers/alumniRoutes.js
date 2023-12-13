@@ -1,5 +1,6 @@
 // Router Imports
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const alumniRouter = express.Router();
 
 // Controller Imports
@@ -16,14 +17,11 @@ alumniRouter.delete('/:alumniId', alumniController.delete_alumni_by_id);
 
 alumniRouter.get('/:alumniId/events', authMiddleware, eventsController.get_events_for_alumni);
 
-alumniRouter.post('/:alumniId/events', alumniController.add_event_to_alumni);
-
 // Middlewares
 function authMiddleware(req, res, next) {
 
     // Get user login token
     const authToken = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
-    console.log('Auth token: ' + authToken);
 
     if (!authToken || authToken == null)
         return res.status(401).json({

@@ -18,6 +18,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -44,8 +45,9 @@ export class EventsComponent {
   // Component variables
   fetching = true;
   events!: Event[];
-  filterForm!: FormGroup;
+  userEvents!: Event[];
   eventYears$: number[];
+  filterForm!: FormGroup;
   eventLocations$: string[];
   eventCategories$: string[];
 
@@ -75,6 +77,8 @@ export class EventsComponent {
     this._eventService.getAllEvents().subscribe(
       _response => {
         this.fetching = false;
+        this.events = _response.resource;
+        this.userEvents = _response.resource.filter( (_event : Event) => _event.createdBy === this._authService.authenticatedUser()?.username);
         this.events = _response.resource
       },
       _err => {

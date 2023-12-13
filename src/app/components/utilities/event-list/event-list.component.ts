@@ -16,16 +16,18 @@ import { EventDetailsComponent } from '../event-details/event-details.component'
 export class EventListComponent {
 
   // Dependancy injections
-  private _matDialog : MatDialog = inject(MatDialog);
+  private _matDialog: MatDialog = inject(MatDialog);
 
   @Input() _event$ !: Event;
+  @Input() isOwner !: boolean;
   @Output() eventListEmitter = new EventEmitter<boolean>;
 
-  openDetailsDialog(state : boolean) : void {
-    const dialogConfig : MatDialogConfig = {
-      data : {
-        editState : state,
-        dialogData : this._event$
+  openDetailsDialog(state: boolean): void {
+    const dialogConfig: MatDialogConfig = {
+      data: {
+        editState: state,
+        deleteFlag: this.isOwner,
+        dialogData: this._event$
       },
       width: '70%',
       height: '80%',
@@ -36,7 +38,7 @@ export class EventListComponent {
     }
 
     this._matDialog.open(EventDetailsComponent, dialogConfig).afterClosed().subscribe(
-      (_res : boolean) => this.eventListEmitter.emit(_res)
+      (_res: boolean) => this.eventListEmitter.emit(_res)
     );
   }
 

@@ -89,22 +89,13 @@
 
     <div class="events">
 
-        <div *ngIf="_authService.authenticatedUser as authenticatedUser; else noUser">
-            {{ authenticatedUser | json}}
-        </div>
-
-        <ng-template #noUser>
-            No user logged in
-        </ng-template>
-
         <ng-container *ngIf="!fetching; else fetchingEvents">
 
-            <!-- <ng-container *ngIf="(events$ | async)!.length > 0; else noEvents"> -->
-            <ng-container *ngIf="events.length > 0; else noEvents">
+            <ng-container *ngIf="userEvents.length != 0; else noUserEvents">
 
                 <div class="header flex justify-between items-center">
                     <p class="text-3xl uppercase font-bold">
-                        Scheduled Events
+                        Your Events <span class="text-red-600">({{userEvents.length}})</span>
                     </p>
 
                     <button mat-raised-button class="appButton py-2" (click)="createNewEvent()">
@@ -114,8 +105,69 @@
                 </div>
 
                 <div class="mt-8">
+                    <ng-container *ngFor="let _userEvent of userEvents; let index = index">
+                        <app-event-list (eventListEmitter)="getEvents()" [_event$]="_userEvent" [isOwner]="true" />
+                    </ng-container>
+                </div>
+
+            </ng-container>
+
+            <ng-template #noUserEvents>
+                <div class="info flex flex-col justify-around items-center" *ngIf="events.length != 0">
+                    <code class="font-semibold text-base"><em>You have not created any events!</em></code>
+
+                    <div class="animation">
+                        <ng-lottie [options]="noDataAnimationOptions">
+                            <!-- Animation goes here -->
+                        </ng-lottie>
+                    </div>
+
+                    <button mat-raised-button class="appButton py-2 my-4" (click)="createNewEvent()">
+                        <mat-icon>create</mat-icon>
+                        Create New Event
+                    </button>
+                </div>
+            </ng-template>
+
+        </ng-container>
+
+        <ng-template #fetchingEvents>
+
+            <div class="info flex flex-col justify-around items-center">
+                <code class="font-semibold"><em>Fetching event data from the database. Please wait...</em></code>
+
+                <div class="animation">
+                    <ng-lottie [options]="fetchingAnimationOptions">
+                        <!-- Animation goes here -->
+                    </ng-lottie>
+                </div>
+            </div>
+
+            <button mat-raised-button class="appButton py-2 my-4" (click)="createNewEvent()">
+                <mat-icon>create</mat-icon>
+                Create New Event
+            </button>
+
+
+        </ng-template>
+
+    </div>
+
+    <div class="events mb-4">
+
+        <ng-container *ngIf="!fetching; else fetchingEvents">
+
+            <ng-container *ngIf="events.length > 0; else noEvents">
+
+                <div class="header flex justify-between items-center">
+                    <p class="text-3xl uppercase font-bold">
+                        Scheduled Events <span class="text-red-600">({{events.length}})</span>
+                    </p>
+                </div>
+
+                <div class="mt-8">
                     <ng-container *ngFor="let _event of events; let index = index">
-                        <app-event-list (eventListEmitter)="getEvents()" [_event$]="_event" />
+                        <app-event-list (eventListEmitter)="getEvents()" [_event$]="_event" [isOwner]="false" />
                     </ng-container>
                 </div>
 
@@ -151,7 +203,6 @@
                     </ng-lottie>
                 </div>
             </div>
-
 
         </ng-template>
 

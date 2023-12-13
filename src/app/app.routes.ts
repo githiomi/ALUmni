@@ -1,8 +1,13 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
 import { authGuard } from './guards/auth.guard';
+import { inject } from '@angular/core';
+import { AuthService } from './services/auth.service';
+
+const user = inject(AuthService).authenticatedUser();
 
 export const routes: Routes = [
+
 
     // Application Routes
     {
@@ -13,24 +18,30 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import('./components/pages/login/login.component').then( c => c.LoginComponent),
-        title: 'Alumni Login'
+        title: 'ALUmni Login'
     },
     {
         path: 'register',
         loadComponent: () => import('./components/pages/signup/signup.component').then( c => c.SignupComponent),
-        title: 'Alumni Registration'
+        title: 'ALUmni Registration'
     },
     {
         path: 'events',
         loadComponent: () => import('./components/pages/events/events.component').then( c => c.EventsComponent),
-        title: 'Alumni Events'
+        canActivate : [authGuard],
+        title: 'ALUmni Events'
     },
     {
         path: 'connect',
         loadComponent: () => import('./components/pages/connect/connect.component').then( c => c.ConnectComponent),
         canActivate : [authGuard],
-        title: 'Connect With Others '
+        title: 'ALUmni Connect'
     },
+    // {
+    //     path: 'profile',
+    //     loadComponent: () => import('./components/pages/profile/profile.component').then( c => c.ProfileComponent),
+    //     title: `${user?.username} Profile`
+    // },
     {
         path: 'dashboard',
         loadComponent: () => import('./components/pages/dashboard/dashboard.component').then( c => c.DashboardComponent),

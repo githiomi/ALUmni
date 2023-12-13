@@ -34,7 +34,7 @@
     </div>
 
     <div class="viewMore flex flex-col gap-4 justify-center items-center">
-        <button (click)="openDetailsDialog(true)" color="basic" mat-mini-fab class="appButton">
+        <button *ngIf="isOwner" (click)="openDetailsDialog(true)" color="basic" mat-mini-fab class="appButton">
             <mat-icon>create</mat-icon>
         </button>
 
