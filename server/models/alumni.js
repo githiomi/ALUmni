@@ -1,6 +1,6 @@
 let alumniCounter = 1;
-const MAX = 101;
-const MIN = 0
+const MAX = 110;
+const MIN = 100;
 class Alumnni {
 
     constructor(
@@ -12,7 +12,7 @@ class Alumnni {
         this.username = this.firstName.charAt(0).toUpperCase() + this.lastName.substring(0, 4).toUpperCase() + Math.floor(Math.random() * (MAX - MIN)) + MIN;
         this.gender = gender;
         this.age = age;
-        this.profilePictureUrl = "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg";
+        this.profilePictureUrl = this.assignProfilePicture(gender);
         this.startYear = parseInt(graduationYear) - 4;
         this.graduationYear = graduationYear;
         this.emailAddress = emailAddress;
@@ -22,6 +22,14 @@ class Alumnni {
 
         // Increase counter
         alumniCounter ++;
+    }
+
+    assignProfilePicture(gender){
+        if (gender == 'MALE'){
+            return 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png';
+        }else if (gender == 'FEMALE'){
+            return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3BbsAWKX2VvKuN2QEaMChKuKsr6bKLjwlsfboCnu9CQ0AdQI7ltq4-t7g9rnaDm8IgaE&usqp=CAU'
+        }
     }
 }
 

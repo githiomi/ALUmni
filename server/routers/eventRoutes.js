@@ -32,30 +32,5 @@ eventRouter.delete('/:eventId', eventsController.delete_event_by_id);
 
 // eventRouter.post('/:eventId/atendees', eventsController.add_atendees_to_event);
 
-function authMiddleware(req, res, next) {
-
-    // Get user login token
-    const authToken = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
-    console.log('Auth token: ' + authToken);
-
-    if (!authToken || authToken == null)
-        return res.status(401).json({
-            error: 'No Authorization Header was found in the request!',
-            timestamp: Date.now()
-        })
-
-    jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-        if (err)
-            return res.status(403).json({
-                error: "Authorization Token passed but is no longer valid. Refresh Token and try again",
-                timestamp: Date.now()
-            })
-
-        req.authorisedUser = payload;
-        res.status(200).send(req.authorisedUser)
-        next();
-    });
-}
-
 // Module Exports
 module.exports = eventRouter;

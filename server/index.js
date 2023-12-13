@@ -27,7 +27,8 @@ const authRouter = require('./routers/authRoutes');
 
 app.use(cors({
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    origin: 'http://localhost:4200'
+    origin: 'http://localhost:4200',
+    origin: 'http://localhost:61561',
 }));
 
 app.get("/", (req, res) => {

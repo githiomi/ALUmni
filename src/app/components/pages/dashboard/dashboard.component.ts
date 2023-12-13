@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   readonly defaultImage = "https://preview.redd.it/the-best-poses-for-girls-profile-pictures-v0-k3kxvh4czthb1.jpg?width=911&format=pjpg&auto=webp&s=5928c38dc54f0dbe37fc68519b2f23f2507e6d15";
 
   events: Event[] = [];
-  users: User[] = [];
+  users: Alumni[] = [];
   eventColumns: string[] = [
     "id",
     "title",
@@ -89,6 +89,7 @@ export class DashboardComponent implements OnInit {
     this._alumniService.getAllAlumni().subscribe(
       _response => this.users = _response.resource
     )
+    this.alumniDataSource = new MatTableDataSource<Alumni>(this.users);
   }
 
   updateEvent(state: boolean, event: Event): void {

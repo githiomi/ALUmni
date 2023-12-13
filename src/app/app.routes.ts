@@ -8,7 +8,7 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent,
-        title: 'ALUmni Homepage'
+        title: 'ALUmni Home'
     },
     {
         path: 'login',
@@ -23,17 +23,12 @@ export const routes: Routes = [
     {
         path: 'events',
         loadComponent: () => import('./components/pages/events/events.component').then( c => c.EventsComponent),
-        canActivate : [authGuard],
-        title: 'All Events'
-    },
-    {
-        path: ':alumniId/events',
-        loadComponent: () => import('./components/pages/alum-events/alum-events.component').then( c => c.AlumEventsComponent),
         title: 'Alumni Events'
     },
     {
         path: 'connect',
         loadComponent: () => import('./components/pages/connect/connect.component').then( c => c.ConnectComponent),
+        canActivate : [authGuard],
         title: 'Connect With Others '
     },
     {

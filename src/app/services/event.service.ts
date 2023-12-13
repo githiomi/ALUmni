@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Event } from '../interfaces/event';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { ServerResponse } from '../interfaces/serverResponse';
+import { SnackbarService } from './snackbar.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +60,7 @@ export class EventService {
 
   // Dependacy Injection
   private _httpClient: HttpClient = inject(HttpClient);
+  private _authService: AuthService = inject(AuthService);
 
   getEventById(eventId: string): Observable<Event> {
     return this._httpClient.get<ServerResponse>(`http://localhost:3001/events/${eventId}`).pipe(
@@ -86,9 +89,7 @@ export class EventService {
       tap({
         error: console.log
       }),
-      catchError( _err => {
-        return of(_err.message)
-      })
+      catchError( _err => throwError(_err.message))
     );
   }
 
@@ -98,6 +99,13 @@ export class EventService {
         error: console.log
       })
     );
+  }
+
+  getUserEvents(): Observable<ServerResponse> {
+    return this._httpClient.get<ServerResponse>(`http://localhost:3001/alumni/${this._authService.authenticatedUser()?.alumniId}/events}`).pipe(
+      tap({error: console.log}),
+      catchError( _err => throwError(_err.message))
+    )
   }
 
 }

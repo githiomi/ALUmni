@@ -7,9 +7,9 @@ import { Router, RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthResponse } from 'src/app/interfaces/authResponse';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ServerResponse } from 'src/app/interfaces/serverResponse';
 
 @Component({
   selector: 'app-login',
@@ -53,7 +53,7 @@ export class LoginComponent {
 
     // this._authService.loginUser(alumniId, alumniPassword);
     this._authService.loginUser(username, password).subscribe(
-      ( _res : AuthResponse ) => {
+      ( _res : ServerResponse ) => {
         this._matSnackBar.open(_res.message, "CLOSE", {
           duration: 2000,
           horizontalPosition: 'start'

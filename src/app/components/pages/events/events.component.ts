@@ -1,4 +1,3 @@
-import { Observable, map, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Event } from 'src/app/interfaces/event';
 import { Component, inject } from '@angular/core';
@@ -6,8 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AnimationService } from 'src/app/services/animation.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -28,10 +29,12 @@ import { LottieModule, AnimationOptions } from 'ngx-lottie';
 export class EventsComponent {
 
   // Dependency injection
+  _authService: AuthService = inject(AuthService);
   private _matDialog: MatDialog = inject(MatDialog);
   private _matSnackBar: MatSnackBar = inject(MatSnackBar);
   private _formBuilder: FormBuilder = inject(FormBuilder);
   private _eventService: EventService = inject(EventService);
+  private _snackbarService: SnackbarService = inject(SnackbarService);
   private _animationService: AnimationService = inject(AnimationService);
 
   // Animation Options
@@ -76,7 +79,7 @@ export class EventsComponent {
       },
       _err => {
         this.fetching = false;
-        this._matSnackBar.open(_err, 'CLOSE', { duration: 2000 });
+        this._snackbarService.openSnackBar('Error! Could not retrieve events from the database', 'CLOSE');
       }
     )
   }
@@ -95,15 +98,7 @@ export class EventsComponent {
     const formValues = filterForm.value;
 
     if (!formValues.eventCategory && !formValues.eventLocation) {
-      this._matSnackBar.open(
-        'No filter action was specified.',
-        'CLOSE',
-        {
-          duration: 4000,
-          verticalPosition: 'bottom',
-          horizontalPosition: 'start'
-        });
-
+      this._snackbarService.openSnackBar('No filter action was specified.', 'CLOSE');
       return;
     }
 

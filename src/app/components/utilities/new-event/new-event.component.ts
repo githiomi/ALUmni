@@ -1,19 +1,20 @@
-import { Observable} from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { AuthService } from 'src/app/services/auth.service';
+import { MatNativeDateModule } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { LoggedInUser } from 'src/app/interfaces/logged-in-user';
+import { BehaviorSubject, Subscription, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-new-event',
@@ -30,7 +31,6 @@ export class NewEventComponent {
   private _eventService: EventService = inject(EventService);
 
   // Component Variables
-  username !: string;
   newEventForm!: FormGroup;
   loading: boolean = false;
   eventLocations$: string[];
@@ -39,7 +39,7 @@ export class NewEventComponent {
   constructor(
     private _dialogReference: MatDialogRef<NewEventComponent>
   ) {
-    this.newEventFormInit()
+    this.newEventFormInit();
     this.eventLocations$ = this._eventService.eventLocations;
     this.eventCategories$ = this._eventService.eventCategories;
   }
@@ -53,6 +53,7 @@ export class NewEventComponent {
       eventCategory: new FormControl('', [Validators.required]),
       venue: new FormControl('', [Validators.required]),
       attendeeLimit: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      createdBy: new FormControl(this._authService.authenticatedUser()?.username, [Validators.required]),
       eventBanner: new FormControl('')
     })
   }
@@ -65,14 +66,6 @@ export class NewEventComponent {
     }
 
     this.loading = true;
-
-    this._authService.loggedInUser$.subscribe(
-      _loggedInUser => {
-        console.log('User', _loggedInUser);
-        this.username = _loggedInUser.username;
-      }
-    )
-
     const formValue = form.value
 
     const newEvent = {
@@ -84,10 +77,8 @@ export class NewEventComponent {
       eventDate: formValue.eventDate,
       attendeeLimit: formValue.attendeeLimit,
       eventCategory: formValue.eventCategory,
-      createdBy:  'TBD'
+      createdBy: formValue.createdBy
     }
-
-    console.log(newEvent.createdBy)
 
     this._eventService.postNewEvent(newEvent).subscribe(
       res => {
@@ -96,7 +87,7 @@ export class NewEventComponent {
         this.loading = false;
         this._dialogReference.close(true);
       },
-      err => {
+      _ => {
         this.loading = false;
         this._dialogReference.close(false);
       }

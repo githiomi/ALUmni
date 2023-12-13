@@ -17,7 +17,8 @@
                 <li class="cursor-pointer" routerLink="/home" routerLinkActive="active">Home</li>
                 <li class="cursor-pointer" routerLink="/events" routerLinkActive="active">Events</li>
                 <li class="cursor-pointer" routerLink="/connect" routerLinkActive="active">Connect</li>
-                <li class="cursor-pointer" routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
+                <li *ngIf="_authService.authenticatedUser() != null && _authService.authenticatedUser()?.role == 'Manager'"
+                    class="cursor-pointer" routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
             </ul>
         </nav>
 
@@ -25,34 +26,38 @@
             <!-- Vertical Divider goes here -->
         </mat-divider>
 
-        <button *ngIf="!(isLoggedIn | async)" mat-raised-button class="loginBtn uppercase" routerLink="/login">
+        <button
+            *ngIf="_authService.authenticatedUser() == null || _authService.authenticatedUser == undefined; else profileView"
+            mat-raised-button class="loginBtn uppercase" routerLink="/login">
             login
         </button>
 
-        <div class="cursor-pointer flex justify-between items-center gap-2" *ngIf="isLoggedIn | async"
-            [mat-menu-trigger-for]="profileDropDown">
+        <ng-template #profileView>
+            <div class="cursor-pointer flex justify-between items-center gap-2"
+                [mat-menu-trigger-for]="profileDropDown">
 
-            <img [src]="currentUser$.profilePictureUrl" alt="Profile Picture" class="profilePicture img-thumbnail">
+                <img [src]="_authService.authenticatedUser()?.profilePictureUrl" alt="Profile Picture" class="profilePicture img-thumbnail">
 
-            <div class="content flex flex-col items-start">
-                <small class="font-extralight">Welcome Back,</small>
-                <span class="font-semibold tracking-wider">{{ currentUser$.username }}</span>
+                <div class="content flex flex-col items-start">
+                    <small class="font-extralight">Welcome Back,</small>
+                    <span class="font-semibold tracking-wider">{{ _authService.authenticatedUser()?.username }}</span>
+                </div>
+
+                <mat-icon class="text-red-600">expand_more</mat-icon>
+
+                <mat-menu #profileDropDown="matMenu">
+                    <ng-template id="pro" matMenuContent>
+                        <button class="profileButton" mat-menu-item routerLink="/profile">
+                            <mat-icon>person-add</mat-icon>
+                            View Profile</button>
+                        <button class="profileButton" mat-menu-item (click)="logoutUser()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            Log Out</button>
+                    </ng-template>
+                </mat-menu>
+
             </div>
-
-            <mat-icon class="text-red-600">expand_more</mat-icon>
-
-            <mat-menu #profileDropDown="matMenu">
-                <ng-template id="pro" matMenuContent>
-                    <button class="profileButton" mat-menu-item routerLink="/profile">
-                        <mat-icon>person-add</mat-icon>
-                        View Profile</button>
-                    <button class="profileButton" mat-menu-item (click)="logoutUser()">
-                        <mat-icon>exit_to_app</mat-icon>
-                        Log Out</button>
-                </ng-template>
-            </mat-menu>
-
-        </div>
+        </ng-template>
 
     </div>
 

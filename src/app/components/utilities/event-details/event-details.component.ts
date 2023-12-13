@@ -5,9 +5,7 @@ import { Event } from 'src/app/interfaces/event';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable, of } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +20,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatSnackBarModule, MatSelectModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatSelectModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule],
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css']
 })
@@ -41,10 +39,11 @@ export class EventDetailsComponent implements OnInit {
   private _snackBarService: SnackbarService = inject(SnackbarService);
 
   // Component Variables
+  deleteFlag: boolean;
+  isLoggedIn$: boolean;
   seatsRemaining: number;
   protected _event$: Event;
   editEventForm!: FormGroup;
-  isLoggedIn$: Observable<boolean>;
   eventLocations$: string[] = this._eventService.eventLocations;
   eventCategories$: string[] = this._eventService.eventCategories;
 
@@ -52,14 +51,16 @@ export class EventDetailsComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private _eventData$: {
       editState: boolean,
+      deleteFlag: boolean,
       dialogData: Event
     },
     private _eventDialogReference: MatDialogRef<EventDetailsComponent>
   ) {
     this.editMode = this._eventData$.editState;
     this._event$ = this._eventData$.dialogData;
+    this.deleteFlag = this._eventData$.deleteFlag;
     this.seatsRemaining = this._event$.attendeeLimit;
-    this.isLoggedIn$ = this._authService.loginStatus$;
+    this.isLoggedIn$ = this._authService.loggedInStatus();
   }
 
   ngOnInit() {
@@ -77,7 +78,8 @@ export class EventDetailsComponent implements OnInit {
         eventCategory: new FormControl(this._event$.eventCategory, [Validators.required]),
         venue: new FormControl(this._event$.venue, [Validators.required]),
         attendeeLimit: new FormControl(this._event$.attendeeLimit, [Validators.required, Validators.minLength(1)]),
-        eventBanner: new FormControl(this._event$.eventBanner, [Validators.required])
+        eventBanner: new FormControl(this._event$.eventBanner, [Validators.required]),
+        createdBy: new FormControl(this._authService.authenticatedUser()?.username)
       })
   }
 
@@ -118,14 +120,18 @@ export class EventDetailsComponent implements OnInit {
   }
 
   reserveSpot(): void {
-    this.seatsRemaining--;
-    this._snackBarService.openSnackBar(`You have successfully reserved a spot for the ${this._event$.eventTitle} event!`);
+    if (!this.isLoggedIn$) {
+      this._snackBarService.openSnackBar('You must first be logged in to reserve an event spot.')
+    } else {
+      this.seatsRemaining--;
+      this._snackBarService.openSnackBar(`You have successfully reserved a spot for the ${this._event$.eventTitle} event!`);
+    }
   }
 
   submitUpdateForm(form: any): void {
 
     if (form.invalid) {
-      console.warn("Update Form is invalid");
+      this._snackBarService.openSnackBar('Please make sure the form is filled in correctly!')
       return;
     }
 

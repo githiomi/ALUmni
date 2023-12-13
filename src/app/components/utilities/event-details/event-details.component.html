@@ -9,7 +9,7 @@
     </div>
 
     <div class="header">
-        <button color="basic" mat-mini-fab class="delete" (click)="deleteEvent()">
+        <button *ngIf="isLoggedIn$ && deleteFlag" color="basic" mat-mini-fab class="delete" (click)="deleteEvent()">
             <mat-icon class="text-red-600">delete</mat-icon>
         </button>
 
@@ -193,7 +193,7 @@
 
         <mat-progress-spinner *ngIf="submitting" />
 
-        <div class="favourites" *ngIf="(isLoggedIn$ | async) && !editMode">
+        <div class="favourites" *ngIf="isLoggedIn$ && !editMode">
             <button color="basic" mat-mini-fab (click)="addToFavorites()">
                 <mat-icon class="text-red-600">{{ favourited ? 'favorite' : 'favorite_border' }}</mat-icon>
             </button>

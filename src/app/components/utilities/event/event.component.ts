@@ -1,10 +1,9 @@
-import { Component, Input, inject, OnInit } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Event } from 'src/app/interfaces/event';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { EventDetailsComponent } from '../event-details/event-details.component';
 
@@ -15,21 +14,13 @@ import { EventDetailsComponent } from '../event-details/event-details.component'
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css']
 })
-export class EventComponent implements OnInit {
+export class EventComponent {
 
   // Dependancy Injections
   private _matDialog: MatDialog = inject(MatDialog);
-  private _authService: AuthService = inject(AuthService);
 
   // Component Variables
   @Input() event !: Event;
-  loginStatus !: boolean;
-
-  ngOnInit(): void {
-    this._authService.loginStatus$.subscribe(
-      status => this.loginStatus = status
-    )
-  }
 
   openDetailsDialog(state : boolean): void {
 

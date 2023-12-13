@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { LoggedInUser } from 'src/app/interfaces/logged-in-user';
-import { User } from 'src/app/interfaces/user';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-header',
@@ -17,40 +17,17 @@ import { User } from 'src/app/interfaces/user';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
 
   // Dependancy Injection
   private _router: Router = inject(Router);
-  private _authService: AuthService = inject(AuthService);
-
-  // Component Variables
-  currentUser$ !: LoggedInUser;
-  private userSubscription$: Subscription | undefined;
-  isLoggedIn: Observable<boolean> = this._authService.loginStatus$;
-
-  ngOnInit() {
-    this.userSubscription$ = this._authService.loggedInUser$.subscribe(
-      res => this.currentUser$ = res
-    )
-  }
-
-  changeStatus(status: boolean): void {
-    if (status === false)
-      if (confirm(`${this.currentUser$.username}, are you sure you want to log out?`))
-        this._authService.changeLoginStatus(status);
-      else
-        return;
-    this._authService.changeLoginStatus(status);
-  }
+  _authService: AuthService = inject(AuthService);
+  private _snackbarService: SnackbarService = inject(SnackbarService);
 
   logoutUser(): void {
+    this._snackbarService.openSnackBar(`${this._authService.authenticatedUser()?.username}, you have successfully logged out.`);
     this._authService.logoutUser();
     this._router.navigate(['/home']);
-  }
-
-  ngOnDestroy(): void {
-    if (this.userSubscription$ !== null && this.userSubscription$ !== undefined)
-      this.userSubscription$.unsubscribe();
   }
 
 }

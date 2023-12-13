@@ -2,13 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from 'src/app/services/auth.service';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { EventComponent } from '../../utilities/event/event.component';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -18,22 +17,23 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  
+
   // Dependancy Injection
   private _router: Router = inject(Router);
-  private _snackBar: MatSnackBar = inject(MatSnackBar);
-  private _authService : AuthService = inject(AuthService);
   private _eventService: EventService = inject(EventService);
+  private _snackBarService: SnackbarService = inject(SnackbarService);
 
   // Component Variables
   events$ !: Observable<Event[]>;
-  isLoggedIn !: Observable<boolean>;
 
   ngOnInit() {
     this.events$ = this._eventService.getAllEvents().pipe(
-      map ( _serverResponse => _serverResponse.resource)
+      map(_serverResponse => _serverResponse.resource),
+      catchError(_err => {
+        this._snackBarService.openSnackBar('ERROR! Could not retrieve events from the server.');
+        return of([]);
+      })
     );
-    this.isLoggedIn = this._authService.loginStatus$;
   }
 
   readonly aboutStats = [
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
     }
   ]
 
-  goToPage(routerLink : string) : void {
+  goToPage(routerLink: string): void {
     this._router.navigate([routerLink]);
   }
 

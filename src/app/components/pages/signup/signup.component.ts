@@ -97,7 +97,7 @@ export class SignupComponent {
     }
 
     // Make service call
-    this._authService.createNewUser(newUser).subscribe(
+    this._authService.registerUser(newUser).subscribe(
       (_response: ServerResponse) => {
         const newUser = _response.resource;
         console.log(newUser);

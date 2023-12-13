@@ -89,6 +89,14 @@
 
     <div class="events">
 
+        <div *ngIf="_authService.authenticatedUser as authenticatedUser; else noUser">
+            {{ authenticatedUser | json}}
+        </div>
+
+        <ng-template #noUser>
+            No user logged in
+        </ng-template>
+
         <ng-container *ngIf="!fetching; else fetchingEvents">
 
             <!-- <ng-container *ngIf="(events$ | async)!.length > 0; else noEvents"> -->

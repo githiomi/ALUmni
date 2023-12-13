@@ -69,6 +69,8 @@ ul li:hover{
     height: 35px;
     object-fit: cover;
     border-radius: 50%;
+    border: 1.5px solid var(--var-primary-red);
+    background-color: var(--var-white);
 }
 
 .profileButton:hover {

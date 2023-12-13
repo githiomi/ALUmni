@@ -1,7 +1,7 @@
 // Router Imports
 const express = require('express');
 const authRouter = express.Router();
-const { check, validationResult } = require('express-validator');
+const { check } = require('express-validator');
 
 // Controller Imports
 const authController = require('./../controllers/authController');
@@ -27,6 +27,8 @@ authRouter.post('/login', [
 // ], authController.register);
 
 authRouter.post('/register', authController.register);
+
+authRouter.get('/user', authController.get_user);
 
 // Exports
 module.exports = authRouter;    

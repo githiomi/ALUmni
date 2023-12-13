@@ -25,9 +25,8 @@ exports.create_new_event = (req, res) => {
 
     eventDAO.createNewEvent(event)
         .then(_newEvent => {
-            console.log("Inserted the event document into the database", _newEvent);
             res.status(201).send({
-                message: 'Successfully added an event to the database',
+                message: `Successfully added an event with title ${_newEvent.eventTitle} to the database`,
                 resource: _newEvent,
                 timestamp: Date.now()
             })
@@ -35,7 +34,7 @@ exports.create_new_event = (req, res) => {
         .catch(err => {
             console.error(err);
             res.status(417).send({
-                message: `Error adding the new event with the name ${_newEvent.eventTitle} to the database`,
+                message: `Error adding the new event to the database`,
                 timestamp: Date.now()
             })
         });
@@ -52,7 +51,6 @@ exports.get_all_events = (req, res) => {
             })
         })
         .catch(err => {
-            console.error('There was an error retrieving all the events from the database', err);
             res.status(500).send({
                 message: `There was an error retrieving all the events from the database. Error: ${err}`,
                 timestamp: Date.now()
@@ -90,9 +88,9 @@ exports.get_event_by_id = (req, res) => {
 
 exports.get_events_for_alumni = (req, res) => {
 
-    const alumniId = (req.params.alumniId).toUpperCase();
+    const alumni = req.authorisedUser;
 
-    eventDAO.getAlumniEvents(alumniId)
+    eventDAO.getAlumniEvents(alumni.alumniId)
         .then(_events => {
             if (_events.length == 0)
                 res.status(404).send({

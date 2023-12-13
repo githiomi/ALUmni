@@ -7,6 +7,7 @@ const alumniDB = new nedb({ filename: "./database/alumni.db", autoload: true });
 
 // Data Models
 const Alumni = require('./../models/alumni');
+const authRouter = require('../routers/authRoutes');
 
 exports.log_in = (req, res) => {
 
@@ -91,5 +92,18 @@ exports.register = async (req, res) => {
                 timestamp: Date.now()
             });
     });
+
+}
+
+exports.get_user = (req, res, next) => {
+
+    authHeader = req.headers['Authorization'];
+
+    if (!authHeader)
+        return next()
+
+    token = authHeader.split(' ')[1];
+
+    console.log('Token: ' + token);
 
 }

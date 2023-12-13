@@ -10,6 +10,7 @@ import { LottieModule } from 'ngx-lottie';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AuthService } from './services/auth.service';
 
 // Lottie Animation
 export function playerFactory(): any {
