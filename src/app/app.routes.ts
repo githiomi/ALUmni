@@ -1,15 +1,9 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
 import { authGuard } from './guards/auth.guard';
-import { inject } from '@angular/core';
-import { AuthService } from './services/auth.service';
-
-const user = inject(AuthService).authenticatedUser();
 
 export const routes: Routes = [
 
-
-    // Application Routes
     {
         path: 'home',
         component: HomeComponent,
@@ -37,11 +31,11 @@ export const routes: Routes = [
         canActivate : [authGuard],
         title: 'ALUmni Connect'
     },
-    // {
-    //     path: 'profile',
-    //     loadComponent: () => import('./components/pages/profile/profile.component').then( c => c.ProfileComponent),
-    //     title: `${user?.username} Profile`
-    // },
+    {
+        path: 'profile',
+        loadComponent: () => import('./components/pages/profile/profile.component').then( c => c.ProfileComponent),
+        title: 'User Profile'
+    },
     {
         path: 'dashboard',
         loadComponent: () => import('./components/pages/dashboard/dashboard.component').then( c => c.DashboardComponent),
@@ -57,4 +51,4 @@ export const routes: Routes = [
         loadComponent: () => import('./components/pages/error/error.component').then( c => c.ErrorComponent ),
         title: '404 Error'
     }
-];
+]

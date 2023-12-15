@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ import { ServerResponse } from 'src/app/interfaces/serverResponse';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   // Dependency Injection
   private _router: Router = inject(Router);
@@ -35,6 +35,11 @@ export class LoginComponent {
       username: new FormControl('', [Validators.required]),
       alumniPassword: new FormControl('', [Validators.required])
     })
+  }
+
+  ngOnInit(): void {
+      if(this._authService.loggedInStatus())
+        this._router.navigateByUrl('/home');
   }
 
   submitForm(form: any) {

@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   readonly aboutStats = [
     {
       digit: 2,
-      tagLine: 'Campuses Unique Across Africa'
+      tagLine: 'Unique Campuses Across Africa'
     },
     {
       digit: 7,
@@ -62,13 +62,13 @@ export class HomeComponent implements OnInit {
       optionName: 'Give Back To Society',
       optionIcon: './../../assets/images/give_back.png',
       buttonText: 'Volunteer',
-      pageLink: '/volunteer'
+      pageLink: '/login'
     },
     {
       optionName: 'Explore Communites',
       optionIcon: './../../assets/images/explore.png',
-      buttonText: 'Community',
-      pageLink: '/community'
+      buttonText: 'Connect',
+      pageLink: '/connect'
     }
   ]
 
