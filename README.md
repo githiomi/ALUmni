@@ -8,7 +8,7 @@
 
 ## 👀 Product Preview
 
-![Screenshot](./src/assets/images/Screenshot.png)
+![Screenshot](src/assets/images/Screenshot.png)
 
 ## 🏗️ Development server
 
