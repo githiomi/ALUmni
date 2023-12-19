@@ -1,6 +1,6 @@
 # <a href="https://github.com/githiomi/ALUmni.git" target="_blank"><img style="margin: 0px 5px" src="./src/assets/images/ALUmni_logo.png" alt="ALUmni" height="50" /></a> ALUmni
 
-> Created by <a href="https://www.github.com/githiomi"> Daniel Githiomi </a>
+> Created by [Daniel Githiomi](https://www.github.com/githiomi) </a>
 
 ## 🚧 Description
 
@@ -22,7 +22,7 @@ Install dependencies
 npm install
 ````
 
-Run Angular server __(http://localhost:4200)__
+Run Angular server __(<http://localhost:4200>)__
 
 ## ⏬ Setup/Installation Minimal Requirements
 
@@ -77,7 +77,7 @@ In order to enjoy the features of this application you will need to:
 Contact me through any of the following:
 
 * Slack: danielgithiomi
-* Email: danielgithiomi@gmail.com
+* Email: <danielgithiomi@gmail.com>
 * Github: githiomi
 
 ## 📃 License

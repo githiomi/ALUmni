@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { EventComponent } from '../../utilities/event/event.component';
+import { EventComponent } from './../../utilities/event/event.component';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/interfaces/event';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -54,19 +54,19 @@ export class HomeComponent implements OnInit {
   readonly optionTiles = [
     {
       optionName: 'Attend An Event By ALU',
-      optionIcon: 'assets/images/event_calendar.png',
+      optionIcon: './assets/images/event_calendar.png',
       buttonText: 'Events',
       pageLink: '/events'
     },
     {
       optionName: 'Give Back To Society',
-      optionIcon: 'assets/images/give_back.png',
+      optionIcon: './assets/images/give_back.png',
       buttonText: 'Volunteer',
       pageLink: '/login'
     },
     {
       optionName: 'Explore Communites',
-      optionIcon: 'assets/images/explore.png',
+      optionIcon: './assets/images/explore.png',
       buttonText: 'Connect',
       pageLink: '/connect'
     }
