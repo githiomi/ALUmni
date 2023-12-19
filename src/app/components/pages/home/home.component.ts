@@ -54,19 +54,19 @@ export class HomeComponent implements OnInit {
   readonly optionTiles = [
     {
       optionName: 'Attend An Event By ALU',
-      optionIcon: './../../assets/images/event_calendar.png',
+      optionIcon: '/assets/images/event_calendar.png',
       buttonText: 'Events',
       pageLink: '/events'
     },
     {
       optionName: 'Give Back To Society',
-      optionIcon: './../../assets/images/give_back.png',
+      optionIcon: '/assets/images/give_back.png',
       buttonText: 'Volunteer',
       pageLink: '/login'
     },
     {
       optionName: 'Explore Communites',
-      optionIcon: './../../assets/images/explore.png',
+      optionIcon: '/assets/images/explore.png',
       buttonText: 'Connect',
       pageLink: '/connect'
     }

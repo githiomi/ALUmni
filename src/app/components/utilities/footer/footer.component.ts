@@ -12,6 +12,6 @@ import { RouterModule } from '@angular/router';
 })
 export class FooterComponent {
 
-  readonly universityLogo : string = './../../../assets/images/ALUmni_logo.png';
+  readonly universityLogo : string = './assets/images/ALUmni_logo.png';
 
 }
