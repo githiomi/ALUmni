@@ -68,6 +68,10 @@ In order to enjoy the features of this application you will need to:
 * Run 'ng serve' to run the application on the development server.
 * Enjoy the `ALUmni` Angular Application and Shop at will.
 
+## 🦾 Live Page
+
+* The application has been hosted using `GitHub Pages` and the link to the live page can be found [here](https://githiomi.github.io/ALUmni).
+
 ## 📧 Support and contact details
 
 Contact me through any of the following:
