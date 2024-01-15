@@ -1,4 +1,4 @@
-# <a href="https://github.com/githiomi/ALUmni.git" target="_blank"><img style="margin: 0px 5px" src="./src/assets/images/ALUmni_logo.png" alt="ALUmni" height="50" /></a> ALUmni
+# <a href="https://github.com/githiomi/ALUmni.git" target="_blank"><img style="margin: 0px 5px" src="./assets/images/ALUmni_logo.png" height="50" /></a> ALUmni
 
 > Created by [Daniel Githiomi](https://www.github.com/githiomi) </a>
 
@@ -8,7 +8,7 @@
 
 ## 👀 Product Preview
 
-![Screenshot](src/assets/images/Screenshot.png)
+![Screenshot](./assets/images/Screenshot.png)
 
 ## 🏗️ Development server
 
