@@ -70,17 +70,31 @@ export class EventDetailsComponent implements OnInit {
 
   private eventFormInit(): void {
     if (this.editMode)
+      // this.editEventForm = this._formBuilder.group({
+      //   eventTitle: new FormControl(this._event$.eventTitle, [Validators.required]),
+      //   eventDescription: new FormControl(this._event$.eventDescription, [Validators.required]),
+      //   eventDate: new FormControl(this._event$.eventDate, [Validators.required]),
+      //   eventDuration: new FormControl(this._event$.eventDuration, [Validators.required]),
+      //   eventCategory: new FormControl(this._event$.eventCategory, [Validators.required]),
+      //   venue: new FormControl(this._event$.venue, [Validators.required]),
+      //   attendeeLimit: new FormControl(this._event$.attendeeLimit, [Validators.required, Validators.minLength(1)]),
+      //   eventBanner: new FormControl(this._event$.eventBanner, [Validators.required]),
+      //   createdBy: new FormControl(this._authService.authenticatedUser()?.username)
+      // });
+
       this.editEventForm = this._formBuilder.group({
-        eventTitle: new FormControl(this._event$.eventTitle, [Validators.required]),
-        eventDescription: new FormControl(this._event$.eventDescription, [Validators.required]),
-        eventDate: new FormControl(this._event$.eventDate, [Validators.required]),
-        eventDuration: new FormControl(this._event$.eventDuration, [Validators.required]),
-        eventCategory: new FormControl(this._event$.eventCategory, [Validators.required]),
-        venue: new FormControl(this._event$.venue, [Validators.required]),
-        attendeeLimit: new FormControl(this._event$.attendeeLimit, [Validators.required, Validators.minLength(1)]),
-        eventBanner: new FormControl(this._event$.eventBanner, [Validators.required]),
-        createdBy: new FormControl(this._authService.authenticatedUser()?.username)
-      })
+        eventTitle: new FormControl('', [Validators.required]),
+        eventDescription: new FormControl('', [Validators.required]),
+        eventDate: new FormControl('', [Validators.required]),
+        eventDuration: new FormControl('', [Validators.required]),
+        eventCategory: new FormControl('', [Validators.required]),
+        venue: new FormControl('', [Validators.required]),
+        attendeeLimit: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        eventBanner: new FormControl('', [Validators.required]),
+        createdBy: new FormControl('')
+      });
+
+      this.editEventForm.patchValue(this._event$);
   }
 
   // Method to delete an event
