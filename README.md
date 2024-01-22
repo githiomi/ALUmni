@@ -1,4 +1,4 @@
-# <a href="https://github.com/githiomi/ALUmni.git" target="_blank"><img style="margin: 0px 5px" src="./assets/images/ALUmni_logo.png" height="50" /></a> ALUmni
+# <a href="https://github.com/githiomi/ALUmni.git" target="_blank"><img style="margin: 0px 5px" src="src/assets/images/ALUmni_logo.png" height="50" /></a> ALUmni
 
 > Created by [Daniel Githiomi](https://www.github.com/githiomi) </a>
 
@@ -8,7 +8,7 @@
 
 ## 👀 Product Preview
 
-![Screenshot](./assets/images/Screenshot.png)
+![Screenshot](src\assets\images\Screenshot.png)
 
 ## 🏗️ Development server
 
@@ -22,7 +22,33 @@ Install dependencies
 npm install
 ````
 
-Run Angular server __(<http://localhost:4200>)__
+Run Angular server and this should open on port 4200 __(<http://localhost:4200>)__
+
+``` (nodejs)
+ng serve
+```
+
+Navigate to the local NodeJS server and run it using the following command to run the main server index.js file. Make sure to have __nodemon__ installed
+
+``` (nodejs)
+nodemon index
+```
+
+## 😎 Login Configurations
+
+ADMIN / SUPERUSER:
+
+```(nodejs)
+Username: ABART511
+Password: allan2024
+```
+
+ALUMNI / NORMAL USER:
+
+```(nodejs)
+Username: DGITH4100
+Password: dhosiohoes
+```
 
 ## ⏬ Setup/Installation Minimal Requirements
 
