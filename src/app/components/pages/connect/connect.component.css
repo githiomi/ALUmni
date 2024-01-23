@@ -9,3 +9,16 @@
 .connectMatCard {
     padding: 3rem 1rem;
 }
+
+.inputRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: .5rem 0;
+    gap: 2rem;
+}
+
+mat-form-field {
+    width: 100%;
+}
