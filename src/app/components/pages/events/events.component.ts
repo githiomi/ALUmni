@@ -18,7 +18,6 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 
 // Animation Imports
 import { LottieModule, AnimationOptions } from 'ngx-lottie';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-events',
