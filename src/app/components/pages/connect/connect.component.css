@@ -1,0 +1,11 @@
+/* Connect Mat-Card */
+.connect {
+    transform: translateY(-10vh);
+    width: 50%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.connectMatCard {
+    padding: 3rem 1rem;
+}
