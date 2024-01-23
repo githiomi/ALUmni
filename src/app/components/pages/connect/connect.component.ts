@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { emailPatternValidation } from 'src/app/validators/emailPatternValidator';
 
 @Component({
   selector: 'app-connect',
@@ -31,7 +32,8 @@ export class ConnectComponent {
       emailAddress: new FormControl('', [Validators.email, Validators.required]),
       message: new FormControl('', [Validators.required])
     }, {
-      updateOn: blur
+      updateOn: blur,
+      Validators: [emailPatternValidation]
     })
   }
 
