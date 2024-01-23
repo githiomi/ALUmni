@@ -22,3 +22,10 @@
 mat-form-field {
     width: 100%;
 }
+
+mat-card-footer {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin: 1rem 0 0;
+}

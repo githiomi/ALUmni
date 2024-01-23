@@ -4,11 +4,12 @@ import { MatCardModule } from '@angular/material/card';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-connect',
   standalone: true,
-  imports: [CommonModule, MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './connect.component.html',
   styleUrls: ['./connect.component.css']
 })
@@ -30,10 +31,6 @@ export class ConnectComponent {
     }, {
       updateOn: blur
     })
-  }
-
-  private formConfig(): void {
-
   }
 
   onFormSubmit(form: any): void {

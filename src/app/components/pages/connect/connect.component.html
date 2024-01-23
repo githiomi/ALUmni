@@ -63,9 +63,21 @@
                             class="text-red-600 text-xs text-end py-1">Email Address is required!</small>
                     </mat-form-field>
 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Message</mat-label>
+                        <textarea matInput type="text" formControlName="message"></textarea>
+                        <small
+                            *ngIf="(connectForm.controls['message'].dirty || form.submitted) && connectForm.controls['message'].invalid"
+                            class="text-red-600 text-xs text-end py-1">The message is required!</small>
+                    </mat-form-field>
+
                 </form>
 
             </mat-card-content>
+
+            <mat-card-footer>
+                <button mat-raised-button [disabled]="form.invalid" class="uppercase text-base">Submit</button>
+            </mat-card-footer>
 
         </mat-card>
 
