@@ -31,6 +31,12 @@
                 </div>
             </mat-card-header>
 
+            <mat-card-content>
+
+                <form [formGroup]="connectForm" (ngSubmit)="onFormSubmit(connectForm)" #connectForm="ngForm"></form>
+
+            </mat-card-content>
+
         </mat-card>
 
     </div>
