@@ -76,7 +76,9 @@
             </mat-card-content>
 
             <mat-card-footer>
-                <button mat-raised-button [disabled]="form.invalid" class="uppercase text-base">Submit</button>
+                <button *ngIf="!isSubmitting()" mat-raised-button [disabled]="form.invalid" class="uppercase text-base">Submit</button>
+
+                <mat-progress-spinner diameter="30" mode="indeterminate" *ngIf="isSubmitting()" color="warn" /> 
             </mat-card-footer>
 
         </mat-card>
