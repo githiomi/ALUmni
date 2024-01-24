@@ -57,10 +57,13 @@
 
                     <mat-form-field appearance="outline">
                         <mat-label>Email Address</mat-label>
-                        <input matInput type="email" formControlName="lastName">
+                        <input matInput type="email" formControlName="emailAddress">
                         <small
-                            *ngIf="(connectForm.controls['emailAddress'].dirty || form.submitted) && connectForm.controls['emailAddress'].invalid && connectForm.hasError('invalidEmail')"
+                            *ngIf="(connectForm.controls['emailAddress'].dirty || form.submitted) && connectForm.controls['emailAddress'].invalid"
                             class="text-red-600 text-xs text-end py-1">Email Address is required!</small>
+                        <small
+                            *ngIf="connectForm.hasError('invalidEmail') && connectForm.controls['emailAddress'].dirty && !connectForm.controls['emailAddress'].invalid"
+                            class="text-red-600 text-xs text-end py-1">Enter a valid Email Address!</small>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
@@ -76,7 +79,7 @@
             </mat-card-content>
 
             <mat-card-footer>
-                <button *ngIf="!isSubmitting()" mat-raised-button class="uppercase text-base">Submit</button>
+                <button *ngIf="!isSubmitting()" mat-raised-button class="uppercase text-base" (click)="onFormSubmit(connectForm)">Submit</button>
 
                 <mat-progress-spinner diameter="30" mode="indeterminate" *ngIf="isSubmitting()" color="warn" /> 
             </mat-card-footer>

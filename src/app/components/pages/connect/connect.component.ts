@@ -21,19 +21,18 @@ export class ConnectComponent {
   private _formBuilder: FormBuilder = inject(FormBuilder);
 
   // Class variable
-  connectForm !: FormGroup;
+  connectForm: FormGroup;
   isSubmitting = signal(false);
 
   constructor() {
-    // Connect Form configuration
     this.connectForm = this._formBuilder.group({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      emailAddress: new FormControl('', [Validators.email, Validators.required]),
+      emailAddress: new FormControl('', [Validators.required]),
       message: new FormControl('', [Validators.required])
     }, {
-      updateOn: blur,
-      Validators: [emailPatternValidation]
+      updateOn: 'blur',
+      validators: [emailPatternValidation]
     })
   }
 
@@ -42,7 +41,10 @@ export class ConnectComponent {
     this.isSubmitting.set(true);
 
     if (form.invalid) {
-      setTimeout( () => this.isSubmitting.set(false), 2000);
+      setTimeout( () => {
+        console.log("Form is invalid", form)
+        this.isSubmitting.set(false)
+      }, 2000);
       return;
     }
 

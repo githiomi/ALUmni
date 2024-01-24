@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { passwordMatchValidator } from 'src/app/validators/passwordMatchValidator';
 import { MatSelectModule } from '@angular/material/select';
 import { EventService } from 'src/app/services/event.service';
-import { Observable } from 'rxjs';
 import { ServerResponse } from 'src/app/interfaces/serverResponse';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
