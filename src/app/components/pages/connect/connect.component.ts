@@ -51,21 +51,26 @@ export class ConnectComponent {
     }
 
     const formValue = form.value;
-
     const message = { firstName: formValue.firstName, lastName: formValue.lastName, emailAddress: formValue.emailAddress, message: formValue.message }
 
-    this._contactService.postMessage(message).pipe(
-      tap(console.log)
-    ).subscribe(
-      _response => {
-        this.isSubmitting.set(false);
-        this._snackBarService.openSnackBar(_response.message)
-      },
-      _error => {
-        this.isSubmitting.set(false);
-        this._snackBarService.openSnackBar(_error.message)
-      }
-    )
+    setTimeout(() => {
+
+      // Clear the form input
+      this.connectForm.reset();
+
+      this._contactService.postMessage(message).pipe(
+        tap(console.log)
+      ).subscribe(
+        _response => {
+          this.isSubmitting.set(false);
+          this._snackBarService.openSnackBar(_response.message, 'OK')
+        },
+        _error => {
+          this.isSubmitting.set(false);
+          this._snackBarService.openSnackBar(_error.message, 'DISMISS')
+        }
+      )
+    }, 1500);
 
   }
 
