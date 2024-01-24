@@ -18,11 +18,19 @@ class ContactDAO {
         }
     }
 
-    postMessageToDB({firstName, lastName, emailAddress, message}) {
+    postMessageToDB(message) {
 
-        return new Promise = (resolve, reject) => {
-            this.contactDB.p
-        }
+        return new Promise ((resolve, reject) => {
+            this.contactDB.insert(message, (err, result) => {
+                if (err) {
+                    reject(err);
+                }else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
 }
+
+module.exports = ContactDAO
