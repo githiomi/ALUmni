@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { emailPatternValidation } from 'src/app/validators/emailPatternValidator';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-connect',
@@ -20,6 +21,7 @@ export class ConnectComponent {
 
   // Dependency injection
   private _formBuilder: FormBuilder = inject(FormBuilder);
+  private _contactService : ContactService = inject(ContactService);
   private _snackBarService : SnackbarService = inject(SnackbarService);
 
   // Class variable

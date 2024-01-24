@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const PORT_NUMBER = 3001;
 
 // Routers
+const contactRouter = require('./routers/contactRoutes');
 const alumniRouter = require('./routers/alumniRoutes');
 const eventRouter = require('./routers/eventRoutes');
 const authRouter = require('./routers/authRoutes');
@@ -44,6 +45,9 @@ app.use('/events', eventRouter);
 
 // ALUMNI ROUTES
 app.use('/alumni', alumniRouter);
+
+// CONTACT ROUTES
+app.use('/contact', contactRouter);
 
 // --------------------------------------------------------------------------------------------------------------------
 app.get('/close', function (req, res) {
