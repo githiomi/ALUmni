@@ -15,8 +15,8 @@
         <nav>
             <ul class="uppercase text-base">
                 <li class="cursor-pointer" routerLink="/home" routerLinkActive="active">Home</li>
-                <li class="cursor-pointer" routerLink="/events" routerLinkActive="active">Events</li>
                 <li class="cursor-pointer" routerLink="/connect" routerLinkActive="active">Connect</li>
+                <li class="cursor-pointer" routerLink="/events" routerLinkActive="active">Events</li>
                 <li *ngIf="_authService.authenticatedUser() != null && _authService.authenticatedUser()?.role == 'Manager'"
                     class="cursor-pointer" routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
             </ul>
