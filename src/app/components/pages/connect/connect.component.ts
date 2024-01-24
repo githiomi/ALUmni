@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { emailPatternValidation } from 'src/app/validators/emailPatternValidator';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { ContactService } from 'src/app/services/contact.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-connect',
@@ -21,8 +22,8 @@ export class ConnectComponent {
 
   // Dependency injection
   private _formBuilder: FormBuilder = inject(FormBuilder);
-  private _contactService : ContactService = inject(ContactService);
-  private _snackBarService : SnackbarService = inject(SnackbarService);
+  private _contactService: ContactService = inject(ContactService);
+  private _snackBarService: SnackbarService = inject(SnackbarService);
 
   // Class variable
   connectForm: FormGroup;
@@ -49,8 +50,23 @@ export class ConnectComponent {
       this.isSubmitting.set(false);
     }
 
-    console.log("Form is valid");
-  
+    const formValue = form.value;
+
+    const message = { firstName: formValue.firstName, lastName: formValue.lastName, emailAddress: formValue.emailAddress, message: formValue.message }
+
+    this._contactService.postMessage(message).pipe(
+      tap(console.log)
+    ).subscribe(
+      _response => {
+        this.isSubmitting.set(false);
+        this._snackBarService.openSnackBar(_response.message)
+      },
+      _error => {
+        this.isSubmitting.set(false);
+        this._snackBarService.openSnackBar(_error.message)
+      }
+    )
+
   }
 
 }
