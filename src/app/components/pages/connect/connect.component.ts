@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { emailPatternValidation } from 'src/app/validators/emailPatternValidator';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-connect',
@@ -19,6 +20,7 @@ export class ConnectComponent {
 
   // Dependency injection
   private _formBuilder: FormBuilder = inject(FormBuilder);
+  private _snackBarService : SnackbarService = inject(SnackbarService);
 
   // Class variable
   connectForm: FormGroup;
@@ -41,11 +43,8 @@ export class ConnectComponent {
     this.isSubmitting.set(true);
 
     if (form.invalid) {
-      setTimeout( () => {
-        console.log("Form is invalid", form)
-        this.isSubmitting.set(false)
-      }, 2000);
-      return;
+      this._snackBarService.openSnackBar('The form is invalid. Check and try again.', 'DISMISS');
+      this.isSubmitting.set(false);
     }
 
     console.log("Form is valid");
