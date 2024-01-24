@@ -7,7 +7,9 @@ export const passwordMatchValidator : ValidatorFn = (
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
 
-    return password && confirmPassword && password === confirmPassword ? null : {
+    return password && confirmPassword && password === confirmPassword 
+    ? null 
+    : {
         passwordMatch : true
     }
 

@@ -28,7 +28,7 @@ export const routes: Routes = [
     {
         path: 'connect',
         loadComponent: () => import('./components/pages/connect/connect.component').then( c => c.ConnectComponent),
-        canActivate : [authGuard],
+        // canActivate : [authGuard],
         title: 'ALUmni Connect'
     },
     {

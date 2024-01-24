@@ -4,17 +4,87 @@
 
         <div class="linedTextLight uppercase text-center text-xl">
             <div class="horizontalLine"></div>
-            Sorry
+            Connect
             <div class="horizontalLine"></div>
         </div>
 
         <p class="uppercase">
-            No active Alumni
+            Get in touch
         </p>
 
         <p class="uppercase">
-            to connect with
+            with us below
         </p>
+
+    </div>
+
+    <div class="connect">
+
+        <mat-card class="connectMatCard">
+
+            <mat-card-header class="flex flex-col text-center items-center">
+                <p class="text-3xl uppercase">Connect With Us</p>
+                <div class="linedTextDark uppercase text-center text-lg">
+                    <div class="horizontalLine"></div>
+                    Let us know about you
+                    <div class="horizontalLine"></div>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <form [formGroup]="connectForm" (ngSubmit)="onFormSubmit(connectForm)" #form="ngForm">
+
+                    <div class="inputRow">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>First Name</mat-label>
+                            <input matInput type="text" formControlName="firstName">
+                            <small
+                                *ngIf="(connectForm.controls['firstName'].dirty || form.submitted) && connectForm.controls['firstName'].invalid"
+                                class="text-red-600 text-xs text-end py-1">First Name is required!</small>
+                        </mat-form-field>
+    
+                        <mat-form-field appearance="outline">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput type="text" formControlName="lastName">
+                            <small
+                                *ngIf="(connectForm.controls['lastName'].dirty || form.submitted) && connectForm.controls['lastName'].invalid"
+                                class="text-red-600 text-xs text-end py-1">Last Name is required!</small>
+                        </mat-form-field>
+    
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput type="email" formControlName="emailAddress">
+                        <small
+                            *ngIf="(connectForm.controls['emailAddress'].dirty || form.submitted) && connectForm.controls['emailAddress'].invalid"
+                            class="text-red-600 text-xs text-end py-1">Email Address is required!</small>
+                        <small
+                            *ngIf="connectForm.hasError('invalidEmail') && connectForm.controls['emailAddress'].dirty && !connectForm.controls['emailAddress'].invalid"
+                            class="text-red-600 text-xs text-end py-1">Enter a valid Email Address!</small>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Message</mat-label>
+                        <textarea matInput type="text" formControlName="message"></textarea>
+                        <small
+                            *ngIf="(connectForm.controls['message'].dirty || form.submitted) && connectForm.controls['message'].invalid"
+                            class="text-red-600 text-xs text-end py-1">The message is required!</small>
+                    </mat-form-field>
+
+                </form>
+
+            </mat-card-content>
+
+            <mat-card-footer>
+                <button *ngIf="!isSubmitting()" mat-raised-button class="uppercase text-base" (click)="onFormSubmit(connectForm)">Submit</button>
+
+                <mat-progress-spinner diameter="30" mode="indeterminate" *ngIf="isSubmitting()" color="warn" /> 
+            </mat-card-footer>
+
+        </mat-card>
 
     </div>
 
